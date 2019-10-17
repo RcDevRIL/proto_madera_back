@@ -1,7 +1,7 @@
 package com.madera.api;
 
-import org.hibernate.annotations.Entity;
+//import org.hibernate.annotations.Entity;
 
-@Entity
+//@Entity
 public class Test {
 }
