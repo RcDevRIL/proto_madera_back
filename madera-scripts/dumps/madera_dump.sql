@@ -89,8 +89,8 @@ CREATE TABLE madera.composant (
     i_composant_id integer NOT NULL,
     i_composant_groupe_id integer,
     v_libelle character varying(45),
-    i_stock_id integer,
-    i_composant_referentiel_id integer
+    i_composant_referentiel_id integer,
+    f_section float
 );
 
 
@@ -307,7 +307,7 @@ CREATE TABLE madera.utilisateur (
     v_tel character varying(45),
     v_login character varying(45),
     v_password character varying(255),
-    i_role_id integer
+    i_role_id integer NOT NULL
 );
 
 

@@ -1,10 +1,15 @@
-INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, v_password) VALUES
+INSERT INTO madera.role(i_role_id, v_libelle_role) VALUES
+-- Temporaire ?
+(1, 'Développeur'),
+(2, 'Commercial');
+
+INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, v_password, i_role_id) VALUES
 -- Mdp : 123456
-(1, 'LADOUCE', 'Fabien', 'ladouce.fabien@gmail.com', '0600000000', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92'),
+(1, 'LADOUCE', 'Fabien', 'ladouce.fabien@gmail.com', '0600000000', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 2),
 -- Mdp : abcdef
-(2, 'HELIOT', 'David', 'boite.sphinx@gmail.com', '0600000000', 'bef57ec7f53a6d40beb640a780a639c83bc29ac8a9816f1fc6c5c6dcd93c4721'),
+(2, 'HELIOT', 'David', 'boite.sphinx@gmail.com', '0600000000', 'bef57ec7f53a6d40beb640a780a639c83bc29ac8a9816f1fc6c5c6dcd93c4721', 2),
 -- Mdp : abc123
-(3, 'CHEVALLIER', 'Romain', 'romain.chevallier@gmail.com', '0600000000', '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090');
+(3, 'CHEVALLIER', 'Romain', 'romain.chevallier@gmail.com', '0600000000', '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090', 2);
 
 INSERT INTO madera.composant_referentiel(i_composant_referentiel_id, v_caracteristique, v_unite_usage)VALUES
 -- Montants en bois pour la structure, nommés lisses ou contrefort
@@ -74,7 +79,12 @@ INSERT INTO madera.composant_groupe(i_composant_groupe_id, v_libelle_groupe) VAL
 (7, 'Boulons'),
 (8, 'Gougeons'),
 (9, 'Finition intérieure'),
-(10, 'Finition extérieure');
+(10, 'Finition extérieure'),
+(11, 'Ossature'),
+(12, 'Pare-vapeur'),
+(13, 'Panneau structurel'),
+(14, 'Plancher'),
+(15, 'Toit');
 
 INSERT INTO madera.devis_etat(i_devis_etat_id, v_devis_etat_libelle, i_pourcentage_somme) VALUES
 (1, 'A la Signature', 3),
@@ -89,3 +99,40 @@ INSERT INTO madera.devis_etat(i_devis_etat_id, v_devis_etat_libelle, i_pourcenta
 INSERT INTO madera.gammes(i_gammes_id, v_libelle_gammes) VALUES
 (1, 'Standard'),
 (2, 'Premium');
+
+INSERT INTO madera.composant(i_composant_id, i_composant_groupe_id, v_libelle, i_composant_referentiel_id, f_section) VALUES
+(1, 10, 'Crépi minéral', 4 , 3),
+-- Equivalent au plâtre
+(2, 13, 'Gypse-phaser', 4 , 12),
+-- Isolant
+(3, 3, 'EPS / XPS', 4 , 30),
+-- Panneau structurel
+(4, 10, 'OSB', 4 , 10),
+-- Ossature
+(5, 11, 'Chassis de bois', 4 , 120),
+-- Isolant
+(6, 3, 'Ouate minérale', 3 , 1.2),
+-- Pare vapeur
+(7, 12, 'Folio isolé sur vapeur', 3 , 1),
+-- Panneau structurel
+(8, 13, 'Carton de plâtre', 4 , 12.5),
+-- Finition intérieure
+(9, 9, 'Ponçage et peinture', 4 , 2),
+-- Planchers
+(10, 10, 'Parquette laminée', 5 , 10),
+-- Panneau structurel
+(11, 10, 'OSB', 4 , 18),
+-- Ossature
+(12, 11, 'Chassis de bois', 4 , 200),
+-- Tasseau ?
+(13, null, 'Construction carton de plâtre', null , null),
+(14, 15, 'Tuiles', 6 , null),
+-- Pare vapeur ?
+(15, 12, 'Folio', 3, 1),
+-- Poutre de maintien
+(16, 11, 'Poutre', 1, 16),
+-- Isolant
+(17, 3, 'Ouate', 3 , 5),
+(18, 3, 'Ouate + folio d''aluminium', 3 , 5),
+-- Phaser
+(19, 13, 'Phaser', 4, 3);
