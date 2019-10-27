@@ -1,5 +1,4 @@
 INSERT INTO madera.role(i_role_id, v_libelle_role) VALUES
--- Temporaire ?
 (1, 'Développeur'),
 (2, 'Commercial');
 
@@ -52,7 +51,6 @@ INSERT INTO madera.adresse(i_adresse_id, v_ville, v_code_postale, v_rue, v_compl
 (9, 'La Roche sur Yon', '85000', 'Rue Enzo Ferrari', '', ''),
 (10, 'Dax', '40100', 'rue d''Aspremont', '', '30');
 
--- TODO Mettre une colonne raison_soc ? Si c'est des entreprises
 INSERT INTO madera.client(i_client_id, v_nom, v_prenom, v_tel, v_mail) VALUES
 (1, 'DUBOIS', 'Claude', '0600000000', 'dubois.claude@gmail.com'),
 (2, 'YAOURT', 'Clémentine', '0600000000', 'yaourt.clementine@gmail.com'),
@@ -68,7 +66,6 @@ INSERT INTO madera.client_adresse(i_client_id, i_adresse_id, b_adresse_facturati
 (4, 8, true),
 (5, 3, true);
 
--- A voir quoi mettre dedans au fur-et à mesure (sans doute sujet à modification)
 INSERT INTO madera.composant_groupe(i_composant_groupe_id, v_libelle_groupe) VALUES
 (1, 'Lisses'),
 (2, 'Contrefort'),
@@ -135,4 +132,90 @@ INSERT INTO madera.composant(i_composant_id, i_composant_groupe_id, v_libelle, i
 (17, 3, 'Ouate', 3 , 5),
 (18, 3, 'Ouate + folio d''aluminium', 3 , 5),
 -- Phaser
-(19, 13, 'Phaser', 4, 3);
+(19, 13, 'Phaser', 4, 3),
+-- Ouate
+(20, 3, 'Ouate minérale', 3 , 100);
+
+INSERT INTO madera.module(i_module_id, i_gammes_id, i_module_referentiel_id, v_nom, v_nature_module, v_angle, b_modele) VALUES
+(1, 1, 1, 'Mur extérieur standard', 'Mur extérieur', 'Angle sortant', true),
+(2, 1, 2, 'Mur intérieur standard', 'Mur intérieur', 'Angle sortant', true),
+(3, 1, 4, 'Mur intermédiaire standard', 'Mur intermédiaire', '', true),
+(4, 1, 6, 'Toit standard', 'Toit', '', true);
+
+INSERT INTO madera.module_composant(i_composant_id, i_module_id, i_ordre) VALUES
+-- Mur extérieur
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 4),
+(5, 1, 5),
+(6, 1, 6),
+(7, 1, 9),
+(8, 1, 8),
+(9, 1, 9 ),
+-- Mur intérieur
+(9, 2, 1),
+(8, 2, 2),
+(4, 2, 3),
+(5, 2, 4),
+(6, 2, 5),
+-- Mur intermédiaire
+(10, 3, 1),
+(11, 3, 2),
+(12, 3, 3),
+(20, 3, 4),
+(13, 3, 5),
+(8, 3, 6),
+(9, 3, 7),
+-- Toit
+(14, 4, 1),
+(15, 4, 2),
+(11, 4, 3),
+(16, 4, 4),
+(17, 4, 5),
+(18, 4, 6),
+(19, 4, 7),
+(8, 4, 8),
+(9, 4, 9);
+
+INSERT INTO madera.projet(i_projet_id, i_client_id, v_ref_projet, d_date_projet, i_devis_etat_id, f_prix) VALUES
+(1, 2, 'ref_20191027_2', '27/10/2019', 3, 205365);
+
+INSERT INTO madera.projet_module(i_projet_module_id, i_projet_id, i_module_id) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 4);
+
+INSERT INTO madera.projet_utilisateurs(i_utilisateur_id, i_projet_id) VALUES
+(1, 1),
+(2, 1),
+(3, 1);
+
+INSERT INTO madera.fournisseur(i_fournisseur_id, v_raison_soc, i_adresse_id) VALUES
+(1, 'Leroy Merlin', 3),
+(2, 'Dijon Bois', 7),
+(3, '74 Toiture', 5),
+(4, 'Vendeur de caillou professionnel', 6);
+
+INSERT INTO madera.composant_fournisseur(i_composant_id, i_fournisseur_id, v_ref_fournisseur) VALUES
+(1, 4, 'crepi_mineral_VCP'),
+(2, 1, 'gyphe_phaser_LM'),
+(3, 1, 'isolant_xps_LM'),
+(4, 1, 'panneau_osb_10_LM'),
+(5, 2, 'chassis_bois_120_LM'),
+(6, 1, 'isolant_ouate_120_LM'),
+(7, 1, 'pare_vapeur_LM'),
+(8, 1, 'carton_platre_LM'),
+(9, 1, 'peinture_LM'),
+(10, 1, 'parquets_laminee_LM'),
+(11, 1, 'panneau_OSB_18_LM'),
+(12, 2, 'chassis_bois_200_LM'),
+(13, 1, 'constr_carton_platres_LM'),
+(14, 3, 'tuile_74'),
+(15, 1, 'folio_LM'),
+(16, 2, 'poutre_LM'),
+(17, 1, 'isolant_ouate_LM'),
+(18, 1, 'ioslant_oaute_alu_LM'),
+(19, 4, 'phaser_VCP'),
+(20, 1, 'isolant_ouate_100_LM');
