@@ -4,15 +4,11 @@ import com.madera.api.models.User;
 import org.jooq.DSLContext;
 import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-
-import javax.sql.DataSource;
 
 import static com.madera.jooq.Tables.UTILISATEUR;
 
-@Service
+@Repository
 public class UserRepository {
 
     @Autowired

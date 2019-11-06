@@ -2,7 +2,6 @@ package com.madera.api.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.jooq.Record;
 
 @JsonSerialize
 @JsonDeserialize

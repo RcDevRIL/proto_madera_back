@@ -1,7 +1,7 @@
 package com.madera.api.controllers;
 
-import com.madera.api.ApiApplication;
 import com.madera.api.models.User;
+import com.madera.api.repository.ComposantRepository;
 import com.madera.api.repository.UserRepository;
 import org.jooq.Result;
 import org.slf4j.Logger;
@@ -21,9 +21,11 @@ public class TaskMadera {
 
     @Autowired
     private final UserRepository userRepository;
+    private final ComposantRepository composantRepository;
 
-    public TaskMadera(UserRepository userRepository) {
+    public TaskMadera(UserRepository userRepository, ComposantRepository composantRepository) {
         this.userRepository = userRepository;
+        this.composantRepository = composantRepository;
     }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
@@ -50,5 +52,35 @@ public class TaskMadera {
         log.debug("Connection failure");
         mapResponse.put("token", "false");
         return mapResponse;
+    }
+
+    @GetMapping(path = "/referentiel", produces = "application/json")
+    @ResponseBody
+    public Map<String, Result> getReferentiel() {
+        Map<String, Result> mapResponse = new HashMap<>();
+        // TODO Vérifier si utilisateur est connecté ou non
+        var result = composantRepository.getAllComposant();
+        mapResponse.put("composant", result);
+        return mapResponse;
+    }
+
+    @PostMapping(path = "/createProject", consumes = "application/json")
+    public String createProject() {
+        return "Create project";
+    }
+
+    @PutMapping(path = "/updateProject", consumes = "application/json")
+    public String updateProject() {
+        return "Update project";
+    }
+
+    @GetMapping(path = "/projects", consumes = "application/json")
+    public String getAllProject() {
+        return "Get all project";
+    }
+
+    @GetMapping(path = "/quote/{id}", consumes = "application/json")
+    public String getQuote(@RequestParam Integer id) {
+        return "Get quote";
     }
 }
