@@ -48,7 +48,22 @@
 			<artifactId>jooq-meta</artifactId>
 			<version>3.12.3</version>
 		</dependency>
-	</dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jooq</artifactId>
+			<version>1.3.5.RELEASE</version>
+		</dependency>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.8</version>
+		</dependency>
+    </dependencies>
 
 	<build>
 		<plugins>
@@ -95,14 +110,13 @@
 							<!-- Generation flags: See advanced configuration properties -->
 						</generate>
 						<target>
-							<packageName>org.jooq.model.madera</packageName>
+							<packageName>com.madera.jooq</packageName>
 							<!-- The destination directory of your generated classes -->
-							<directory>/src/main</directory>
+							<directory>/src/main/java</directory>
 						</target>
 					</generator>
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

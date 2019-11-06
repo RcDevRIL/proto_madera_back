@@ -2,13 +2,13 @@ INSERT INTO madera.role(i_role_id, v_libelle_role) VALUES
 (1, 'Développeur'),
 (2, 'Commercial');
 
-INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, v_password, i_role_id) VALUES
+INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, v_password, i_role_id, v_login) VALUES
 -- Mdp : 123456
-(1, 'LADOUCE', 'Fabien', 'ladouce.fabien@gmail.com', '0600000000', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 2),
+(1, 'LADOUCE', 'Fabien', 'ladouce.fabien@gmail.com', '0600000000', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 2, 'ladouce.fabien'),
 -- Mdp : abcdef
-(2, 'HELIOT', 'David', 'boite.sphinx@gmail.com', '0600000000', 'bef57ec7f53a6d40beb640a780a639c83bc29ac8a9816f1fc6c5c6dcd93c4721', 2),
+(2, 'HELIOT', 'David', 'boite.sphinx@gmail.com', '0600000000', 'bef57ec7f53a6d40beb640a780a639c83bc29ac8a9816f1fc6c5c6dcd93c4721', 2, 'boite.sphinx'),
 -- Mdp : abc123
-(3, 'CHEVALLIER', 'Romain', 'romain.chevallier@gmail.com', '0600000000', '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090', 2);
+(3, 'CHEVALLIER', 'Romain', 'romain.chevallier@gmail.com', '0600000000', '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090', 2, 'romain.chevallier');
 
 INSERT INTO madera.composant_referentiel(i_composant_referentiel_id, v_caracteristique, v_unite_usage)VALUES
 -- Montants en bois pour la structure, nommés lisses ou contrefort

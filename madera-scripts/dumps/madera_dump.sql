@@ -293,7 +293,8 @@ CREATE TABLE madera.utilisateur (
     v_tel character varying(45),
     v_login character varying(45),
     v_password character varying(255),
-    i_role_id integer NOT NULL
+    i_role_id integer NOT NULL,
+    v_token varchar(255)
 );
 
 
