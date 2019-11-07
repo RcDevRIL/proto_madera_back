@@ -11,11 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,12 +29,11 @@ public class ApiApplicationTests {
 	@Test
 	public void checkConnection() {
 		User user = new User("ladouce.fabien", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92");
-		ResponseEntity responseEntity =  taskMadera.authentification(user);
-		//Test si le résultat est null
+		ResponseEntity<Object> responseEntity = taskMadera.authentification(user);
+		// Test si le résultat est null
 		assertNotNull(responseEntity);
-		//Test si la méthode renvoi un code 200
+		// Test si la méthode renvoi un code 200
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 	}
-
 
 }

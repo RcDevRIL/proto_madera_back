@@ -1,9 +1,6 @@
 package com.madera.api.controllers;
 
-import com.madera.api.models.User;
-import com.madera.api.repository.ComposantRepository;
-import com.madera.api.repository.UserRepository;
-import org.apache.coyote.Response;
+import org.jooq.Record;
 import org.jooq.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.madera.api.models.User;
+import com.madera.api.repository.ComposantRepository;
+import com.madera.api.repository.UserRepository;
+
 @RestController
 @RequestMapping(path = "/madera")
 public class TaskMadera {
@@ -24,7 +25,9 @@ public class TaskMadera {
 
     @Autowired
     private final UserRepository userRepository;
-    private final ComposantRepository composantRepository;
+
+    @Autowired
+    private final ComposantRepository composantRepository;// faut rajouter autowired non???? 1 par champs
 
     public TaskMadera(UserRepository userRepository, ComposantRepository composantRepository) {
         this.userRepository = userRepository;
@@ -38,12 +41,12 @@ public class TaskMadera {
 
     @PostMapping(path = "/authentification", consumes = "application/json")
     @ResponseBody
-    public ResponseEntity authentification(@RequestBody User user) {
+    public ResponseEntity<Object> authentification(@RequestBody User user) {
         Map<String, String> mapResponse = new HashMap<>();
         log.debug("Try connection for user {}", user.getLogin());
-        if(!user.getLogin().isEmpty() && !user.getPassword().isEmpty()) {
-            Result result = userRepository.checkUser(user);
-            if(!result.isEmpty()) {
+        if (!user.getLogin().isEmpty() && !user.getPassword().isEmpty()) {
+            Result<Record> result = userRepository.checkUser(user);
+            if (!result.isEmpty()) {
                 String token = UUID.randomUUID().toString();
                 userRepository.insertToken(user, token);
                 log.debug("Connection successful");
@@ -58,10 +61,10 @@ public class TaskMadera {
 
     @GetMapping(path = "/referentiel", produces = "application/json")
     @ResponseBody
-    public Map<String, Result> getReferentiel() {
-        Map<String, Result> mapResponse = new HashMap<>();
+    public Map<String, Result<Record>> getReferentiel() {
+        Map<String, Result<Record>> mapResponse = new HashMap<>();
         // TODO Vérifier si utilisateur est connecté ou non
-        var result = composantRepository.getAllComposant();
+        Result<Record> result = composantRepository.getAllComposant();
         mapResponse.put("composant", result);
         return mapResponse;
     }
