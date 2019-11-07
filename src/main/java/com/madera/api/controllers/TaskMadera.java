@@ -3,10 +3,13 @@ package com.madera.api.controllers;
 import com.madera.api.models.User;
 import com.madera.api.repository.ComposantRepository;
 import com.madera.api.repository.UserRepository;
+import org.apache.coyote.Response;
 import org.jooq.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -35,8 +38,7 @@ public class TaskMadera {
 
     @PostMapping(path = "/authentification", consumes = "application/json")
     @ResponseBody
-    //TODO Optimiser la méthode
-    public Map<String, String> authentification(@RequestBody User user) {
+    public ResponseEntity authentification(@RequestBody User user) {
         Map<String, String> mapResponse = new HashMap<>();
         log.debug("Try connection for user {}", user.getLogin());
         if(!user.getLogin().isEmpty() && !user.getPassword().isEmpty()) {
@@ -46,12 +48,12 @@ public class TaskMadera {
                 userRepository.insertToken(user, token);
                 log.debug("Connection successful");
                 mapResponse.put("token", token);
-                return mapResponse;
+                return new ResponseEntity<>(mapResponse, HttpStatus.OK);
             }
         }
         log.debug("Connection failure");
         mapResponse.put("token", "false");
-        return mapResponse;
+        return new ResponseEntity<>("Connection failed", HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping(path = "/referentiel", produces = "application/json")
