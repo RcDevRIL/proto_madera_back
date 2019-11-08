@@ -2,7 +2,6 @@ pipeline {
     agent any
     tools {
         maven 'mvn'
-        jdk 'jdk11'
     }
     stages {
         stage ('Initialize') {
