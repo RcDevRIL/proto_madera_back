@@ -1,5 +1,8 @@
 package com.madera.api.controllers;
 
+import com.madera.api.models.Composant;
+import com.madera.api.models.Gamme;
+import com.madera.api.repository.ReferentielRepository;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.slf4j.Logger;
@@ -10,11 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import com.madera.api.models.User;
-import com.madera.api.repository.ComposantRepository;
 import com.madera.api.repository.UserRepository;
 
 @RestController
@@ -27,20 +30,20 @@ public class TaskMadera {
     private final UserRepository userRepository;
 
     @Autowired
-    private final ComposantRepository composantRepository;// faut rajouter autowired non???? 1 par champs
+    private final ReferentielRepository referentielRepository;
 
-    public TaskMadera(UserRepository userRepository, ComposantRepository composantRepository) {
+    public TaskMadera(UserRepository userRepository, ReferentielRepository referentielRepository) {
         this.userRepository = userRepository;
-        this.composantRepository = composantRepository;
+        this.referentielRepository = referentielRepository;
     }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
+    // TODO Vérifier si utilisateur est connecté ou non
     public String index() {
         return "Coucou toi";
     }
 
     @PostMapping(path = "/authentification", consumes = "application/json")
-    @ResponseBody
     public ResponseEntity<Object> authentification(@RequestBody User user) {
         Map<String, String> mapResponse = new HashMap<>();
         log.debug("Try connection for user {}", user.getLogin());
@@ -61,12 +64,13 @@ public class TaskMadera {
 
     @GetMapping(path = "/referentiel", produces = "application/json")
     @ResponseBody
-    public Map<String, Result<Record>> getReferentiel() {
-        Map<String, Result<Record>> mapResponse = new HashMap<>();
-        // TODO Vérifier si utilisateur est connecté ou non
-        Result<Record> result = composantRepository.getAllComposant();
-        mapResponse.put("composant", result);
-        return mapResponse;
+    public ResponseEntity getReferentiel() {
+        Map<String, Object> mapResponse = new HashMap<>();
+        List<Composant> listComposants= referentielRepository.getAllComposant();
+        List<Gamme> listGammes = referentielRepository.getAllGammes();
+        mapResponse.put("composant", listComposants);
+        mapResponse.put("gammes", listGammes);
+        return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
     @PostMapping(path = "/createProject", consumes = "application/json")
