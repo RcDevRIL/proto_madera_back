@@ -64,7 +64,7 @@ public class TaskMadera {
 
     @GetMapping(path = "/referentiel", produces = "application/json")
     @ResponseBody
-    public ResponseEntity getReferentiel() {
+    public ResponseEntity<Object> getReferentiel() {
         Map<String, Object> mapResponse = new HashMap<>();
         List<Composant> listComposants= referentielRepository.getAllComposant();
         List<Gamme> listGammes = referentielRepository.getAllGammes();
@@ -74,22 +74,25 @@ public class TaskMadera {
     }
 
     @PostMapping(path = "/createProject", consumes = "application/json")
-    public String createProject() {
-        return "Create project";
-    }
+    public ResponseEntity<Object> createProject() {
+        Map<String, Object> mapResponse = new HashMap<>();
+        return new ResponseEntity<>(mapResponse, HttpStatus.OK);}
 
     @PutMapping(path = "/updateProject", consumes = "application/json")
-    public String updateProject() {
-        return "Update project";
+    public ResponseEntity<Object> updateProject() {
+        Map<String, Object> mapResponse = new HashMap<>();
+        return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
     @GetMapping(path = "/projects", consumes = "application/json")
-    public String getAllProject() {
-        return "Get all project";
+    public ResponseEntity<Object> getAllProject() {
+        Map<String, Object> mapResponse = new HashMap<>();
+        return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
     @GetMapping(path = "/quote/{id}", consumes = "application/json")
-    public String getQuote(@RequestParam Integer id) {
-        return "Get quote";
+    public ResponseEntity<Object> getQuote(@RequestParam Integer id) {
+        Map<String, Object> mapResponse = new HashMap<>();
+        return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 }
