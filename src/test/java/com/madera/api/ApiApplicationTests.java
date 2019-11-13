@@ -2,7 +2,6 @@ package com.madera.api;
 
 import com.madera.api.controllers.TaskMadera;
 import com.madera.api.models.User;
-import org.apache.coyote.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +59,7 @@ public class ApiApplicationTests {
 		ResponseEntity<Object> responseEntity = taskMadera.getAllProject();
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
-		//Test si la méthode renvoi un code 200
+		// Test si la méthode renvoi un code 200
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 	}
 

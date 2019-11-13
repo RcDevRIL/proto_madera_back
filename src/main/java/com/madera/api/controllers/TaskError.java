@@ -1,5 +1,7 @@
 package com.madera.api.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,21 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class TaskError implements ErrorController {
 
+    private static final Logger log = LoggerFactory.getLogger(TaskError.class);
+
     @RequestMapping("/error")
     @ResponseBody
     public String handleError(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         Exception exception = (Exception) request.getAttribute("javax.servlet.exception");
-        //TODO Ajouter logger
+        // normalement c'est ça... :/
+        log.error("Error with server", exception);
         return String.format(
-                "<html>" +
-                    "<body>" +
-                        "<h2>Une Erreur sauvage apparaît !</h2>" +
-                        "<div>Status code: <b>%s</b></div>" +
-                        "<div>Exception Message: <b>%s</b></div>" +
-                    "</body>" +
-                "</html>", statusCode, exception==null? "N/A" : exception.getMessage()
-        );
+                "<html>" + "<body>" + "<h2>Une Erreur sauvage apparaît !</h2>" + "<div>Status code: <b>%s</b></div>"
+                        + "<div>Exception Message: <b>%s</b></div>" + "</body>" + "</html>",
+                statusCode, exception == null ? "N/A" : exception.getMessage());
     }
 
     @Override
