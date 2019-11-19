@@ -2,7 +2,7 @@ INSERT INTO madera.role(i_role_id, v_libelle_role) VALUES
 (1, 'Développeur'),
 (2, 'Commercial');
 
-INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, , i_role_id, v_login) VALUES
+INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, i_role_id, v_login) VALUES
 (1, 'LADOUCE', 'Fabien', 'ladouce.fabien@gmail.com', '0600000000', 2, 'ladouce.fabien'),
 (2, 'HELIOT', 'David', 'boite.sphinx@gmail.com', '0600000000', 2, 'boite.sphinx'),
 (3, 'CHEVALLIER', 'Romain', 'romain.chevallier@gmail.com', '0600000000', 2, 'romain.chevallier');
@@ -176,7 +176,7 @@ INSERT INTO madera.module_composant(i_composant_id, i_module_id, i_ordre) VALUES
 (9, 4, 9);
 
 INSERT INTO madera.projet(i_projet_id, i_client_id, v_ref_projet, d_date_projet, i_devis_etat_id, f_prix) VALUES
-(1, 2, 'ref_20191027_2', '27/10/2019', 3, 205365);
+(1, 2, 'ref_20191027_2', '2019-10-27', 3, 205365);
 
 INSERT INTO madera.projet_module(i_projet_module_id, i_projet_id, i_module_id) VALUES
 (1, 1, 1),
