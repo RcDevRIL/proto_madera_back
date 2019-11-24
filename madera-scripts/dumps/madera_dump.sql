@@ -38,7 +38,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE madera.adresse (
-    i_adresse_id integer NOT NULL,
+    i_adresse_id serial,
     v_ville character varying(45),
     v_code_postale character varying(5),
     v_rue character varying(45),
@@ -55,7 +55,7 @@ ALTER TABLE madera.adresse OWNER TO postgres;
 --
 
 CREATE TABLE madera.client (
-    i_client_id integer NOT NULL,
+    i_client_id serial,
     v_nom character varying(45),
     v_prenom character varying(45),
     v_tel character varying(10),
@@ -71,7 +71,7 @@ ALTER TABLE madera.client OWNER TO postgres;
 --
 
 CREATE TABLE madera.client_adresse (
-    i_client_id integer NOT NULL,
+    i_client_id integer not null,
     i_adresse_id integer,
     b_adresse_facturation boolean default false
 );
@@ -86,7 +86,7 @@ ALTER TABLE madera.client_adresse OWNER TO postgres;
 
 --TODO Enlever i_stock_id et gérer les stocks dans la table stock ?
 CREATE TABLE madera.composant (
-    i_composant_id integer NOT NULL,
+    i_composant_id serial,
     i_composant_groupe_id integer,
     v_libelle character varying(45),
     i_composant_referentiel_id integer,
@@ -116,7 +116,7 @@ ALTER TABLE madera.composant_fournisseur OWNER TO postgres;
 --
 
 CREATE TABLE madera.composant_groupe (
-    i_composant_groupe_id integer NOT NULL,
+    i_composant_groupe_id serial,
     v_libelle_groupe character varying(45)
 );
 
@@ -129,7 +129,7 @@ ALTER TABLE madera.composant_groupe OWNER TO postgres;
 --
 
 CREATE TABLE madera.composant_referentiel (
-    i_composant_referentiel_id integer NOT NULL,
+    i_composant_referentiel_id serial,
     v_caracteristique character varying(45),
     v_unite_usage character varying(45)
 );
@@ -143,7 +143,7 @@ ALTER TABLE madera.composant_referentiel OWNER TO postgres;
 --
 
 CREATE TABLE madera.devis_etat (
-    i_devis_etat_id integer NOT NULL,
+    i_devis_etat_id serial,
     v_devis_etat_libelle character varying(150),
     i_pourcentage_somme integer
 );
@@ -157,7 +157,7 @@ ALTER TABLE madera.devis_etat OWNER TO postgres;
 --
 
 CREATE TABLE madera.fournisseur (
-    i_fournisseur_id integer NOT NULL,
+    i_fournisseur_id serial,
     v_raison_soc character varying(45),
     i_adresse_id integer NOT NULL
 );
@@ -171,7 +171,7 @@ ALTER TABLE madera.fournisseur OWNER TO postgres;
 --
 
 CREATE TABLE madera.gammes (
-    i_gammes_id integer NOT NULL,
+    i_gammes_id serial,
     v_libelle_gammes character varying(45)
 );
 
@@ -184,7 +184,7 @@ ALTER TABLE madera.gammes OWNER TO postgres;
 --
 
 CREATE TABLE madera.module (
-    i_module_id integer NOT NULL,
+    i_module_id serial,
     i_gammes_id integer NOT NULL,
     i_module_referentiel_id integer NOT NULL,
     v_nom varchar(50),
@@ -216,7 +216,7 @@ ALTER TABLE madera.module_composant OWNER TO postgres;
 --
 
 CREATE TABLE madera.module_referentiel (
-    i_module_referentiel_id integer NOT NULL,
+    i_module_referentiel_id serial,
     v_caracteristique character varying(45),
     v_unite_usage character varying(45)
 );
@@ -230,7 +230,7 @@ ALTER TABLE madera.module_referentiel OWNER TO postgres;
 --
 
 CREATE TABLE madera.projet (
-    i_projet_id integer NOT NULL,
+    i_projet_id serial,
     i_client_id integer NOT NULL,
     v_ref_projet character varying(45),
     d_date_projet date,
@@ -245,7 +245,7 @@ CREATE TABLE madera.projet (
 --
 
 CREATE TABLE madera.projet_module (
-    i_projet_module_id integer NOT NULL,
+    i_projet_module_id serial,
     i_projet_id integer NOT NULL,
     i_module_id integer NOT NULL
 );
@@ -272,7 +272,7 @@ ALTER TABLE madera.projet_utilisateurs OWNER TO postgres;
 --
 
 CREATE TABLE madera.role (
-    i_role_id integer NOT NULL,
+    i_role_id serial,
     v_libelle_role character varying(45)
 );
 
@@ -285,7 +285,7 @@ ALTER TABLE madera.role OWNER TO postgres;
 --
 
 CREATE TABLE madera.utilisateur (
-    i_utilisateur_id integer NOT NULL,
+    i_utilisateur_id serial,
     v_nom character varying(45),
     v_prenom character varying(45),
     v_date_naissance character varying(45),
