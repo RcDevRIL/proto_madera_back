@@ -39,8 +39,8 @@ public class TaskMadera {
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     // TODO Vérifier si utilisateur est connecté ou non
-    public String index() {
-        return "Coucou toi";
+    public ResponseEntity<Object> index() {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(path = "/authentification", consumes = "application/json")
