@@ -16,6 +16,7 @@ import javax.annotation.processing.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -41,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Gammes extends TableImpl<GammesRecord> {
 
-    private static final long serialVersionUID = 508019497;
+    private static final long serialVersionUID = -1969404522;
 
     /**
      * The reference instance of <code>madera.gammes</code>
@@ -59,7 +60,7 @@ public class Gammes extends TableImpl<GammesRecord> {
     /**
      * The column <code>madera.gammes.i_gammes_id</code>.
      */
-    public final TableField<GammesRecord, Integer> I_GAMMES_ID = createField(DSL.name("i_gammes_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<GammesRecord, Integer> I_GAMMES_ID = createField(DSL.name("i_gammes_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('madera.gammes_i_gammes_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>madera.gammes.v_libelle_gammes</code>.
@@ -107,6 +108,11 @@ public class Gammes extends TableImpl<GammesRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.GAMMES_PKEY);
+    }
+
+    @Override
+    public Identity<GammesRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_GAMMES;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.madera.api.controllers;
 
 import com.madera.api.models.Composant;
 import com.madera.api.models.Gamme;
+import com.madera.api.models.Projet;
 import com.madera.api.repository.ReferentielRepository;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -84,9 +85,12 @@ public class TaskMadera {
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/projects", consumes = "application/json")
+    @GetMapping(path = "/projects", produces = "application/json")
     public ResponseEntity<Object> getAllProject() {
         Map<String, Object> mapResponse = new HashMap<>();
+        List<Projet> listProjets = referentielRepository.getAllProjects();
+        System.out.println(listProjets);
+        mapResponse.put("listProjets", listProjets);
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 

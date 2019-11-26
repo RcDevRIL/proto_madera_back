@@ -16,6 +16,7 @@ import javax.annotation.processing.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -41,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Client extends TableImpl<ClientRecord> {
 
-    private static final long serialVersionUID = 72538633;
+    private static final long serialVersionUID = -147025752;
 
     /**
      * The reference instance of <code>madera.client</code>
@@ -59,7 +60,7 @@ public class Client extends TableImpl<ClientRecord> {
     /**
      * The column <code>madera.client.i_client_id</code>.
      */
-    public final TableField<ClientRecord, Integer> I_CLIENT_ID = createField(DSL.name("i_client_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ClientRecord, Integer> I_CLIENT_ID = createField(DSL.name("i_client_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('madera.client_i_client_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>madera.client.v_nom</code>.
@@ -122,6 +123,11 @@ public class Client extends TableImpl<ClientRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.CLIENT_PKEY);
+    }
+
+    @Override
+    public Identity<ClientRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_CLIENT;
     }
 
     @Override

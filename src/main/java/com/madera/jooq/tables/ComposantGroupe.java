@@ -16,6 +16,7 @@ import javax.annotation.processing.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -41,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ComposantGroupe extends TableImpl<ComposantGroupeRecord> {
 
-    private static final long serialVersionUID = -1697697300;
+    private static final long serialVersionUID = -1277204410;
 
     /**
      * The reference instance of <code>madera.composant_groupe</code>
@@ -59,7 +60,7 @@ public class ComposantGroupe extends TableImpl<ComposantGroupeRecord> {
     /**
      * The column <code>madera.composant_groupe.i_composant_groupe_id</code>.
      */
-    public final TableField<ComposantGroupeRecord, Integer> I_COMPOSANT_GROUPE_ID = createField(DSL.name("i_composant_groupe_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ComposantGroupeRecord, Integer> I_COMPOSANT_GROUPE_ID = createField(DSL.name("i_composant_groupe_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('madera.composant_groupe_i_composant_groupe_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>madera.composant_groupe.v_libelle_groupe</code>.
@@ -107,6 +108,11 @@ public class ComposantGroupe extends TableImpl<ComposantGroupeRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.COMPOSANT_GROUPE_PKEY);
+    }
+
+    @Override
+    public Identity<ComposantGroupeRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_COMPOSANT_GROUPE;
     }
 
     @Override

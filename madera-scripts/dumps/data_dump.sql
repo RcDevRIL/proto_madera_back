@@ -197,8 +197,8 @@ INSERT INTO madera.module_composant(i_composant_id, i_module_id, i_ordre) VALUES
 (8, 4, 8),
 (9, 4, 9);
 
-INSERT INTO madera.projet(i_projet_id, i_client_id, v_ref_projet, d_date_projet, i_devis_etat_id, f_prix) VALUES
-(1, 2, 'ref_20191027_2', '2019-10-27', 3, 205365);
+INSERT INTO madera.projet(i_projet_id, i_client_id, v_nom_projet, v_ref_projet, d_date_projet, i_devis_etat_id, f_prix) VALUES
+(1, 2, 'Projet Test', 'ref_20191027_2', '2019-10-27', 3, 205365);
 
 SELECT setval('madera.projet_i_projet_id_seq'::regclass, 1);
 

@@ -44,6 +44,7 @@ import com.madera.jooq.tables.records.UtilisateurRecord;
 import javax.annotation.processing.Generated;
 
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.Internal;
 
@@ -66,6 +67,20 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
+    public static final Identity<AdresseRecord, Integer> IDENTITY_ADRESSE = Identities0.IDENTITY_ADRESSE;
+    public static final Identity<ClientRecord, Integer> IDENTITY_CLIENT = Identities0.IDENTITY_CLIENT;
+    public static final Identity<ComposantRecord, Integer> IDENTITY_COMPOSANT = Identities0.IDENTITY_COMPOSANT;
+    public static final Identity<ComposantGroupeRecord, Integer> IDENTITY_COMPOSANT_GROUPE = Identities0.IDENTITY_COMPOSANT_GROUPE;
+    public static final Identity<ComposantReferentielRecord, Integer> IDENTITY_COMPOSANT_REFERENTIEL = Identities0.IDENTITY_COMPOSANT_REFERENTIEL;
+    public static final Identity<DevisEtatRecord, Integer> IDENTITY_DEVIS_ETAT = Identities0.IDENTITY_DEVIS_ETAT;
+    public static final Identity<FournisseurRecord, Integer> IDENTITY_FOURNISSEUR = Identities0.IDENTITY_FOURNISSEUR;
+    public static final Identity<GammesRecord, Integer> IDENTITY_GAMMES = Identities0.IDENTITY_GAMMES;
+    public static final Identity<ModuleRecord, Integer> IDENTITY_MODULE = Identities0.IDENTITY_MODULE;
+    public static final Identity<ModuleReferentielRecord, Integer> IDENTITY_MODULE_REFERENTIEL = Identities0.IDENTITY_MODULE_REFERENTIEL;
+    public static final Identity<ProjetRecord, Integer> IDENTITY_PROJET = Identities0.IDENTITY_PROJET;
+    public static final Identity<ProjetModuleRecord, Integer> IDENTITY_PROJET_MODULE = Identities0.IDENTITY_PROJET_MODULE;
+    public static final Identity<RoleRecord, Integer> IDENTITY_ROLE = Identities0.IDENTITY_ROLE;
+    public static final Identity<UtilisateurRecord, Integer> IDENTITY_UTILISATEUR = Identities0.IDENTITY_UTILISATEUR;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
@@ -113,6 +128,23 @@ public class Keys {
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
     // -------------------------------------------------------------------------
+
+    private static class Identities0 {
+        public static Identity<AdresseRecord, Integer> IDENTITY_ADRESSE = Internal.createIdentity(Adresse.ADRESSE, Adresse.ADRESSE.I_ADRESSE_ID);
+        public static Identity<ClientRecord, Integer> IDENTITY_CLIENT = Internal.createIdentity(Client.CLIENT, Client.CLIENT.I_CLIENT_ID);
+        public static Identity<ComposantRecord, Integer> IDENTITY_COMPOSANT = Internal.createIdentity(Composant.COMPOSANT, Composant.COMPOSANT.I_COMPOSANT_ID);
+        public static Identity<ComposantGroupeRecord, Integer> IDENTITY_COMPOSANT_GROUPE = Internal.createIdentity(ComposantGroupe.COMPOSANT_GROUPE, ComposantGroupe.COMPOSANT_GROUPE.I_COMPOSANT_GROUPE_ID);
+        public static Identity<ComposantReferentielRecord, Integer> IDENTITY_COMPOSANT_REFERENTIEL = Internal.createIdentity(ComposantReferentiel.COMPOSANT_REFERENTIEL, ComposantReferentiel.COMPOSANT_REFERENTIEL.I_COMPOSANT_REFERENTIEL_ID);
+        public static Identity<DevisEtatRecord, Integer> IDENTITY_DEVIS_ETAT = Internal.createIdentity(DevisEtat.DEVIS_ETAT, DevisEtat.DEVIS_ETAT.I_DEVIS_ETAT_ID);
+        public static Identity<FournisseurRecord, Integer> IDENTITY_FOURNISSEUR = Internal.createIdentity(Fournisseur.FOURNISSEUR, Fournisseur.FOURNISSEUR.I_FOURNISSEUR_ID);
+        public static Identity<GammesRecord, Integer> IDENTITY_GAMMES = Internal.createIdentity(Gammes.GAMMES, Gammes.GAMMES.I_GAMMES_ID);
+        public static Identity<ModuleRecord, Integer> IDENTITY_MODULE = Internal.createIdentity(Module.MODULE, Module.MODULE.I_MODULE_ID);
+        public static Identity<ModuleReferentielRecord, Integer> IDENTITY_MODULE_REFERENTIEL = Internal.createIdentity(ModuleReferentiel.MODULE_REFERENTIEL, ModuleReferentiel.MODULE_REFERENTIEL.I_MODULE_REFERENTIEL_ID);
+        public static Identity<ProjetRecord, Integer> IDENTITY_PROJET = Internal.createIdentity(Projet.PROJET, Projet.PROJET.I_PROJET_ID);
+        public static Identity<ProjetModuleRecord, Integer> IDENTITY_PROJET_MODULE = Internal.createIdentity(ProjetModule.PROJET_MODULE, ProjetModule.PROJET_MODULE.I_PROJET_MODULE_ID);
+        public static Identity<RoleRecord, Integer> IDENTITY_ROLE = Internal.createIdentity(Role.ROLE, Role.ROLE.I_ROLE_ID);
+        public static Identity<UtilisateurRecord, Integer> IDENTITY_UTILISATEUR = Internal.createIdentity(Utilisateur.UTILISATEUR, Utilisateur.UTILISATEUR.I_UTILISATEUR_ID);
+    }
 
     private static class UniqueKeys0 {
         public static final UniqueKey<AdresseRecord> ADRESSE_PKEY = Internal.createUniqueKey(Adresse.ADRESSE, "adresse_pkey", Adresse.ADRESSE.I_ADRESSE_ID);

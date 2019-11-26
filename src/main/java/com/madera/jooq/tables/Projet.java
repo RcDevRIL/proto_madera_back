@@ -17,10 +17,11 @@ import javax.annotation.processing.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row7;
+import org.jooq.Row8;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -42,7 +43,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Projet extends TableImpl<ProjetRecord> {
 
-    private static final long serialVersionUID = -1554201897;
+    private static final long serialVersionUID = 1951085278;
 
     /**
      * The reference instance of <code>madera.projet</code>
@@ -60,12 +61,17 @@ public class Projet extends TableImpl<ProjetRecord> {
     /**
      * The column <code>madera.projet.i_projet_id</code>.
      */
-    public final TableField<ProjetRecord, Integer> I_PROJET_ID = createField(DSL.name("i_projet_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ProjetRecord, Integer> I_PROJET_ID = createField(DSL.name("i_projet_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('madera.projet_i_projet_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>madera.projet.i_client_id</code>.
      */
     public final TableField<ProjetRecord, Integer> I_CLIENT_ID = createField(DSL.name("i_client_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+
+    /**
+     * The column <code>madera.projet.v_nom_projet</code>.
+     */
+    public final TableField<ProjetRecord, String> V_NOM_PROJET = createField(DSL.name("v_nom_projet"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
 
     /**
      * The column <code>madera.projet.v_ref_projet</code>.
@@ -136,6 +142,11 @@ public class Projet extends TableImpl<ProjetRecord> {
     }
 
     @Override
+    public Identity<ProjetRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_PROJET;
+    }
+
+    @Override
     public UniqueKey<ProjetRecord> getPrimaryKey() {
         return Keys.PROJET_PKEY;
     }
@@ -185,11 +196,11 @@ public class Projet extends TableImpl<ProjetRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row7 type methods
+    // Row8 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row7<Integer, Integer, String, Date, byte[], Integer, Double> fieldsRow() {
-        return (Row7) super.fieldsRow();
+    public Row8<Integer, Integer, String, String, Date, byte[], Integer, Double> fieldsRow() {
+        return (Row8) super.fieldsRow();
     }
 }

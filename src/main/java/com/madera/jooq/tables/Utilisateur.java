@@ -16,6 +16,7 @@ import javax.annotation.processing.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -41,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Utilisateur extends TableImpl<UtilisateurRecord> {
 
-    private static final long serialVersionUID = 702934844;
+    private static final long serialVersionUID = -2054774367;
 
     /**
      * The reference instance of <code>madera.utilisateur</code>
@@ -59,7 +60,7 @@ public class Utilisateur extends TableImpl<UtilisateurRecord> {
     /**
      * The column <code>madera.utilisateur.i_utilisateur_id</code>.
      */
-    public final TableField<UtilisateurRecord, Integer> I_UTILISATEUR_ID = createField(DSL.name("i_utilisateur_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<UtilisateurRecord, Integer> I_UTILISATEUR_ID = createField(DSL.name("i_utilisateur_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('madera.utilisateur_i_utilisateur_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>madera.utilisateur.v_nom</code>.
@@ -147,6 +148,11 @@ public class Utilisateur extends TableImpl<UtilisateurRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.FK_ROLE_IDX, Indexes.UTILISATEUR_PKEY);
+    }
+
+    @Override
+    public Identity<UtilisateurRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_UTILISATEUR;
     }
 
     @Override

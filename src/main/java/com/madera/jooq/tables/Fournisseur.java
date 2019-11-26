@@ -16,6 +16,7 @@ import javax.annotation.processing.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -41,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Fournisseur extends TableImpl<FournisseurRecord> {
 
-    private static final long serialVersionUID = 967551536;
+    private static final long serialVersionUID = 732871771;
 
     /**
      * The reference instance of <code>madera.fournisseur</code>
@@ -59,7 +60,7 @@ public class Fournisseur extends TableImpl<FournisseurRecord> {
     /**
      * The column <code>madera.fournisseur.i_fournisseur_id</code>.
      */
-    public final TableField<FournisseurRecord, Integer> I_FOURNISSEUR_ID = createField(DSL.name("i_fournisseur_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<FournisseurRecord, Integer> I_FOURNISSEUR_ID = createField(DSL.name("i_fournisseur_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('madera.fournisseur_i_fournisseur_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>madera.fournisseur.v_raison_soc</code>.
@@ -112,6 +113,11 @@ public class Fournisseur extends TableImpl<FournisseurRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.FK_ADRESSE_IDX, Indexes.FOURNISSEUR_PKEY);
+    }
+
+    @Override
+    public Identity<FournisseurRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_FOURNISSEUR;
     }
 
     @Override

@@ -232,6 +232,7 @@ ALTER TABLE madera.module_referentiel OWNER TO postgres;
 CREATE TABLE madera.projet (
     i_projet_id serial,
     i_client_id integer NOT NULL,
+    v_nom_projet character varying(50),
     v_ref_projet character varying(45),
     d_date_projet date,
     v_signature_projet bytea,

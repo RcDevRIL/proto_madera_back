@@ -16,6 +16,7 @@ import javax.annotation.processing.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -41,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Module extends TableImpl<ModuleRecord> {
 
-    private static final long serialVersionUID = 1196935031;
+    private static final long serialVersionUID = 838085000;
 
     /**
      * The reference instance of <code>madera.module</code>
@@ -59,7 +60,7 @@ public class Module extends TableImpl<ModuleRecord> {
     /**
      * The column <code>madera.module.i_module_id</code>.
      */
-    public final TableField<ModuleRecord, Integer> I_MODULE_ID = createField(DSL.name("i_module_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ModuleRecord, Integer> I_MODULE_ID = createField(DSL.name("i_module_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('madera.module_i_module_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>madera.module.i_gammes_id</code>.
@@ -132,6 +133,11 @@ public class Module extends TableImpl<ModuleRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.FK_GAMMES_IDX, Indexes.FK_MODULE_REFERENTIEL_IDX, Indexes.MODULE_PKEY);
+    }
+
+    @Override
+    public Identity<ModuleRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_MODULE;
     }
 
     @Override
