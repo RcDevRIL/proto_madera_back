@@ -9,6 +9,10 @@ INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel,
 (2, 'HELIOT', 'David', 'boite.sphinx@gmail.com', '0600000000', 2, 'boite.sphinx'),
 (3, 'CHEVALLIER', 'Romain', 'romain.chevallier@gmail.com', '0600000000', 2, 'romain.chevallier');
 
+
+INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, i_role_id, v_login, v_password) VALUES
+(4, 'TEST', 'USER', 'user@test.com', '0000000000', 2, 'TEST.USER', '8D969EEF6ECAD3C29A3A629280E686CF0C3F5D5A86AFF3CA12020C923ADC6C92');
+
 SELECT setval('madera.utilisateur_i_utilisateur_id_seq'::regclass, 3);
 
 INSERT INTO madera.composant_referentiel(i_composant_referentiel_id, v_caracteristique, v_unite_usage)VALUES
