@@ -28,7 +28,7 @@ public class ReferentielRepository {
         return context.select(GAMMES.fields()).from(GAMMES).fetchInto(Gamme.class);
     }
 
-    public List<Projet> getAllProjects() {
+    public List<Projet> getAllProjects(Integer userId) {
         return context
             .select(PROJET.fields())
             .select(CLIENT.fields())
@@ -38,6 +38,8 @@ public class ReferentielRepository {
             .using(CLIENT.I_CLIENT_ID)
             .join(DEVIS_ETAT)
             .using(DEVIS_ETAT.I_DEVIS_ETAT_ID)
+            .join(PROJET_UTILISATEURS)
+            .on(PROJET_UTILISATEURS.I_PROJET_ID.eq(userId))
             .fetch(HelperBuild::RecordToProject);
     }
 }

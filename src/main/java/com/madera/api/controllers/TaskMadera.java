@@ -85,10 +85,10 @@ public class TaskMadera {
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/projects", produces = "application/json")
-    public ResponseEntity<Object> getAllProject() {
+    @GetMapping(path = "/projects/{id}", produces = "application/json")
+    public ResponseEntity<Object> getAllProject(@PathVariable("id") Integer id) {
         Map<String, Object> mapResponse = new HashMap<>();
-        List<Projet> listProjets = referentielRepository.getAllProjects();
+        List<Projet> listProjets = referentielRepository.getAllProjects(id);
         System.out.println(listProjets);
         mapResponse.put("listProjets", listProjets);
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);

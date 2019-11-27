@@ -56,7 +56,8 @@ public class ApiApplicationTests {
 
 	@Test
 	public void responseAllproject() {
-		ResponseEntity<Object> responseEntity = taskMadera.getAllProject();
+		//TODO Mettre l'id de l'utilisateur de test
+		ResponseEntity<Object> responseEntity = taskMadera.getAllProject(null);
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
