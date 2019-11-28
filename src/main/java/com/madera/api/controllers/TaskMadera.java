@@ -3,7 +3,10 @@ package com.madera.api.controllers;
 import com.madera.api.models.Composant;
 import com.madera.api.models.Gamme;
 import com.madera.api.models.Projet;
+import com.madera.api.models.User;
 import com.madera.api.repository.ReferentielRepository;
+import com.madera.api.repository.UserRepository;
+import com.madera.api.utils.Helper;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.slf4j.Logger;
@@ -18,9 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import com.madera.api.models.User;
-import com.madera.api.repository.UserRepository;
-
 @RestController
 @RequestMapping(path = "/madera")
 public class TaskMadera {
@@ -29,9 +29,9 @@ public class TaskMadera {
 
     @Autowired
     private final UserRepository userRepository;
-
-    @Autowired
     private final ReferentielRepository referentielRepository;
+
+    private final Helper helper = new Helper();
 
     public TaskMadera(UserRepository userRepository, ReferentielRepository referentielRepository) {
         this.userRepository = userRepository;

@@ -1,6 +1,7 @@
 INSERT INTO madera.role(i_role_id, v_libelle_role) VALUES
 (1, 'Développeur'),
-(2, 'Commercial');
+(2, 'Commercial'),
+(3, 'Test');
 
 SELECT setval('madera.role_i_role_id_seq'::regclass, 2);
 
@@ -11,7 +12,7 @@ INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel,
 
 
 INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, i_role_id, v_login, v_password) VALUES
-(4, 'TEST', 'USER', 'user@test.com', '0000000000', 2, 'TEST.USER', '8D969EEF6ECAD3C29A3A629280E686CF0C3F5D5A86AFF3CA12020C923ADC6C92');
+(4, 'TEST', 'USER', 'user@test.com', '0000000000', 3, 'TEST.USER', '8D969EEF6ECAD3C29A3A629280E686CF0C3F5D5A86AFF3CA12020C923ADC6C92');
 
 SELECT setval('madera.utilisateur_i_utilisateur_id_seq'::regclass, 3);
 

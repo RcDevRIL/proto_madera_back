@@ -3,7 +3,7 @@ package com.madera.api.repository;
 import com.madera.api.models.Composant;
 import com.madera.api.models.Gamme;
 import com.madera.api.models.Projet;
-import com.madera.utils.HelperBuild;
+import com.madera.api.utils.Helper;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -40,6 +40,6 @@ public class ReferentielRepository {
             .using(DEVIS_ETAT.I_DEVIS_ETAT_ID)
             .join(PROJET_UTILISATEURS)
             .on(PROJET_UTILISATEURS.I_PROJET_ID.eq(userId))
-            .fetch(HelperBuild::RecordToProject);
+            .fetch(Helper::RecordToProject);
     }
 }

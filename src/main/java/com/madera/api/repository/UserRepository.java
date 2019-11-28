@@ -1,19 +1,24 @@
 package com.madera.api.repository;
 
 import com.madera.api.models.User;
+import com.madera.api.utils.Helper;
+import com.madera.api.security.SecurityUser;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import static com.madera.jooq.Tables.ROLE;
 import static com.madera.jooq.Tables.UTILISATEUR;
+import static org.jooq.impl.DSL.coalesce;
+import static org.jooq.impl.DSL.select;
 
 @Repository
 public class UserRepository {
 
     @Autowired
-    private DSLContext context;
+    DSLContext context;
 
     public Result<Record> checkUser(User user) {
         return context.select().from(UTILISATEUR)
@@ -24,5 +29,17 @@ public class UserRepository {
     public void insertToken(User user, String token) {
         context.update(UTILISATEUR).set(UTILISATEUR.V_TOKEN, token).where(UTILISATEUR.V_LOGIN.eq(UTILISATEUR.V_LOGIN))
                 .execute();
+    }
+
+    public SecurityUser verifyTokenAndRole(DSLContext context, String token) {
+        // Vérifie si le token reçu est le même en base de données
+        return context
+            .select(UTILISATEUR.V_LOGIN, ROLE.V_LIBELLE_ROLE)
+            .from(UTILISATEUR)
+            .join(ROLE)
+            .on(ROLE.I_ROLE_ID.eq(UTILISATEUR.I_ROLE_ID))
+            .where(UTILISATEUR.V_TOKEN.like(token))
+            .and(UTILISATEUR.I_ROLE_ID.notEqual(3))
+            .fetchOne(Helper::RecordToSecurityUser);
     }
 }
