@@ -27,19 +27,15 @@ public class UserRepository {
     }
 
     public void insertToken(User user, String token) {
-        context.update(UTILISATEUR).set(UTILISATEUR.V_TOKEN, token).where(UTILISATEUR.V_LOGIN.eq(UTILISATEUR.V_LOGIN))
+        context.update(UTILISATEUR).set(UTILISATEUR.V_TOKEN, token).where(UTILISATEUR.V_LOGIN.eq(user.getLogin()))
                 .execute();
     }
 
     public SecurityUser verifyTokenAndRole(DSLContext context, String token) {
         // Vérifie si le token reçu est le même en base de données
-        return context
-            .select(UTILISATEUR.V_LOGIN, ROLE.V_LIBELLE_ROLE)
-            .from(UTILISATEUR)
-            .join(ROLE)
-            .on(ROLE.I_ROLE_ID.eq(UTILISATEUR.I_ROLE_ID))
-            .where(UTILISATEUR.V_TOKEN.like(token))
-            .and(UTILISATEUR.I_ROLE_ID.notEqual(3))
-            .fetchOne(Helper::RecordToSecurityUser);
+        return context.select(UTILISATEUR.V_LOGIN, ROLE.V_LIBELLE_ROLE).from(UTILISATEUR).join(ROLE)
+                .on(ROLE.I_ROLE_ID.eq(UTILISATEUR.I_ROLE_ID)).where(UTILISATEUR.V_TOKEN.like(token))
+                // .and(UTILISATEUR.I_ROLE_ID.notEqual(3)) TODO: trier les roles dans AuthentificationFilter
+                .fetchOne(Helper::RecordToSecurityUser);
     }
 }
