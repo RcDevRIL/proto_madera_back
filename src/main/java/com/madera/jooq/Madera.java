@@ -30,6 +30,7 @@ import java.util.List;
 import javax.annotation.processing.Generated;
 
 import org.jooq.Catalog;
+import org.jooq.Sequence;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
@@ -47,7 +48,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Madera extends SchemaImpl {
 
-    private static final long serialVersionUID = -965329520;
+    private static final long serialVersionUID = -1217802379;
 
     /**
      * The reference instance of <code>madera</code>
@@ -155,6 +156,31 @@ public class Madera extends SchemaImpl {
     @Override
     public Catalog getCatalog() {
         return DefaultCatalog.DEFAULT_CATALOG;
+    }
+
+    @Override
+    public final List<Sequence<?>> getSequences() {
+        List result = new ArrayList();
+        result.addAll(getSequences0());
+        return result;
+    }
+
+    private final List<Sequence<?>> getSequences0() {
+        return Arrays.<Sequence<?>>asList(
+            Sequences.ADRESSE_I_ADRESSE_ID_SEQ,
+            Sequences.CLIENT_I_CLIENT_ID_SEQ,
+            Sequences.COMPOSANT_GROUPE_I_COMPOSANT_GROUPE_ID_SEQ,
+            Sequences.COMPOSANT_I_COMPOSANT_ID_SEQ,
+            Sequences.COMPOSANT_REFERENTIEL_I_COMPOSANT_REFERENTIEL_ID_SEQ,
+            Sequences.DEVIS_ETAT_I_DEVIS_ETAT_ID_SEQ,
+            Sequences.FOURNISSEUR_I_FOURNISSEUR_ID_SEQ,
+            Sequences.GAMMES_I_GAMMES_ID_SEQ,
+            Sequences.MODULE_I_MODULE_ID_SEQ,
+            Sequences.MODULE_REFERENTIEL_I_MODULE_REFERENTIEL_ID_SEQ,
+            Sequences.PROJET_I_PROJET_ID_SEQ,
+            Sequences.PROJET_MODULE_I_PROJET_MODULE_ID_SEQ,
+            Sequences.ROLE_I_ROLE_ID_SEQ,
+            Sequences.UTILISATEUR_I_UTILISATEUR_ID_SEQ);
     }
 
     @Override

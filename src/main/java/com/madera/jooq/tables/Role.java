@@ -16,6 +16,7 @@ import javax.annotation.processing.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -41,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Role extends TableImpl<RoleRecord> {
 
-    private static final long serialVersionUID = 671634247;
+    private static final long serialVersionUID = 545549064;
 
     /**
      * The reference instance of <code>madera.role</code>
@@ -59,7 +60,7 @@ public class Role extends TableImpl<RoleRecord> {
     /**
      * The column <code>madera.role.i_role_id</code>.
      */
-    public final TableField<RoleRecord, Integer> I_ROLE_ID = createField(DSL.name("i_role_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RoleRecord, Integer> I_ROLE_ID = createField(DSL.name("i_role_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('madera.role_i_role_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>madera.role.v_libelle_role</code>.
@@ -107,6 +108,11 @@ public class Role extends TableImpl<RoleRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.ROLE_PKEY);
+    }
+
+    @Override
+    public Identity<RoleRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_ROLE;
     }
 
     @Override

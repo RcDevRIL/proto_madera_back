@@ -27,6 +27,8 @@ public class User {
         this.login = login;
     }
 
+    public User(){}
+
     public User(String login, String password) {
         this.login = login;
         this.password = password;

@@ -10,33 +10,46 @@
 	</parent>
 	<groupId>com.madera</groupId>
 	<artifactId>api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.2.0-SNAPSHOT</version>
 	<name>api</name>
-	<description>Api prototype - Madera Application</description>
+	<description>Api prototype - Madera Application v0.2</description>
 
 	<properties>
 		<java.version>11</java.version>
 	</properties>
-
+	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<version>2.2.1.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<version>2.2.1.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<version>2.2.1.RELEASE</version>
 		</dependency>
-
-<!--		<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>-->
+			<artifactId>spring-boot-maven-plugin</artifactId>
+			<version>2.2.1.RELEASE</version>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
+			<version>1.8.0-beta4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.8.0-beta4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jooq</groupId>
@@ -74,51 +87,8 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-
-			<plugin>
-				<groupId>org.jooq</groupId>
-				<artifactId>jooq-codegen-maven</artifactId>
-				<version>3.12.3</version>
-
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-
-				<dependencies>
-					<dependency>
-						<groupId>org.postgresql</groupId>
-						<artifactId>postgresql</artifactId>
-						<version>42.2.8</version>
-					</dependency>
-				</dependencies>
-
 				<configuration>
-					<jdbc>
-						<driver>org.postgresql.Driver</driver>
-						<url>jdbc:postgresql://127.0.0.1:5432/madera</url>
-						<user>postgres</user>
-						<password>madera</password>
-					</jdbc>
-					<generator>
-						<database>
-							<name>org.jooq.meta.postgres.PostgresDatabase</name>
-							<includes>.*</includes>
-							<inputSchema>madera</inputSchema>
-						</database>
-						<generate>
-							<!-- Generation flags: See advanced configuration properties -->
-						</generate>
-						<target>
-							<packageName>com.madera.jooq</packageName>
-							<!-- The destination directory of your generated classes -->
-							<directory>/src/main/java</directory>
-						</target>
-					</generator>
+					<mainClass>com.madera.api.ApiApplication</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

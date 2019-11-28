@@ -20,7 +20,7 @@ public class TaskError implements ErrorController {
         Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
         Exception exception = (Exception) request.getAttribute("javax.servlet.exception");
         // normalement c'est ça... :/
-        log.error("Error with server", exception);
+        log.error("Error with server {}", exception.getMessage());
         return String.format(
                 "<html>" + "<body>" + "<h2>Une Erreur sauvage apparaît !</h2>" + "<div>Status code: <b>%s</b></div>"
                         + "<div>Exception Message: <b>%s</b></div>" + "</body>" + "</html>",

@@ -16,6 +16,7 @@ import javax.annotation.processing.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -41,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Adresse extends TableImpl<AdresseRecord> {
 
-    private static final long serialVersionUID = 630252537;
+    private static final long serialVersionUID = -180960328;
 
     /**
      * The reference instance of <code>madera.adresse</code>
@@ -59,7 +60,7 @@ public class Adresse extends TableImpl<AdresseRecord> {
     /**
      * The column <code>madera.adresse.i_adresse_id</code>.
      */
-    public final TableField<AdresseRecord, Integer> I_ADRESSE_ID = createField(DSL.name("i_adresse_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<AdresseRecord, Integer> I_ADRESSE_ID = createField(DSL.name("i_adresse_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('madera.adresse_i_adresse_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>madera.adresse.v_ville</code>.
@@ -127,6 +128,11 @@ public class Adresse extends TableImpl<AdresseRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.ADRESSE_PKEY);
+    }
+
+    @Override
+    public Identity<AdresseRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_ADRESSE;
     }
 
     @Override

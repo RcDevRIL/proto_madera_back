@@ -28,7 +28,7 @@ public class ApiApplicationTests {
 
 	@Test
 	public void responseAuthentification() {
-		User user = new User("ladouce.fabien", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92");
+		User user = new User("TEST.USER", "8D969EEF6ECAD3C29A3A629280E686CF0C3F5D5A86AFF3CA12020C923ADC6C92");
 		ResponseEntity<Object> responseEntity = taskMadera.authentification(user);
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
@@ -56,7 +56,8 @@ public class ApiApplicationTests {
 
 	@Test
 	public void responseAllproject() {
-		ResponseEntity<Object> responseEntity = taskMadera.getAllProject();
+		// TODO Mettre l'id de l'utilisateur de test
+		ResponseEntity<Object> responseEntity = taskMadera.getAllProject(null);
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200

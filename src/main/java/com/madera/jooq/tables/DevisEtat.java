@@ -16,6 +16,7 @@ import javax.annotation.processing.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -41,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DevisEtat extends TableImpl<DevisEtatRecord> {
 
-    private static final long serialVersionUID = -726001924;
+    private static final long serialVersionUID = -584417720;
 
     /**
      * The reference instance of <code>madera.devis_etat</code>
@@ -59,7 +60,7 @@ public class DevisEtat extends TableImpl<DevisEtatRecord> {
     /**
      * The column <code>madera.devis_etat.i_devis_etat_id</code>.
      */
-    public final TableField<DevisEtatRecord, Integer> I_DEVIS_ETAT_ID = createField(DSL.name("i_devis_etat_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<DevisEtatRecord, Integer> I_DEVIS_ETAT_ID = createField(DSL.name("i_devis_etat_id"), org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('madera.devis_etat_i_devis_etat_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>madera.devis_etat.v_devis_etat_libelle</code>.
@@ -112,6 +113,11 @@ public class DevisEtat extends TableImpl<DevisEtatRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.DEVIS_ETAT_PKEY);
+    }
+
+    @Override
+    public Identity<DevisEtatRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_DEVIS_ETAT;
     }
 
     @Override

@@ -1,14 +1,20 @@
 INSERT INTO madera.role(i_role_id, v_libelle_role) VALUES
 (1, 'Développeur'),
-(2, 'Commercial');
+(2, 'Commercial'),
+(3, 'Test');
 
-INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, v_password, i_role_id, v_login) VALUES
--- Mdp : 123456
-(1, 'LADOUCE', 'Fabien', 'ladouce.fabien@gmail.com', '0600000000', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 2, 'ladouce.fabien'),
--- Mdp : abcdef
-(2, 'HELIOT', 'David', 'boite.sphinx@gmail.com', '0600000000', 'bef57ec7f53a6d40beb640a780a639c83bc29ac8a9816f1fc6c5c6dcd93c4721', 2, 'boite.sphinx'),
--- Mdp : abc123
-(3, 'CHEVALLIER', 'Romain', 'romain.chevallier@gmail.com', '0600000000', '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090', 2, 'romain.chevallier');
+SELECT setval('madera.role_i_role_id_seq'::regclass, 2);
+
+INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, i_role_id, v_login) VALUES
+(1, 'LADOUCE', 'Fabien', 'ladouce.fabien@gmail.com', '0600000000', 2, 'ladouce.fabien'),
+(2, 'HELIOT', 'David', 'boite.sphinx@gmail.com', '0600000000', 2, 'boite.sphinx'),
+(3, 'CHEVALLIER', 'Romain', 'romain.chevallier@gmail.com', '0600000000', 2, 'romain.chevallier');
+
+
+INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, i_role_id, v_login, v_password) VALUES
+(4, 'TEST', 'USER', 'user@test.com', '0000000000', 3, 'TEST.USER', '8D969EEF6ECAD3C29A3A629280E686CF0C3F5D5A86AFF3CA12020C923ADC6C92');
+
+SELECT setval('madera.utilisateur_i_utilisateur_id_seq'::regclass, 3);
 
 INSERT INTO madera.composant_referentiel(i_composant_referentiel_id, v_caracteristique, v_unite_usage)VALUES
 -- Montants en bois pour la structure, nommés lisses ou contrefort
@@ -24,6 +30,8 @@ INSERT INTO madera.composant_referentiel(i_composant_referentiel_id, v_caracteri
 -- Couverture (tuiles ou ardoises)
 (6, 'Longueur et largeur en mm', 'Surface en M2');
 
+SELECT setval('madera.composant_referentiel_i_composant_referentiel_id_seq'::regclass, 6);
+
 INSERT INTO madera.module_referentiel(i_module_referentiel_id, v_caracteristique, v_unite_usage) VALUES
 -- Murs extérieurs
 (1, 'Hauteur-Longueur', 'M Linéaire'),
@@ -38,6 +46,8 @@ INSERT INTO madera.module_referentiel(i_module_referentiel_id, v_caracteristique
 -- Couverture
 (6, 'Hauteur-Longueur', 'M2');
 
+SELECT setval('madera.module_referentiel_i_module_referentiel_id_seq'::regclass, 6);
+
 INSERT INTO madera.adresse(i_adresse_id, v_ville, v_code_postale, v_rue, v_complement, v_numero) VALUES
 (1, 'Dijon', '21000', 'Rue Sully', '', '64E'),
 (2, 'Saint-Apollinaire', '21540', 'rue de la Glacière ', '', '3'),
@@ -51,12 +61,16 @@ INSERT INTO madera.adresse(i_adresse_id, v_ville, v_code_postale, v_rue, v_compl
 (9, 'La Roche sur Yon', '85000', 'Rue Enzo Ferrari', '', ''),
 (10, 'Dax', '40100', 'rue d''Aspremont', '', '30');
 
+SELECT setval('madera.adresse_i_adresse_id_seq'::regclass, 10);
+
 INSERT INTO madera.client(i_client_id, v_nom, v_prenom, v_tel, v_mail) VALUES
 (1, 'DUBOIS', 'Claude', '0600000000', 'dubois.claude@gmail.com'),
 (2, 'YAOURT', 'Clémentine', '0600000000', 'yaourt.clementine@gmail.com'),
 (3, 'CHENE', 'Jean', '0600000000', 'chene.jean@outlook.com'),
 (4, 'COMMUNE', 'Dijon', '0600000000', 'commune.dijon@dijon.fr'),
 (5, 'VENTDANE', 'Julie', '0600000000', 'ventdane.julie@gmail.com');
+
+SELECT setval('madera.client_i_client_id_seq'::regclass, 5);
 
 INSERT INTO madera.client_adresse(i_client_id, i_adresse_id, b_adresse_facturation) VALUES
 (1, 1, true),
@@ -83,6 +97,8 @@ INSERT INTO madera.composant_groupe(i_composant_groupe_id, v_libelle_groupe) VAL
 (14, 'Plancher'),
 (15, 'Toit');
 
+SELECT setval('madera.composant_groupe_i_composant_groupe_id_seq'::regclass, 15);
+
 INSERT INTO madera.devis_etat(i_devis_etat_id, v_devis_etat_libelle, i_pourcentage_somme) VALUES
 (1, 'A la Signature', 3),
 (2, 'Obtention du permis de construire', 10),
@@ -93,9 +109,13 @@ INSERT INTO madera.devis_etat(i_devis_etat_id, v_devis_etat_libelle, i_pourcenta
 (7, 'Achèvement des travaux d''équipement (plomberie, menuiserie, chauffage)', 95),
 (8, 'Remise des clés', 100);
 
+SELECT setval('madera.devis_etat_i_devis_etat_id_seq'::regclass, 8);
+
 INSERT INTO madera.gammes(i_gammes_id, v_libelle_gammes) VALUES
 (1, 'Standard'),
 (2, 'Premium');
+
+SELECT setval('madera.gammes_i_gammes_id_seq'::regclass, 2);
 
 INSERT INTO madera.composant(i_composant_id, i_composant_groupe_id, v_libelle, i_composant_referentiel_id, f_section) VALUES
 (1, 10, 'Crépi minéral', 4 , 3),
@@ -136,11 +156,15 @@ INSERT INTO madera.composant(i_composant_id, i_composant_groupe_id, v_libelle, i
 -- Ouate
 (20, 3, 'Ouate minérale', 3 , 100);
 
+SELECT setval('madera.composant_i_composant_id_seq'::regclass, 20);
+
 INSERT INTO madera.module(i_module_id, i_gammes_id, i_module_referentiel_id, v_nom, v_nature_module, v_angle, b_modele) VALUES
 (1, 1, 1, 'Mur extérieur standard', 'Mur extérieur', 'Angle sortant', true),
 (2, 1, 2, 'Mur intérieur standard', 'Mur intérieur', 'Angle sortant', true),
 (3, 1, 4, 'Mur intermédiaire standard', 'Mur intermédiaire', '', true),
 (4, 1, 6, 'Toit standard', 'Toit', '', true);
+
+SELECT setval('madera.module_i_module_id_seq'::regclass, 4);
 
 INSERT INTO madera.module_composant(i_composant_id, i_module_id, i_ordre) VALUES
 -- Mur extérieur
@@ -178,14 +202,18 @@ INSERT INTO madera.module_composant(i_composant_id, i_module_id, i_ordre) VALUES
 (8, 4, 8),
 (9, 4, 9);
 
-INSERT INTO madera.projet(i_projet_id, i_client_id, v_ref_projet, d_date_projet, i_devis_etat_id, f_prix) VALUES
-(1, 2, 'ref_20191027_2', '27/10/2019', 3, 205365);
+INSERT INTO madera.projet(i_projet_id, i_client_id, v_nom_projet, v_ref_projet, d_date_projet, i_devis_etat_id, f_prix) VALUES
+(1, 2, 'Projet Test', 'ref_20191027_2', '2019-10-27', 3, 205365);
+
+SELECT setval('madera.projet_i_projet_id_seq'::regclass, 1);
 
 INSERT INTO madera.projet_module(i_projet_module_id, i_projet_id, i_module_id) VALUES
 (1, 1, 1),
 (2, 1, 2),
 (3, 1, 3),
 (4, 1, 4);
+
+SELECT setval('madera.projet_module_i_projet_module_id_seq'::regclass, 4);
 
 INSERT INTO madera.projet_utilisateurs(i_utilisateur_id, i_projet_id) VALUES
 (1, 1),
@@ -197,6 +225,8 @@ INSERT INTO madera.fournisseur(i_fournisseur_id, v_raison_soc, i_adresse_id) VAL
 (2, 'Dijon Bois', 7),
 (3, '74 Toiture', 5),
 (4, 'Vendeur de caillou professionnel', 6);
+
+SELECT setval('madera.fournisseur_i_fournisseur_id_seq'::regclass, 4);
 
 INSERT INTO madera.composant_fournisseur(i_composant_id, i_fournisseur_id, v_ref_fournisseur) VALUES
 (1, 4, 'crepi_mineral_VCP'),

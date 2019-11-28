@@ -2,7 +2,11 @@ package com.madera.api.controllers;
 
 import com.madera.api.models.Composant;
 import com.madera.api.models.Gamme;
+import com.madera.api.models.Projet;
+import com.madera.api.models.User;
 import com.madera.api.repository.ReferentielRepository;
+import com.madera.api.repository.UserRepository;
+import com.madera.api.utils.Helper;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.slf4j.Logger;
@@ -17,9 +21,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import com.madera.api.models.User;
-import com.madera.api.repository.UserRepository;
-
 @RestController
 @RequestMapping(path = "/madera")
 public class TaskMadera {
@@ -28,9 +29,9 @@ public class TaskMadera {
 
     @Autowired
     private final UserRepository userRepository;
-
-    @Autowired
     private final ReferentielRepository referentielRepository;
+
+    private final Helper helper = new Helper();
 
     public TaskMadera(UserRepository userRepository, ReferentielRepository referentielRepository) {
         this.userRepository = userRepository;
@@ -39,8 +40,8 @@ public class TaskMadera {
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     // TODO Vérifier si utilisateur est connecté ou non
-    public String index() {
-        return "Coucou toi";
+    public ResponseEntity<Object> index() {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(path = "/authentification", consumes = "application/json")
@@ -84,9 +85,12 @@ public class TaskMadera {
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
-    @GetMapping(path = "/projects", consumes = "application/json")
-    public ResponseEntity<Object> getAllProject() {
+    @GetMapping(path = "/projects/{id}", produces = "application/json")
+    public ResponseEntity<Object> getAllProject(@PathVariable("id") Integer id) {
         Map<String, Object> mapResponse = new HashMap<>();
+        List<Projet> listProjets = referentielRepository.getAllProjects(id);
+        System.out.println(listProjets);
+        mapResponse.put("listProjets", listProjets);
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 

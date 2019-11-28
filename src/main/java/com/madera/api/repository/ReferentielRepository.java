@@ -2,14 +2,15 @@ package com.madera.api.repository;
 
 import com.madera.api.models.Composant;
 import com.madera.api.models.Gamme;
+import com.madera.api.models.Projet;
+import com.madera.api.utils.Helper;
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static com.madera.jooq.Tables.GAMMES;
-import static com.madera.jooq.Tables.COMPOSANT;
+import static com.madera.jooq.Tables.*;
 
 @Repository
 public class ReferentielRepository {
@@ -25,5 +26,20 @@ public class ReferentielRepository {
 
     public List<Gamme> getAllGammes() {
         return context.select(GAMMES.fields()).from(GAMMES).fetchInto(Gamme.class);
+    }
+
+    public List<Projet> getAllProjects(Integer userId) {
+        return context
+            .select(PROJET.fields())
+            .select(CLIENT.fields())
+            .select(DEVIS_ETAT.fields())
+            .from(PROJET)
+            .join(CLIENT)
+            .using(CLIENT.I_CLIENT_ID)
+            .join(DEVIS_ETAT)
+            .using(DEVIS_ETAT.I_DEVIS_ETAT_ID)
+            .join(PROJET_UTILISATEURS)
+            .on(PROJET_UTILISATEURS.I_PROJET_ID.eq(userId))
+            .fetch(Helper::RecordToProject);
     }
 }
