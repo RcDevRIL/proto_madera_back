@@ -8,7 +8,7 @@ import java.beans.ConstructorProperties;
  * DTO DevisEtat
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-SNAPSHOT
+ * @version 0.1-RELEASE
  */
 @JsonSerialize
 public class DevisEtat {

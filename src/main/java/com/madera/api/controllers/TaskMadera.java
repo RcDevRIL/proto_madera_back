@@ -27,7 +27,7 @@ import java.util.UUID;
  * Controlleur principal pour exposer nos différents services.
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-SNAPSHOT
+ * @version 0.1-RELEASE
  */
 @RestController
 @RequestMapping(path = "/madera")

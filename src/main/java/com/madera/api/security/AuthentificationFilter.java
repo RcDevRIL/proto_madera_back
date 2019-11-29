@@ -25,7 +25,7 @@ import java.io.IOException;
  * Classe pour filtrer les requêtes suivant l'état d'authentification
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-SNAPSHOT
+ * @version 0.1-RELEASE
  */
 @Component
 public class AuthentificationFilter extends OncePerRequestFilter {

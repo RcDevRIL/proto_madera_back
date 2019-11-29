@@ -15,7 +15,7 @@ import java.io.Serializable;
  * d'authentification
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-SNAPSHOT
+ * @version 0.1-RELEASE
  */
 @Component
 // Return a custom response error

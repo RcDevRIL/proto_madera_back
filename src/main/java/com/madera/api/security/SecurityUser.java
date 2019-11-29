@@ -12,7 +12,7 @@ import java.util.List;
  * Classe permettant de configurer l'authentification
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-SNAPSHOT
+ * @version 0.1-RELEASE
  */
 // Implementation of UserDetails
 public class SecurityUser implements UserDetails {
