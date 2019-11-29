@@ -12,7 +12,7 @@ INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel,
 
 
 INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, i_role_id, v_login, v_password) VALUES
-(4, 'TEST', 'USER', 'user@test.com', '0000000000', 3, 'TEST.USER', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+(4, 'test', 'user', 'user@test.com', '0000000000', 3, 'testuser', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
 
 SELECT setval('madera.utilisateur_i_utilisateur_id_seq'::regclass, 3);
 

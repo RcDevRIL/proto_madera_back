@@ -8,6 +8,12 @@ import org.springframework.context.annotation.PropertySource;
 
 import javax.sql.DataSource;
 
+/**
+ * Classe permettant de configurer l'accès en base de données
+ * 
+ * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
+ * @version 0.1-SNAPSHOT
+ */
 @Configuration
 @PropertySource("classpath:madera.properties")
 class DatasourceConfig {

@@ -3,6 +3,12 @@ package com.madera.api.models;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+/**
+ * DTO User
+ * 
+ * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
+ * @version 0.1-SNAPSHOT
+ */
 @JsonSerialize
 @JsonDeserialize
 public class User {
@@ -27,10 +33,16 @@ public class User {
         this.login = login;
     }
 
-    public User(){}
+    public User() {
+    }
 
     public User(String login, String password) {
         this.login = login;
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User: " + this.login + ", password: " + this.password;
     }
 }

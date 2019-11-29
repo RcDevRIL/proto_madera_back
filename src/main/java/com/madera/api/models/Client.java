@@ -4,6 +4,12 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.beans.ConstructorProperties;
 
+/**
+ * DTO Client
+ * 
+ * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
+ * @version 0.1-SNAPSHOT
+ */
 @JsonSerialize
 public class Client {
 
@@ -17,11 +23,11 @@ public class Client {
 
     public String mail;
 
-    public Client(){
+    public Client() {
 
     }
 
-    @ConstructorProperties({"i_client_id", "v_nom", "v_prenom", "v_tel", "v_mail"})
+    @ConstructorProperties({ "i_client_id", "v_nom", "v_prenom", "v_tel", "v_mail" })
     public Client(Integer id, String nom, String prenom, String numTel, String mail) {
         this.id = id;
         this.nom = nom;

@@ -6,11 +6,13 @@ import com.madera.api.models.Projet;
 import com.madera.api.models.User;
 import com.madera.api.repository.ReferentielRepository;
 import com.madera.api.repository.UserRepository;
-import com.madera.api.utils.Helper;
+
 import org.jooq.Record;
 import org.jooq.Result;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Controlleur principal pour exposer nos différents services.
+ * 
+ * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
+ * @version 0.1-SNAPSHOT
+ */
 @RestController
 @RequestMapping(path = "/madera")
 public class TaskMadera {
@@ -29,9 +37,9 @@ public class TaskMadera {
 
     @Autowired
     private final UserRepository userRepository;
-    private final ReferentielRepository referentielRepository;
 
-    private final Helper helper = new Helper();
+    @Autowired
+    private final ReferentielRepository referentielRepository;
 
     public TaskMadera(UserRepository userRepository, ReferentielRepository referentielRepository) {
         this.userRepository = userRepository;
@@ -39,26 +47,28 @@ public class TaskMadera {
     }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
-    // TODO Vérifier si utilisateur est connecté ou non
+    // TODO Permettre le ping même si on est pas authentifié
     public ResponseEntity<Object> index() {
+        // TODO Afficher l'IP de la machine qui ping si possible
+        log.info("Received ping from somewhere");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(path = "/authentification", consumes = "application/json")
     public ResponseEntity<Object> authentification(@RequestBody User user) {
         Map<String, String> mapResponse = new HashMap<>();
-        log.debug("Try connection for user {}", user.getLogin());
+        log.info("Try connection for user {}", user.getLogin());
         if (!user.getLogin().isEmpty() && !user.getPassword().isEmpty()) {
             Result<Record> result = userRepository.checkUser(user);
             if (!result.isEmpty()) {
                 String token = UUID.randomUUID().toString();
                 userRepository.insertToken(user, token);
-                log.debug("Connection successful");
+                log.info("Connection successful");
                 mapResponse.put("token", token);
                 return new ResponseEntity<>(mapResponse, HttpStatus.OK);
             }
         }
-        log.debug("Connection failure");
+        log.info("Connection failure");
         mapResponse.put("token", "false");
         return new ResponseEntity<>("Connection failed", HttpStatus.UNAUTHORIZED);
     }
@@ -67,7 +77,7 @@ public class TaskMadera {
     @ResponseBody
     public ResponseEntity<Object> getReferentiel() {
         Map<String, Object> mapResponse = new HashMap<>();
-        List<Composant> listComposants= referentielRepository.getAllComposant();
+        List<Composant> listComposants = referentielRepository.getAllComposant();
         List<Gamme> listGammes = referentielRepository.getAllGammes();
         mapResponse.put("composant", listComposants);
         mapResponse.put("gammes", listGammes);
@@ -77,7 +87,8 @@ public class TaskMadera {
     @PostMapping(path = "/createProject", consumes = "application/json")
     public ResponseEntity<Object> createProject() {
         Map<String, Object> mapResponse = new HashMap<>();
-        return new ResponseEntity<>(mapResponse, HttpStatus.OK);}
+        return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+    }
 
     @PutMapping(path = "/updateProject", consumes = "application/json")
     public ResponseEntity<Object> updateProject() {

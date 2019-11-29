@@ -2,14 +2,19 @@ package com.madera.api;
 
 import com.madera.api.controllers.TaskMadera;
 import com.madera.api.models.User;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -18,6 +23,10 @@ import static org.junit.Assert.assertNotNull;
 @WebAppConfiguration
 @SpringBootTest
 public class ApiApplicationTests {
+	// TODO Tester plus que simplement un code 200, s'il y a des données de tests
+	// c'est pas que pour les afficher ;)
+
+	private static final Logger log = LoggerFactory.getLogger(ApiApplicationTests.class);
 
 	@Autowired
 	private TaskMadera taskMadera;
@@ -28,12 +37,32 @@ public class ApiApplicationTests {
 
 	@Test
 	public void responseAuthentification() {
-		User user = new User("TEST.USER", "8D969EEF6ECAD3C29A3A629280E686CF0C3F5D5A86AFF3CA12020C923ADC6C92");
+		// Test avec infos correctes *******************
+
+		User user = new User("testuser", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92");
+		log.info("Connecting with {}", user.toString());
 		ResponseEntity<Object> responseEntity = taskMadera.authentification(user);
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
-		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+		// Test avec infos incorrectes *******************
+
+		user = new User("test.user", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92");
+		log.info("Connecting with {}", user.toString());
+		responseEntity = taskMadera.authentification(user);
+		// Test si le résultat est null
+		assertNotNull(responseEntity);
+		// Test si la méthode renvoi un code 200
+		assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
+		user = new User("testuser", "8D969EEf6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92");
+		log.info("Connecting with {}", user.toString());
+		responseEntity = taskMadera.authentification(user);
+		// Test si le résultat est null
+		assertNotNull(responseEntity);
+		// Test si la méthode renvoi un code 200
+		assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -42,7 +71,7 @@ public class ApiApplicationTests {
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
-		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -51,7 +80,7 @@ public class ApiApplicationTests {
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
-		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -61,7 +90,7 @@ public class ApiApplicationTests {
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
-		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -70,7 +99,7 @@ public class ApiApplicationTests {
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
-		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -79,7 +108,7 @@ public class ApiApplicationTests {
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
-		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
 }

@@ -5,12 +5,21 @@ import com.madera.api.models.DevisEtat;
 import com.madera.api.models.Projet;
 import com.madera.api.repository.UserRepository;
 import com.madera.api.security.SecurityUser;
+
 import org.jooq.Record;
 
 import static com.madera.jooq.Tables.*;
 import static com.madera.jooq.tables.Client.CLIENT;
 import static com.madera.jooq.tables.DevisEtat.DEVIS_ETAT;
 
+/**
+ * Classe permettant d'exposer des méthodes utiles.
+ * 
+ * Elle est principalement utilisé pour mapper des données actuellement.
+ * 
+ * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
+ * @version 0.1-SNAPSHOT
+ */
 public class Helper {
 
     UserRepository userRepository = new UserRepository();
@@ -46,8 +55,8 @@ public class Helper {
         return devisEtat;
     }
 
-    //TODO méthode public ?
-    //Construct a instance of securityUser
+    // TODO méthode public ?
+    // Construct an instance of securityUser
     public static SecurityUser RecordToSecurityUser(Record record) {
         SecurityUser securityUser = new SecurityUser();
         securityUser.setUsername(record.get(UTILISATEUR.V_LOGIN));

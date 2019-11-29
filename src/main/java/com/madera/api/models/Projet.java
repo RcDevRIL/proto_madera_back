@@ -2,11 +2,15 @@ package com.madera.api.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.hibernate.validator.internal.util.stereotypes.Immutable;
-import org.jooq.Record;
 
 import java.util.Date;
 
+/**
+ * DTO Projet
+ * 
+ * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
+ * @version 0.1-SNAPSHOT
+ */
 @JsonSerialize
 public class Projet {
 

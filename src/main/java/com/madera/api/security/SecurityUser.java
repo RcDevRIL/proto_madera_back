@@ -8,8 +8,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Classe permettant de configurer l'authentification
+ * 
+ * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
+ * @version 0.1-SNAPSHOT
+ */
 // Implementation of UserDetails
 public class SecurityUser implements UserDetails {
+
+    /**
+     * Added after warning from IDE
+     */
+    private static final long serialVersionUID = -6768093170018245310L;
 
     String username;
     String password;
