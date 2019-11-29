@@ -25,7 +25,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         // We don't need CSRF for this example
-        http.csrf().disable()
+        http
+        .csrf().disable()
+        .httpBasic().disable()
+        .formLogin().disable()
         // dont authenticat this particular request
         .authorizeRequests().antMatchers("/madera/authentification").permitAll().
         // all other requests need to be authenticated

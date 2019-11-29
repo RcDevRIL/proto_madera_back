@@ -1,8 +1,8 @@
 package com.madera.api.repository;
 
 import com.madera.api.models.User;
-import com.madera.api.utils.Helper;
 import com.madera.api.security.SecurityUser;
+import com.madera.api.utils.Helper;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -11,8 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import static com.madera.jooq.Tables.ROLE;
 import static com.madera.jooq.Tables.UTILISATEUR;
-import static org.jooq.impl.DSL.coalesce;
-import static org.jooq.impl.DSL.select;
 
 @Repository
 public class UserRepository {
