@@ -4,18 +4,19 @@ pipeline {
         maven 'mvn'
     }
     stages {
-        stage ('Initialize') {
+        stage ('Show environment variable') {
             steps {
                 sh '''
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
+                    echo "JAVA_HOME = ${JAVA_HOME}"
+                    echo "WORKSPACE" = ${WORKSPACE}"
                 '''
             }
         }
-
         stage ('Build') {
             steps {
-                sh 'mvn clean test' 
+                sh 'mvn clean install' 
             }
             post {
                 success {
