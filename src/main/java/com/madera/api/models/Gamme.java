@@ -22,4 +22,23 @@ public class Gamme {
         this.gammeId = gammeId;
         this.libelleGammes = libelleGammes;
     }
+
+    public Gamme() {
+    }
+
+    public int getGammeId() {
+        return gammeId;
+    }
+
+    public void setGammeId(int gammeId) {
+        this.gammeId = gammeId;
+    }
+
+    public String getLibelleGammes() {
+        return libelleGammes;
+    }
+
+    public void setLibelleGammes(String libelleGammes) {
+        this.libelleGammes = libelleGammes;
+    }
 }
