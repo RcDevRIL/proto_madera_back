@@ -13,14 +13,17 @@
 	<groupId>com.madera</groupId>
 	<artifactId>api</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<name>Madera API prototype</name>
 	<description>API prototype - Madera Application v0.1</description>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>11</java.version>
 	</properties>
-	<packaging>jar</packaging>
+    
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
