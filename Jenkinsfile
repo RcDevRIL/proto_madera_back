@@ -2,16 +2,18 @@ pipeline {
     agent any
     tools {
         maven 'mvn'
-        //jdk 'openjdk-11'
     }
     stages {
         stage ('Show environment variable') {
             steps {
                 sh '''
+                    set +x
+                    echo "JAVA_HOME = ${JAVA_HOME}"
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
-                    echo "JAVA_HOME = ${JAVA_HOME}"
                     echo "WORKSPACE = ${WORKSPACE}"
+                    git --version
+                    mvn -version
                 '''
             }
         }
