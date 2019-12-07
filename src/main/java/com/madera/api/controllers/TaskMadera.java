@@ -51,11 +51,11 @@ public class TaskMadera {
 
     @PostMapping(path = "/authentification", consumes = "application/json")
     public ResponseEntity<Object> authentification(@RequestBody User user) {
-        Map<String, String> mapResponse = new HashMap<>();
         log.info("Try connection for user {}", user.getLogin());
         if (!user.getLogin().isEmpty() && !user.getPassword().isEmpty()) {
             Result<Record> result = userRepository.checkUser(user);
             if (!result.isEmpty()) {
+                Map<String, String> mapResponse = new HashMap<>();
                 String token = UUID.randomUUID().toString();
                 userRepository.insertToken(user, token);
                 log.info("Connection successful");
@@ -64,7 +64,6 @@ public class TaskMadera {
             }
         }
         log.info("Connection failure");
-        mapResponse.put("token", "false");
         return new ResponseEntity<>("Connection failed", HttpStatus.UNAUTHORIZED);
     }
 
