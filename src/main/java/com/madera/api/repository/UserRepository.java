@@ -45,4 +45,12 @@ public class UserRepository {
                 // AuthentificationFilter
                 .fetchOne(Helper::RecordToSecurityUser);
     }
+
+    public int deleteToken(String login) {
+        return context
+            .update(UTILISATEUR)
+            .setNull(UTILISATEUR.V_TOKEN)
+            .where(UTILISATEUR.V_LOGIN.eq(login))
+            .execute();
+    }
 }

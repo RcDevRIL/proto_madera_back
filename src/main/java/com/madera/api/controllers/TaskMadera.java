@@ -68,12 +68,22 @@ public class TaskMadera {
         return new ResponseEntity<>("Connection failed", HttpStatus.UNAUTHORIZED);
     }
 
+    @PostMapping(path = "/deconnection", consumes = "application/json")
+    public ResponseEntity<Object> deconnection(@RequestBody String login) {
+        int isDelete = userRepository.deleteToken(login);
+        if(isDelete != 1) {
+            return new ResponseEntity<>("Error with deconnection", HttpStatus.BAD_REQUEST);
+        } else {
+            log.info("User logged out");
+            return new ResponseEntity<>("User deconnected", HttpStatus.OK);
+        }
+    }
+
     @GetMapping(path = "/referentiel", produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> getReferentiel() {
         Map<String, Object> mapResponse = new HashMap<>();
 
-        //TODO A revoir (faut que je regarde un truc au travail)
         List<Composant> listComposants= referentielRepository.getAllComposant();
         List<Gamme> listGammes = referentielRepository.getAllGammes();
         List<Module> listModules = referentielRepository.getAllModules();
