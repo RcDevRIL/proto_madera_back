@@ -98,7 +98,7 @@ public class TaskMadera {
 
     @GetMapping(path= "/synchro/{id}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<Object> getSynchro(@RequestParam Integer utilisateurId) {
+    public ResponseEntity<Object> getSynchro(@PathVariable("id") Integer utilisateurId) {
         Map<String, Object> mapResponse = new HashMap<>();
         System.out.println(utilisateurId);
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
