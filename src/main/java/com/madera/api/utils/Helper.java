@@ -27,6 +27,14 @@ public class Helper {
 
     UserRepository userRepository = new UserRepository();
 
+    public static User RecordToUser(Record record) {
+        User user = new User();
+        user.setUtilisateurId(record.get(UTILISATEUR.I_UTILISATEUR_ID));
+        user.setLogin(record.get(UTILISATEUR.V_LOGIN));
+        user.setToken(record.get(UTILISATEUR.V_TOKEN));
+        return user;
+    }
+
     public static Projet RecordToProject(Record record) {
         Projet projet = new Projet();
         projet.setProjetId(record.get(PROJET.I_PROJET_ID));
@@ -66,6 +74,7 @@ public class Helper {
         return securityUser;
     }
 
+    //TODO A supprimer ?
     public static ComposantReferentiel RecordToComposantReferentiel(Record record) {
         ComposantReferentiel composantReferentiel = new ComposantReferentiel();
         composantReferentiel.setComposantReferentielId(record.get(COMPOSANT_REFERENTIEL.I_COMPOSANT_REFERENTIEL_ID));
@@ -74,6 +83,7 @@ public class Helper {
         return composantReferentiel;
     }
 
+    //TODO A supprimer ?
     public static ComposantGroupe RecordToComposantGroupe(Record record) {
         ComposantGroupe composantGroupe = new ComposantGroupe();
         composantGroupe.setComposantGroupeId(record.get(COMPOSANT_GROUPE.I_COMPOSANT_GROUPE_ID));
@@ -84,10 +94,13 @@ public class Helper {
     public static Composant RecordToComposant(Record record) {
         Composant composant = new Composant();
         composant.setComposantId(record.get(COMPOSANT.I_COMPOSANT_ID));
-        //Création de l'objet composantGroupe
-        composant.setComposantGroupe(RecordToComposantGroupe(record));
+        //ComposantGroupe
+        composant.setComposantGroupeId(record.get(COMPOSANT_GROUPE.I_COMPOSANT_GROUPE_ID));
+        composant.setLibelleGroupe(record.get(COMPOSANT_GROUPE.V_LIBELLE_GROUPE));
         // Création de l'objet composantReferentiel
-        composant.setComposantReferentiel(RecordToComposantReferentiel(record));
+        composant.setComposantReferentielId(record.get(COMPOSANT_REFERENTIEL.I_COMPOSANT_REFERENTIEL_ID));
+        composant.setCaracteristiqueReferentiel(record.get(COMPOSANT_REFERENTIEL.V_CARACTERISTIQUE));
+        composant.setUniteUsage(record.get(COMPOSANT_REFERENTIEL.V_UNITE_USAGE));
         composant.setLibelle(record.get(COMPOSANT.V_LIBELLE));
         //Section peut être null
         composant.setSection(Optional.ofNullable(record.get(COMPOSANT.F_SECTION)));
@@ -98,7 +111,9 @@ public class Helper {
         Module module = new Module();
         module.setModuleId(record.get(MODULE.I_MODULE_ID));
         module.setGammeId(record.get(GAMMES.I_GAMMES_ID));
-        module.setModuleReferentiel(RecordToModuleReferentiel(record));
+        module.setModuleReferentielId(record.get(MODULE_REFERENTIEL.I_MODULE_REFERENTIEL_ID));
+        module.setCaracteristiqueReferentiel(record.get(MODULE_REFERENTIEL.V_CARACTERISTIQUE));
+        module.setUniteUsage(record.get(MODULE_REFERENTIEL.V_UNITE_USAGE));
         module.setNom(record.get(MODULE.V_NOM));
         module.setAngle(record.get(MODULE.V_ANGLE));
         module.setNatureModule(record.get(MODULE.V_NATURE_MODULE));

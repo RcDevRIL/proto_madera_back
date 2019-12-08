@@ -8,7 +8,11 @@ public class Module {
 
     Integer gammeId;
 
-    ModuleReferentiel moduleReferentiel;
+    Integer moduleReferentielId;
+
+    String caracteristiqueReferentiel;
+
+    String uniteUsage;
 
     //TODO rajouter la liste des composants
 
@@ -23,14 +27,40 @@ public class Module {
     public Module() {
     }
 
-    public Module(Integer moduleId, Integer gammeId, ModuleReferentiel moduleReferentiel, String nom, String angle, String natureModule, Boolean modele) {
+    public Module(Integer moduleId, Integer gammeId, Integer moduleReferentielId, String caracteristiqueReferentiel, String uniteUsage, String nom, String angle, String natureModule, Boolean modele) {
         this.moduleId = moduleId;
         this.gammeId = gammeId;
-        this.moduleReferentiel = moduleReferentiel;
+        this.moduleReferentielId = moduleReferentielId;
+        this.caracteristiqueReferentiel = caracteristiqueReferentiel;
+        this.uniteUsage = uniteUsage;
         this.nom = nom;
         this.angle = angle;
         this.natureModule = natureModule;
         this.modele = modele;
+    }
+
+    public Integer getModuleReferentielId() {
+        return moduleReferentielId;
+    }
+
+    public void setModuleReferentielId(Integer moduleReferentielId) {
+        this.moduleReferentielId = moduleReferentielId;
+    }
+
+    public String getCaracteristiqueReferentiel() {
+        return caracteristiqueReferentiel;
+    }
+
+    public void setCaracteristiqueReferentiel(String caracteristiqueReferentiel) {
+        this.caracteristiqueReferentiel = caracteristiqueReferentiel;
+    }
+
+    public String getUniteUsage() {
+        return uniteUsage;
+    }
+
+    public void setUniteUsage(String uniteUsage) {
+        this.uniteUsage = uniteUsage;
     }
 
     public Integer getModuleId() {
@@ -47,14 +77,6 @@ public class Module {
 
     public void setGammeId(Integer gammeId) {
         this.gammeId = gammeId;
-    }
-
-    public ModuleReferentiel getModuleReferentiel() {
-        return moduleReferentiel;
-    }
-
-    public void setModuleReferentiel(ModuleReferentiel moduleReferentiel) {
-        this.moduleReferentiel = moduleReferentiel;
     }
 
     public String getNom() {

@@ -17,10 +17,17 @@ public class Composant {
 
     public int composantId;
 
-    public ComposantGroupe composantGroupe;
+    Integer composantGroupeId;
+
+    String libelleGroupe;
+
     public String libelle;
 
-    public ComposantReferentiel composantReferentiel;
+    public Integer composantReferentielId;
+
+    public String caracteristiqueReferentiel;
+
+    public String uniteUsage;
 
     public Optional<Double> section;
 
@@ -35,12 +42,20 @@ public class Composant {
         this.composantId = composantId;
     }
 
-    public ComposantGroupe getComposantGroupe() {
-        return composantGroupe;
+    public Integer getComposantGroupeId() {
+        return composantGroupeId;
     }
 
-    public void setComposantGroupe(ComposantGroupe composantGroupel) {
-        this.composantGroupe = composantGroupel;
+    public void setComposantGroupeId(Integer composantGroupeId) {
+        this.composantGroupeId = composantGroupeId;
+    }
+
+    public String getLibelleGroupe() {
+        return libelleGroupe;
+    }
+
+    public void setLibelleGroupe(String libelleGroupe) {
+        this.libelleGroupe = libelleGroupe;
     }
 
     public String getLibelle() {
@@ -51,12 +66,28 @@ public class Composant {
         this.libelle = libelle;
     }
 
-    public ComposantReferentiel getComposantReferentiel() {
-        return composantReferentiel;
+    public Integer getComposantReferentielId() {
+        return composantReferentielId;
     }
 
-    public void setComposantReferentiel(ComposantReferentiel composantReferentiel) {
-        this.composantReferentiel = composantReferentiel;
+    public void setComposantReferentielId(Integer composantReferentielId) {
+        this.composantReferentielId = composantReferentielId;
+    }
+
+    public String getCaracteristiqueReferentiel() {
+        return caracteristiqueReferentiel;
+    }
+
+    public void setCaracteristiqueReferentiel(String caracteristiqueReferentiel) {
+        this.caracteristiqueReferentiel = caracteristiqueReferentiel;
+    }
+
+    public String getUniteUsage() {
+        return uniteUsage;
+    }
+
+    public void setUniteUsage(String uniteUsage) {
+        this.uniteUsage = uniteUsage;
     }
 
     public Optional<Double> getSection() {

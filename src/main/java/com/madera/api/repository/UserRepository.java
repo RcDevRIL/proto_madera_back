@@ -1,12 +1,11 @@
 package com.madera.api.repository;
 
 import com.madera.api.models.User;
+import com.madera.api.models.UserAuth;
 import com.madera.api.security.SecurityUser;
 import com.madera.api.utils.Helper;
 
 import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Result;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,13 +25,15 @@ public class UserRepository {
     @Autowired
     DSLContext context;
 
-    public Result<Record> checkUser(User user) {
-        return context.select().from(UTILISATEUR)
+    public User checkUser(UserAuth user) {
+        return context
+                .select(UTILISATEUR.fields())
+                .from(UTILISATEUR)
                 .where(UTILISATEUR.V_LOGIN.eq(user.getLogin()).and(UTILISATEUR.V_PASSWORD.eq(user.getPassword())))
-                .fetch();
+                .fetchOne(Helper::RecordToUser);
     }
 
-    public void insertToken(User user, String token) {
+    public void insertToken(UserAuth user, String token) {
         context.update(UTILISATEUR).set(UTILISATEUR.V_TOKEN, token).where(UTILISATEUR.V_LOGIN.eq(user.getLogin()))
                 .execute();
     }

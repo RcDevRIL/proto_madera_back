@@ -50,17 +50,17 @@ public class TaskMadera {
     }
 
     @PostMapping(path = "/authentification", consumes = "application/json")
-    public ResponseEntity<Object> authentification(@RequestBody User user) {
-        log.info("Try connection for user {}", user.getLogin());
-        if (!user.getLogin().isEmpty() && !user.getPassword().isEmpty()) {
-            Result<Record> result = userRepository.checkUser(user);
-            if (!result.isEmpty()) {
+    public ResponseEntity<Object> authentification(@RequestBody UserAuth userAuth) {
+        log.info("Try connection for user {}", userAuth.getLogin());
+        if (!userAuth.getLogin().isEmpty() && !userAuth.getPassword().isEmpty()) {
+            User user = userRepository.checkUser(userAuth);
+            if (user != null) {
                 Map<String, String> mapResponse = new HashMap<>();
                 String token = UUID.randomUUID().toString();
-                userRepository.insertToken(user, token);
+                userRepository.insertToken(userAuth, token);
+                user.setToken(token);
                 log.info("Connection successful");
-                mapResponse.put("token", token);
-                return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+                return new ResponseEntity<>(user, HttpStatus.OK);
             }
         }
         log.info("Connection failure");
@@ -89,6 +89,7 @@ public class TaskMadera {
         List<ModuleComposant> listModuleComposants = referentielRepository.getAllModuleComposant();
 
         mapResponse.put("composant", listComposants);
+        //TODO ComposantGroupe
         mapResponse.put("gammes", listGammes);
         mapResponse.put("module", listModules);
         mapResponse.put("moduleComposant", listModuleComposants);
@@ -97,8 +98,9 @@ public class TaskMadera {
 
     @GetMapping(path= "/synchro/{id}", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<Object> getSynchro() {
+    public ResponseEntity<Object> getSynchro(@RequestParam Integer utilisateurId) {
         Map<String, Object> mapResponse = new HashMap<>();
+        System.out.println(utilisateurId);
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
