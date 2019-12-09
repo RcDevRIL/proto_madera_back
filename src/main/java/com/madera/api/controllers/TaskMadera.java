@@ -87,9 +87,10 @@ public class TaskMadera {
         List<Gamme> listGammes = referentielRepository.getAllGammes();
         List<Module> listModules = referentielRepository.getAllModules();
         List<ModuleComposant> listModuleComposants = referentielRepository.getAllModuleComposant();
+        List<ComposantGroupe> listComposantGroupe = referentielRepository.getAllComposantGroupe();
 
         mapResponse.put("composant", listComposants);
-        //TODO ComposantGroupe
+        mapResponse.put("composantGroupe", listComposantGroupe);
         mapResponse.put("gammes", listGammes);
         mapResponse.put("module", listModules);
         mapResponse.put("moduleComposant", listModuleComposants);

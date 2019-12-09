@@ -38,6 +38,13 @@ public class ReferentielRepository {
             .fetch(Helper::RecordToComposant);
     }
 
+    public List<ComposantGroupe> getAllComposantGroupe() {
+        return context
+            .select(COMPOSANT_GROUPE.fields())
+            .from(COMPOSANT_GROUPE)
+            .fetch(Helper::RecordToComposantGroupe);
+    }
+
     public List<Gamme> getAllGammes() {
         return context.select(GAMMES.fields()).from(GAMMES).fetch(Helper::RecordToGamme);
     }
