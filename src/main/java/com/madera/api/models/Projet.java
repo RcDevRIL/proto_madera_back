@@ -25,9 +25,28 @@ public class Projet {
 
     public double prix;
 
-    public Client clientProjet;
+    public Integer clientId;
 
-    public DevisEtat devisEtat;
+    public Integer devisEtatId;
+
+    public Projet() {
+    }
+
+    public Integer getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Integer clientId) {
+        this.clientId = clientId;
+    }
+
+    public Integer getDevisEtatId() {
+        return devisEtatId;
+    }
+
+    public void setDevisEtatId(Integer devisEtatId) {
+        this.devisEtatId = devisEtatId;
+    }
 
     public int getProjetId() {
         return projetId;
@@ -35,14 +54,6 @@ public class Projet {
 
     public void setProjetId(int projetId) {
         this.projetId = projetId;
-    }
-
-    public Client getClientProjet() {
-        return clientProjet;
-    }
-
-    public void setClientProjet(Client clientProjet) {
-        this.clientProjet = clientProjet;
     }
 
     public String getNomProjet() {
@@ -67,14 +78,6 @@ public class Projet {
 
     public void setDateProjet(Date dateProjet) {
         this.dateProjet = dateProjet;
-    }
-
-    public DevisEtat getDevisEtat() {
-        return devisEtat;
-    }
-
-    public void setDevisEtat(DevisEtat devisEtat) {
-        this.devisEtat = devisEtat;
     }
 
     public double getPrix() {

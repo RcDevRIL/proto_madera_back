@@ -78,6 +78,13 @@ public class ReferentielRepository {
             .using(DEVIS_ETAT.I_DEVIS_ETAT_ID)
             .join(PROJET_UTILISATEURS)
             .on(PROJET_UTILISATEURS.I_PROJET_ID.eq(userId))
-            .fetch(Helper::RecordToProject);
+            .fetch(Helper::RecordToProjet);
+    }
+
+    public List<DevisEtat> getAllDevisEtat() {
+        return context
+            .select(DEVIS_ETAT.fields())
+            .from(DEVIS_ETAT)
+            .fetch(Helper::RecordToDevisEtat);
     }
 }

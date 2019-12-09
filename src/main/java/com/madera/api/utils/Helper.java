@@ -4,11 +4,8 @@ import com.madera.api.models.Module;
 import com.madera.api.models.*;
 import com.madera.api.repository.UserRepository;
 import com.madera.api.security.SecurityUser;
-
 import org.jooq.Record;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static com.madera.jooq.Tables.*;
@@ -35,17 +32,16 @@ public class Helper {
         return user;
     }
 
-    public static Projet RecordToProject(Record record) {
+    public static Projet RecordToProjet(Record record) {
         Projet projet = new Projet();
         projet.setProjetId(record.get(PROJET.I_PROJET_ID));
-        projet.setDateProjet(record.get(PROJET.D_DATE_PROJET));
         projet.setNomProjet(record.get(PROJET.V_NOM_PROJET));
         projet.setRefProjet(record.get(PROJET.V_REF_PROJET));
+        projet.setDateProjet(record.get(PROJET.D_DATE_PROJET));
         projet.setPrix(record.get(PROJET.F_PRIX));
-        projet.setClientProjet(RecordToClient(record));
-        projet.setDevisEtat(RecordToDevisEtat(record));
+        projet.setClientId(record.get(PROJET.I_CLIENT_ID));
+        projet.setDevisEtatId(record.get(PROJET.I_DEVIS_ETAT_ID));
         return projet;
-
     }
 
     public static Client RecordToClient(Record record) {
@@ -83,7 +79,6 @@ public class Helper {
         return composantReferentiel;
     }
 
-    //TODO A supprimer ?
     public static ComposantGroupe RecordToComposantGroupe(Record record) {
         ComposantGroupe composantGroupe = new ComposantGroupe();
         composantGroupe.setComposantGroupeId(record.get(COMPOSANT_GROUPE.I_COMPOSANT_GROUPE_ID));
@@ -144,13 +139,30 @@ public class Helper {
         return moduleComposant;
     }
 
-    public static List<ModuleComposant> lRecordToModuleComposant(Record record) {
-        List<ModuleComposant> listComposants = new ArrayList();
-        ModuleComposant moduleComposant = new ModuleComposant();
-        moduleComposant.setModuleId(record.get(MODULE_COMPOSANT.I_MODULE_ID));
-        moduleComposant.setComposantId(record.get(MODULE_COMPOSANT.I_COMPOSANT_ID));
-        moduleComposant.setOrdre(record.get(MODULE_COMPOSANT.I_ORDRE));
-        listComposants.add(moduleComposant);
-        return listComposants;
+    public static ProjetModule RecordToProjetModule(Record record) {
+        ProjetModule projetModule = new ProjetModule();
+        projetModule.setProjetModuleId(record.get(PROJET_MODULE.I_PROJET_MODULE_ID));
+        projetModule.setProjetId(record.get(PROJET_MODULE.I_PROJET_ID));
+        projetModule.setModuleId(record.get(PROJET_MODULE.I_MODULE_ID));
+        return projetModule;
+    }
+
+    public static ClientAdresse RecordToClientAdresse(Record record) {
+        ClientAdresse clientAdresse = new ClientAdresse();
+        clientAdresse.setClientId(record.get(CLIENT_ADRESSE.I_CLIENT_ID));
+        clientAdresse.setAdresseId(record.get(CLIENT_ADRESSE.I_ADRESSE_ID));
+        clientAdresse.setAdresseFacturation(record.get(CLIENT_ADRESSE.B_ADRESSE_FACTURATION));
+        return clientAdresse;
+    }
+
+    public static Adresse RecordToAdresse(Record record) {
+        Adresse adresse = new Adresse();
+        adresse.setAdresseId(record.get(ADRESSE.I_ADRESSE_ID));
+        adresse.setVille(record.get(ADRESSE.V_VILLE));
+        adresse.setCodePostale(record.get(ADRESSE.V_CODE_POSTALE));
+        adresse.setRue(record.get(ADRESSE.V_COMPLEMENT));
+        adresse.setComplement(record.get(ADRESSE.V_COMPLEMENT));
+        adresse.setNumero(record.get(ADRESSE.V_NUMERO));
+        return adresse;
     }
 }

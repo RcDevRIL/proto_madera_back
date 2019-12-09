@@ -2,6 +2,7 @@ package com.madera.api.controllers;
 
 import com.madera.api.models.*;
 import com.madera.api.models.Module;
+import com.madera.api.repository.ProjetRepository;
 import com.madera.api.repository.ReferentielRepository;
 import com.madera.api.repository.UserRepository;
 import com.madera.api.utils.Helper;
@@ -34,12 +35,14 @@ public class TaskMadera {
     @Autowired
     private final UserRepository userRepository;
     private final ReferentielRepository referentielRepository;
+    private final ProjetRepository projetRepository;
 
     private final Helper helper = new Helper();
 
-    public TaskMadera(UserRepository userRepository, ReferentielRepository referentielRepository) {
+    public TaskMadera(UserRepository userRepository, ReferentielRepository referentielRepository, ProjetRepository projetRepository) {
         this.userRepository = userRepository;
         this.referentielRepository = referentielRepository;
+        this.projetRepository = projetRepository;
     }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
@@ -88,12 +91,15 @@ public class TaskMadera {
         List<Module> listModules = referentielRepository.getAllModules();
         List<ModuleComposant> listModuleComposants = referentielRepository.getAllModuleComposant();
         List<ComposantGroupe> listComposantGroupe = referentielRepository.getAllComposantGroupe();
+        List<DevisEtat> listDevisEtat = referentielRepository.getAllDevisEtat();
 
         mapResponse.put("composant", listComposants);
         mapResponse.put("composantGroupe", listComposantGroupe);
         mapResponse.put("gammes", listGammes);
         mapResponse.put("module", listModules);
         mapResponse.put("moduleComposant", listModuleComposants);
+        mapResponse.put("devisEtat", listDevisEtat);
+
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
@@ -101,7 +107,18 @@ public class TaskMadera {
     @ResponseBody
     public ResponseEntity<Object> getSynchro(@PathVariable("id") Integer utilisateurId) {
         Map<String, Object> mapResponse = new HashMap<>();
-        System.out.println(utilisateurId);
+
+        List<Projet> listProjet = projetRepository.getAllProjectsByUserId(utilisateurId);
+        List<ProjetModule> listProjetModule = projetRepository.getAllProjectModuleByUserId(utilisateurId);
+        List<Client> listClient = projetRepository.getAllClient();
+        List<ClientAdresse> listClientAdresse = projetRepository.getAllClientAdresse();
+        List<Adresse> listAdresse = projetRepository.getAllAdresse();
+
+        mapResponse.put("projet", listProjet);
+        mapResponse.put("projetModule", listProjetModule);
+        mapResponse.put("client", listClient);
+        mapResponse.put("clientAdresse", listClientAdresse);
+        mapResponse.put("adresse", listAdresse);
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
@@ -120,7 +137,7 @@ public class TaskMadera {
     @GetMapping(path = "/projects/{id}", produces = "application/json")
     public ResponseEntity<Object> getAllProject(@PathVariable("id") Integer id) {
         Map<String, Object> mapResponse = new HashMap<>();
-        List<Projet> listProjets = referentielRepository.getAllProjects(id);
+        List<Projet> listProjets = projetRepository.getAllProjectsByUserId(id);
         System.out.println(listProjets);
         mapResponse.put("listProjets", listProjets);
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
