@@ -1,5 +1,11 @@
 package com.madera.api.models;
 
+/**
+ * DTO Adresse
+ *
+ * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
+ * @version 0.2-PRE-RELEASE
+ */
 public class Adresse {
 
     Integer adresseId;

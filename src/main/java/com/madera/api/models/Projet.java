@@ -9,7 +9,7 @@ import java.sql.Date;
  * DTO Projet
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-RELEASE
+ * @version 0.2-PRE-RELEASE
  */
 @JsonSerialize
 public class Projet {

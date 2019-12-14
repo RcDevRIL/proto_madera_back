@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * Controlleur pour gérer les erreurs.
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-RELEASE
+ * @version 0.2-PRE-RELEASE
  */
 @Controller
 public class TaskError implements ErrorController {

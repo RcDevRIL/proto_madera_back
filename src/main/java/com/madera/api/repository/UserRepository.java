@@ -14,10 +14,10 @@ import static com.madera.jooq.Tables.ROLE;
 import static com.madera.jooq.Tables.UTILISATEUR;
 
 /**
- * Repository Users
- * 
+ * Repository User
+ *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-RELEASE
+ * @version 0.2-PRE-RELEASE
  */
 @Repository
 public class UserRepository {
@@ -26,9 +26,7 @@ public class UserRepository {
     DSLContext context;
 
     public User checkUser(UserAuth user) {
-        return context
-                .select(UTILISATEUR.fields())
-                .from(UTILISATEUR)
+        return context.select(UTILISATEUR.fields()).from(UTILISATEUR)
                 .where(UTILISATEUR.V_LOGIN.eq(user.getLogin()).and(UTILISATEUR.V_PASSWORD.eq(user.getPassword())))
                 .fetchOne(Helper::RecordToUser);
     }
@@ -48,10 +46,6 @@ public class UserRepository {
     }
 
     public int deleteToken(String login) {
-        return context
-            .update(UTILISATEUR)
-            .setNull(UTILISATEUR.V_TOKEN)
-            .where(UTILISATEUR.V_LOGIN.eq(login))
-            .execute();
+        return context.update(UTILISATEUR).setNull(UTILISATEUR.V_TOKEN).where(UTILISATEUR.V_LOGIN.eq(login)).execute();
     }
 }

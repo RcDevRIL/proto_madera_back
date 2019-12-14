@@ -24,7 +24,7 @@ import java.util.UUID;
  * Controlleur principal pour exposer nos différents services.
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-RELEASE
+ * @version 0.2-PRE-RELEASE
  */
 @RestController
 @RequestMapping(path = "/madera")
@@ -39,7 +39,8 @@ public class TaskMadera {
 
     private final Helper helper = new Helper();
 
-    public TaskMadera(UserRepository userRepository, ReferentielRepository referentielRepository, ProjetRepository projetRepository) {
+    public TaskMadera(UserRepository userRepository, ReferentielRepository referentielRepository,
+            ProjetRepository projetRepository) {
         this.userRepository = userRepository;
         this.referentielRepository = referentielRepository;
         this.projetRepository = projetRepository;
@@ -73,7 +74,7 @@ public class TaskMadera {
     @PostMapping(path = "/deconnection", consumes = "application/json")
     public ResponseEntity<Object> deconnection(@RequestBody String login) {
         int isDelete = userRepository.deleteToken(login);
-        if(isDelete != 1) {
+        if (isDelete != 1) {
             return new ResponseEntity<>("Error with deconnection", HttpStatus.BAD_REQUEST);
         } else {
             log.info("User logged out");
@@ -86,7 +87,7 @@ public class TaskMadera {
     public ResponseEntity<Object> getReferentiel() {
         Map<String, Object> mapResponse = new HashMap<>();
 
-        List<Composant> listComposants= referentielRepository.getAllComposant();
+        List<Composant> listComposants = referentielRepository.getAllComposant();
         List<Gamme> listGammes = referentielRepository.getAllGammes();
         List<Module> listModules = referentielRepository.getAllModules();
         List<ModuleComposant> listModuleComposants = referentielRepository.getAllModuleComposant();
@@ -103,7 +104,7 @@ public class TaskMadera {
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
-    @GetMapping(path= "/synchro/{id}", produces = "application/json")
+    @GetMapping(path = "/synchro/{id}", produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> getSynchro(@PathVariable("id") Integer utilisateurId) {
         Map<String, Object> mapResponse = new HashMap<>();
@@ -123,10 +124,11 @@ public class TaskMadera {
     }
 
     @PostMapping(path = "/createProject", consumes = "application/json")
-    public ResponseEntity<Object> createProject(@RequestBody Projet projet, @RequestBody List<ProjetModule> listProjetModule, @RequestBody Integer utilisateurId) {
+    public ResponseEntity<Object> createProject(@RequestBody Projet projet,
+            @RequestBody List<ProjetModule> listProjetModule, @RequestBody Integer utilisateurId) {
         Map<String, Object> mapResponse = new HashMap<>();
         Integer projetId = projetRepository.createProjet(projet, listProjetModule, utilisateurId);
-        if(projetId != null) {
+        if (projetId != null) {
             mapResponse.put("projetId", projetId);
             return new ResponseEntity<>(mapResponse, HttpStatus.OK);
         } else {

@@ -1,6 +1,11 @@
 package com.madera.api.models;
 
-
+/**
+ * DTO ComposantReferentiel
+ *
+ * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
+ * @version 0.2-PRE-RELEASE
+ */
 public class ComposantReferentiel {
 
     public Integer composantReferentielId;

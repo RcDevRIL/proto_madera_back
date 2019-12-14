@@ -2,6 +2,12 @@ package com.madera.api.models;
 
 import java.util.List;
 
+/**
+ * DTO Module
+ *
+ * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
+ * @version 0.2-PRE-RELEASE
+ */
 public class Module {
 
     Integer moduleId;
@@ -14,7 +20,7 @@ public class Module {
 
     String uniteUsage;
 
-    //TODO rajouter la liste des composants
+    // TODO rajouter la liste des composants
 
     String nom;
 
@@ -27,7 +33,8 @@ public class Module {
     public Module() {
     }
 
-    public Module(Integer moduleId, Integer gammeId, Integer moduleReferentielId, String caracteristiqueReferentiel, String uniteUsage, String nom, String angle, String natureModule, Boolean modele) {
+    public Module(Integer moduleId, Integer gammeId, Integer moduleReferentielId, String caracteristiqueReferentiel,
+            String uniteUsage, String nom, String angle, String natureModule, Boolean modele) {
         this.moduleId = moduleId;
         this.gammeId = gammeId;
         this.moduleReferentielId = moduleReferentielId;

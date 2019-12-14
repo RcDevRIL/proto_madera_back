@@ -18,7 +18,7 @@ import static com.madera.jooq.tables.DevisEtat.DEVIS_ETAT;
  * Elle est principalement utilisé pour mapper des données actuellement.
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-RELEASE
+ * @version 0.2-PRE-RELEASE
  */
 public class Helper {
 
@@ -62,7 +62,7 @@ public class Helper {
         return devisEtat;
     }
 
-    //Construct a instance of securityUser
+    // Construct a instance of securityUser
     public static SecurityUser RecordToSecurityUser(Record record) {
         SecurityUser securityUser = new SecurityUser();
         securityUser.setUsername(record.get(UTILISATEUR.V_LOGIN));
@@ -70,7 +70,7 @@ public class Helper {
         return securityUser;
     }
 
-    //TODO A supprimer ?
+    // TODO A supprimer ?
     public static ComposantReferentiel RecordToComposantReferentiel(Record record) {
         ComposantReferentiel composantReferentiel = new ComposantReferentiel();
         composantReferentiel.setComposantReferentielId(record.get(COMPOSANT_REFERENTIEL.I_COMPOSANT_REFERENTIEL_ID));
@@ -89,7 +89,7 @@ public class Helper {
     public static Composant RecordToComposant(Record record) {
         Composant composant = new Composant();
         composant.setComposantId(record.get(COMPOSANT.I_COMPOSANT_ID));
-        //ComposantGroupe
+        // ComposantGroupe
         composant.setComposantGroupeId(record.get(COMPOSANT_GROUPE.I_COMPOSANT_GROUPE_ID));
         composant.setLibelleGroupe(record.get(COMPOSANT_GROUPE.V_LIBELLE_GROUPE));
         // Création de l'objet composantReferentiel
@@ -97,7 +97,7 @@ public class Helper {
         composant.setCaracteristiqueReferentiel(record.get(COMPOSANT_REFERENTIEL.V_CARACTERISTIQUE));
         composant.setUniteUsage(record.get(COMPOSANT_REFERENTIEL.V_UNITE_USAGE));
         composant.setLibelle(record.get(COMPOSANT.V_LIBELLE));
-        //Section peut être null
+        // Section peut être null
         composant.setSection(Optional.ofNullable(record.get(COMPOSANT.F_SECTION)));
         return composant;
     }
