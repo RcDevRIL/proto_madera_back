@@ -1,39 +1,100 @@
 package com.madera.api.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.springframework.lang.Nullable;
 
 import java.beans.ConstructorProperties;
+import java.util.Optional;
 
 /**
  * DTO Composant
- * 
+ *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-SNAPSHOT
+ * @version 0.1-RELEASE
  */
 @JsonSerialize
 public class Composant {
 
-    // TODO A voir si on garde les champs tels que composantGroupeId, ou si l'on
-    // renvoi également le libelle du composantGroupe
-    // TODO C'est un exemple
     public int composantId;
 
-    public Integer composantGroupeId;
+    Integer composantGroupeId;
+
+    String libelleGroupe;
 
     public String libelle;
 
     public Integer composantReferentielId;
 
-    public double section;
+    public String caracteristiqueReferentiel;
 
-    @ConstructorProperties({ "i_composant_id", "i_composant_groupe_id", "v_libelle", "i_composant_referentielId",
-            "f_section" })
-    public Composant(int composantId, Integer composantGroupeId, String libelle, Integer composantReferentielId,
-            double section) {
+    public String uniteUsage;
+
+    public Optional<Double> section;
+
+    public Composant() {
+    }
+
+    public int getComposantId() {
+        return composantId;
+    }
+
+    public void setComposantId(int composantId) {
         this.composantId = composantId;
+    }
+
+    public Integer getComposantGroupeId() {
+        return composantGroupeId;
+    }
+
+    public void setComposantGroupeId(Integer composantGroupeId) {
         this.composantGroupeId = composantGroupeId;
+    }
+
+    public String getLibelleGroupe() {
+        return libelleGroupe;
+    }
+
+    public void setLibelleGroupe(String libelleGroupe) {
+        this.libelleGroupe = libelleGroupe;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
         this.libelle = libelle;
+    }
+
+    public Integer getComposantReferentielId() {
+        return composantReferentielId;
+    }
+
+    public void setComposantReferentielId(Integer composantReferentielId) {
         this.composantReferentielId = composantReferentielId;
+    }
+
+    public String getCaracteristiqueReferentiel() {
+        return caracteristiqueReferentiel;
+    }
+
+    public void setCaracteristiqueReferentiel(String caracteristiqueReferentiel) {
+        this.caracteristiqueReferentiel = caracteristiqueReferentiel;
+    }
+
+    public String getUniteUsage() {
+        return uniteUsage;
+    }
+
+    public void setUniteUsage(String uniteUsage) {
+        this.uniteUsage = uniteUsage;
+    }
+
+    public Optional<Double> getSection() {
+        return section;
+    }
+
+    public void setSection(Optional<Double> section) {
         this.section = section;
     }
 }

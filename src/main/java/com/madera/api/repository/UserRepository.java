@@ -1,12 +1,11 @@
 package com.madera.api.repository;
 
 import com.madera.api.models.User;
+import com.madera.api.models.UserAuth;
 import com.madera.api.security.SecurityUser;
 import com.madera.api.utils.Helper;
 
 import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Result;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,7 +17,7 @@ import static com.madera.jooq.Tables.UTILISATEUR;
  * Repository Users
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-SNAPSHOT
+ * @version 0.1-RELEASE
  */
 @Repository
 public class UserRepository {
@@ -26,13 +25,15 @@ public class UserRepository {
     @Autowired
     DSLContext context;
 
-    public Result<Record> checkUser(User user) {
-        return context.select().from(UTILISATEUR)
+    public User checkUser(UserAuth user) {
+        return context
+                .select(UTILISATEUR.fields())
+                .from(UTILISATEUR)
                 .where(UTILISATEUR.V_LOGIN.eq(user.getLogin()).and(UTILISATEUR.V_PASSWORD.eq(user.getPassword())))
-                .fetch();
+                .fetchOne(Helper::RecordToUser);
     }
 
-    public void insertToken(User user, String token) {
+    public void insertToken(UserAuth user, String token) {
         context.update(UTILISATEUR).set(UTILISATEUR.V_TOKEN, token).where(UTILISATEUR.V_LOGIN.eq(user.getLogin()))
                 .execute();
     }
@@ -44,5 +45,13 @@ public class UserRepository {
                 // .and(UTILISATEUR.I_ROLE_ID.notEqual(3)) TODO: trier les roles dans
                 // AuthentificationFilter
                 .fetchOne(Helper::RecordToSecurityUser);
+    }
+
+    public int deleteToken(String login) {
+        return context
+            .update(UTILISATEUR)
+            .setNull(UTILISATEUR.V_TOKEN)
+            .where(UTILISATEUR.V_LOGIN.eq(login))
+            .execute();
     }
 }
