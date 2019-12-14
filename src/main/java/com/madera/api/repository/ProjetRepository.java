@@ -2,7 +2,11 @@ package com.madera.api.repository;
 
 import com.madera.api.models.*;
 import com.madera.api.utils.Helper;
+import com.madera.jooq.tables.records.ProjetRecord;
+import com.madera.jooq.tables.records.UtilisateurRecord;
 import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -53,5 +57,34 @@ public class ProjetRepository {
             .select(ADRESSE.fields())
             .from(ADRESSE)
             .fetch(Helper::RecordToAdresse);
+    }
+
+    public Integer createProjet(Projet projet, List<ProjetModule> listProjetModule, Integer utilisateurId) {
+        return context.transactionResult(configuration-> {
+            Record record =
+                DSL.using(configuration).insertInto(
+                    PROJET)
+                    .set(PROJET.V_NOM_PROJET,projet.nomProjet)
+                    .set(PROJET.V_REF_PROJET, projet.refProjet)
+                    .set(PROJET.D_DATE_PROJET, projet.dateProjet)
+                    .set(PROJET.F_PRIX, projet.prix)
+                    .set(PROJET.I_CLIENT_ID, projet.clientId)
+                    .set(PROJET.I_DEVIS_ETAT_ID, projet.devisEtatId)
+                .returning(PROJET.I_PROJET_ID)
+                .fetchOne();
+
+            listProjetModule.forEach((projetModule -> {
+                DSL.using(configuration).insertInto(PROJET_MODULE)
+                        .set(PROJET_MODULE.I_MODULE_ID, projetModule.getModuleId())
+                        .set(PROJET_MODULE.I_PROJET_ID, record.get(PROJET.I_PROJET_ID))
+                        .execute();
+            }));
+
+            DSL.using(configuration).insertInto(PROJET_UTILISATEURS)
+                    .set(PROJET_UTILISATEURS.I_PROJET_ID, record.get(PROJET.I_PROJET_ID))
+                    .set(PROJET_UTILISATEURS.I_UTILISATEUR_ID, utilisateurId)
+                    .execute();
+            return record.get(PROJET.I_PROJET_ID);
+        });
     }
 }

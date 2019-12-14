@@ -3,7 +3,7 @@ package com.madera.api.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * DTO Projet
@@ -14,13 +14,13 @@ import java.util.Date;
 @JsonSerialize
 public class Projet {
 
-    public int projetId;
+    public Integer projetId;
 
     public String nomProjet;
 
     public String refProjet;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     public Date dateProjet;
 
     public double prix;
@@ -48,11 +48,11 @@ public class Projet {
         this.devisEtatId = devisEtatId;
     }
 
-    public int getProjetId() {
+    public Integer getProjetId() {
         return projetId;
     }
 
-    public void setProjetId(int projetId) {
+    public void setProjetId(Integer projetId) {
         this.projetId = projetId;
     }
 

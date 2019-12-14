@@ -123,9 +123,15 @@ public class TaskMadera {
     }
 
     @PostMapping(path = "/createProject", consumes = "application/json")
-    public ResponseEntity<Object> createProject() {
+    public ResponseEntity<Object> createProject(@RequestBody Projet projet, @RequestBody List<ProjetModule> listProjetModule, @RequestBody Integer utilisateurId) {
         Map<String, Object> mapResponse = new HashMap<>();
-        return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+        Integer projetId = projetRepository.createProjet(projet, listProjetModule, utilisateurId);
+        if(projetId != null) {
+            mapResponse.put("projetId", projetId);
+            return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping(path = "/updateProject", consumes = "application/json")

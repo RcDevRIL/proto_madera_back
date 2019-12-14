@@ -11,6 +11,10 @@ public class ProjetModule {
     public ProjetModule() {
     }
 
+    public ProjetModule(Integer moduleId) {
+        this.moduleId = moduleId;
+    }
+
     public Integer getProjetModuleId() {
         return projetModuleId;
     }
