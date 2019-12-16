@@ -1,4 +1,5 @@
 # proto_madera_back - README V0.2.1
+* __Tests coverage :__ ![Coverage](https://github.com/RcDevRIL/proto_madera_back/blob/readMe/coverage/coverage.svg)
 
 Welcome on our development repository for our graduation project!! 
 
