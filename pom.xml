@@ -94,6 +94,8 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<mainClass>com.madera.api.ApiApplication</mainClass>
+					<exclude>com.madera.jooq.tables.records.*</exclude>
+					<exclusion>com.madera.jooq.tables.records.*</exclusion>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -104,6 +106,13 @@
 					<execution>
 						<goals>
 							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>prepare-report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
 						</goals>
 					</execution>
 					<!-- attached to Maven test phase -->

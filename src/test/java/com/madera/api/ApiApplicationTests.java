@@ -94,7 +94,7 @@ public class ApiApplicationTests {
 		projet.setClientId(4);
 		projet.setDevisEtatId(1);
 
-		List<ProjetModule> listProjetModule = new ArrayList();
+		List<ProjetModule> listProjetModule = new ArrayList<>();
 		listProjetModule.add(new ProjetModule(1));
 		listProjetModule.add(new ProjetModule(2));
 		listProjetModule.add(new ProjetModule(3));

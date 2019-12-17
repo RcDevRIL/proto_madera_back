@@ -1,9 +1,7 @@
 package com.madera.api.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.springframework.lang.Nullable;
 
-import java.beans.ConstructorProperties;
 import java.util.Optional;
 
 /**

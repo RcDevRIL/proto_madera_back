@@ -5,9 +5,6 @@ import com.madera.api.models.Module;
 import com.madera.api.repository.ProjetRepository;
 import com.madera.api.repository.ReferentielRepository;
 import com.madera.api.repository.UserRepository;
-import com.madera.api.utils.Helper;
-import org.jooq.Record;
-import org.jooq.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +34,6 @@ public class TaskMadera {
     private final ReferentielRepository referentielRepository;
     private final ProjetRepository projetRepository;
 
-    private final Helper helper = new Helper();
-
     public TaskMadera(UserRepository userRepository, ReferentielRepository referentielRepository,
             ProjetRepository projetRepository) {
         this.userRepository = userRepository;
@@ -59,7 +54,6 @@ public class TaskMadera {
         if (!userAuth.getLogin().isEmpty() && !userAuth.getPassword().isEmpty()) {
             User user = userRepository.checkUser(userAuth);
             if (user != null) {
-                Map<String, String> mapResponse = new HashMap<>();
                 String token = UUID.randomUUID().toString();
                 userRepository.insertToken(userAuth, token);
                 user.setToken(token);
