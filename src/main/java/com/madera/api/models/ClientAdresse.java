@@ -11,6 +11,12 @@ public class ClientAdresse {
     public ClientAdresse() {
     }
 
+    public ClientAdresse(Integer clientId, Integer adresseId, Boolean adresseFacturation) {
+        this.clientId = clientId;
+        this.adresseId = adresseId;
+        this.adresseFacturation = adresseFacturation;
+    }
+
     public Integer getClientId() {
         return clientId;
     }
@@ -34,4 +40,6 @@ public class ClientAdresse {
     public void setAdresseFacturation(Boolean adresseFacturation) {
         this.adresseFacturation = adresseFacturation;
     }
+
+
 }

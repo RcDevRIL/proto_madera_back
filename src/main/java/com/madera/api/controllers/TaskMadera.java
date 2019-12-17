@@ -2,6 +2,7 @@ package com.madera.api.controllers;
 
 import com.madera.api.models.*;
 import com.madera.api.models.Module;
+import com.madera.api.repository.ClientRepository;
 import com.madera.api.repository.ProjetRepository;
 import com.madera.api.repository.ReferentielRepository;
 import com.madera.api.repository.UserRepository;
@@ -36,13 +37,15 @@ public class TaskMadera {
     private final UserRepository userRepository;
     private final ReferentielRepository referentielRepository;
     private final ProjetRepository projetRepository;
+    private final ClientRepository clientRepository;
 
     private final Helper helper = new Helper();
 
-    public TaskMadera(UserRepository userRepository, ReferentielRepository referentielRepository, ProjetRepository projetRepository) {
+    public TaskMadera(UserRepository userRepository, ReferentielRepository referentielRepository, ProjetRepository projetRepository, ClientRepository clientRepository) {
         this.userRepository = userRepository;
         this.referentielRepository = referentielRepository;
         this.projetRepository = projetRepository;
+        this.clientRepository = clientRepository;
     }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
@@ -110,8 +113,8 @@ public class TaskMadera {
 
         List<Projet> listProjet = projetRepository.getAllProjectsByUserId(utilisateurId);
         List<ProjetModule> listProjetModule = projetRepository.getAllProjectModuleByUserId(utilisateurId);
-        List<Client> listClient = projetRepository.getAllClient();
-        List<ClientAdresse> listClientAdresse = projetRepository.getAllClientAdresse();
+        List<Client> listClient = clientRepository.getAllClient();
+        List<ClientAdresse> listClientAdresse = clientRepository.getAllClientAdresse();
         List<Adresse> listAdresse = projetRepository.getAllAdresse();
 
         mapResponse.put("projet", listProjet);
@@ -153,5 +156,33 @@ public class TaskMadera {
     public ResponseEntity<Object> getQuote(@RequestParam Integer id) {
         Map<String, Object> mapResponse = new HashMap<>();
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/createClient", consumes = "application/json")
+    public ResponseEntity<Object> createClient(@RequestBody Client client) {
+        //TODO client_adresse et adresse ?
+        Map<String, Object> mapResponse = new HashMap<>();
+        Integer clientId = clientRepository.createClient(client);
+        if(clientId != null) {
+            mapResponse.put("clientId", clientId);
+            return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(mapResponse, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(path = "/addClientAdresse", consumes = "application/json")
+    public ResponseEntity<Object> addClientAdresse(@RequestBody List<ClientAdresse> listClientAdresse) {
+        Map<String, Object> mapResponse = new HashMap<>();
+        clientRepository.addClientAdresse(listClientAdresse);
+        //TODO gérer si adresse pas renseigné ?
+        return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/createAdresse", consumes = "application/json")
+    public ResponseEntity<Object> createAdresse(@RequestBody List<Adresse> listAdresse) {
+        clientRepository.createAdresse(listAdresse);
+        //TODO gérer si adresse pas renseigné ?
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

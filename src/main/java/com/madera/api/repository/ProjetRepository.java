@@ -1,9 +1,9 @@
 package com.madera.api.repository;
 
-import com.madera.api.models.*;
+import com.madera.api.models.Adresse;
+import com.madera.api.models.Projet;
+import com.madera.api.models.ProjetModule;
 import com.madera.api.utils.Helper;
-import com.madera.jooq.tables.records.ProjetRecord;
-import com.madera.jooq.tables.records.UtilisateurRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.impl.DSL;
@@ -36,20 +36,6 @@ public class ProjetRepository {
             .join(PROJET_UTILISATEURS).on(PROJET_UTILISATEURS.I_PROJET_ID.eq(PROJET_MODULE.I_PROJET_ID))
             .where(PROJET_UTILISATEURS.I_UTILISATEUR_ID.eq(utilisateurId))
             .fetch(Helper::RecordToProjetModule);
-    }
-
-    public List<Client> getAllClient() {
-        return context
-            .select(CLIENT.fields())
-            .from(CLIENT)
-            .fetch(Helper::RecordToClient);
-    }
-
-    public List<ClientAdresse> getAllClientAdresse() {
-        return context
-            .select(CLIENT_ADRESSE.fields())
-            .from(CLIENT_ADRESSE)
-            .fetch(Helper::RecordToClientAdresse);
     }
 
     public List<Adresse> getAllAdresse() {

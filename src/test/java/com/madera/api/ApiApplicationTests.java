@@ -1,9 +1,8 @@
 package com.madera.api;
 
 import com.madera.api.controllers.TaskMadera;
-import com.madera.api.models.Projet;
-import com.madera.api.models.ProjetModule;
-import com.madera.api.models.UserAuth;
+import com.madera.api.models.*;
+import org.apache.coyote.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -125,6 +124,46 @@ public class ApiApplicationTests {
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+
+	@Test
+	public void responseCreateClient() {
+		Client client = new Client();
+		client.setNom("Toto");
+		client.setPrenom("Yaourt");
+		client.setMail("toto.yaourt@gmail.com");
+		client.setNumTel("0600000000");
+		ResponseEntity<Object> responseEntity = taskMadera.createClient(client);
+		// Test si le résultat est null
+		assertNotNull(responseEntity);
+		// Test si la méthode renvoi un code 200
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+
+	@Test
+	public void responseAddClientAdresse() {
+		List<ClientAdresse> listClientAdresse = new ArrayList();
+		//Id de l'utilisateur de test : 4
+		listClientAdresse.add(new ClientAdresse(4, 1, false));
+		listClientAdresse.add(new ClientAdresse(4, 7, true));
+		ResponseEntity<Object> responseEntity = taskMadera.addClientAdresse(listClientAdresse);
+		// Test si le résultat est null
+		assertNotNull(responseEntity);
+		//Test si la méthode renvoi un code 200
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+
+	@Test
+	public void responseCreateAdresse() {
+		List<Adresse> listAdresse = new ArrayList<>();
+		listAdresse.add(new Adresse("Lyon", "69000", "rue du charpentier", "", "13"));
+		listAdresse.add(new Adresse("Lens", "62300", "rue de l'éclair", "", "21"));
+		listAdresse.add(new Adresse("Dijon", "21000", "boulevard du bois", "", "5"));
+		ResponseEntity<Object> responseEntity = taskMadera.createAdresse(listAdresse);
+		//Test si lé résultat est null
+		assertNotNull(responseEntity);
+		//Test si la méthode renvoi un code 200
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
