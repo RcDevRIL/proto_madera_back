@@ -94,14 +94,17 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<mainClass>com.madera.api.ApiApplication</mainClass>
-					<exclude>com.madera.jooq.tables.records.*</exclude>
-					<exclusion>com.madera.jooq.tables.records.*</exclusion>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.2</version>
+				<configuration>
+					<excludes>
+						<exclude>com/madera/jooq/tables/records/**/*</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
