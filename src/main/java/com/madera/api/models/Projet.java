@@ -3,46 +3,57 @@ package com.madera.api.models;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * DTO Projet
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-RELEASE
+ * @version 0.2-PRE-RELEASE
  */
 @JsonSerialize
 public class Projet {
 
-    public int projetId;
+    public Integer projetId;
 
     public String nomProjet;
 
     public String refProjet;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     public Date dateProjet;
 
     public double prix;
 
-    public Client clientProjet;
+    public Integer clientId;
 
-    public DevisEtat devisEtat;
+    public Integer devisEtatId;
 
-    public int getProjetId() {
+    public Projet() {
+    }
+
+    public Integer getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Integer clientId) {
+        this.clientId = clientId;
+    }
+
+    public Integer getDevisEtatId() {
+        return devisEtatId;
+    }
+
+    public void setDevisEtatId(Integer devisEtatId) {
+        this.devisEtatId = devisEtatId;
+    }
+
+    public Integer getProjetId() {
         return projetId;
     }
 
-    public void setProjetId(int projetId) {
+    public void setProjetId(Integer projetId) {
         this.projetId = projetId;
-    }
-
-    public Client getClientProjet() {
-        return clientProjet;
-    }
-
-    public void setClientProjet(Client clientProjet) {
-        this.clientProjet = clientProjet;
     }
 
     public String getNomProjet() {
@@ -67,14 +78,6 @@ public class Projet {
 
     public void setDateProjet(Date dateProjet) {
         this.dateProjet = dateProjet;
-    }
-
-    public DevisEtat getDevisEtat() {
-        return devisEtat;
-    }
-
-    public void setDevisEtat(DevisEtat devisEtat) {
-        this.devisEtat = devisEtat;
     }
 
     public double getPrix() {

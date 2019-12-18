@@ -8,7 +8,7 @@ import java.beans.ConstructorProperties;
  * DTO Gamme
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-RELEASE
+ * @version 0.2-PRE-RELEASE
  */
 @JsonSerialize
 public class Gamme {
@@ -20,6 +20,25 @@ public class Gamme {
     @ConstructorProperties({ "i_gammes_id", "v_libelle_gammes" })
     public Gamme(int gammeId, String libelleGammes) {
         this.gammeId = gammeId;
+        this.libelleGammes = libelleGammes;
+    }
+
+    public Gamme() {
+    }
+
+    public int getGammeId() {
+        return gammeId;
+    }
+
+    public void setGammeId(int gammeId) {
+        this.gammeId = gammeId;
+    }
+
+    public String getLibelleGammes() {
+        return libelleGammes;
+    }
+
+    public void setLibelleGammes(String libelleGammes) {
         this.libelleGammes = libelleGammes;
     }
 }

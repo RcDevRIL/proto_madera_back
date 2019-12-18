@@ -218,7 +218,8 @@ SELECT setval('madera.projet_module_i_projet_module_id_seq'::regclass, 4);
 INSERT INTO madera.projet_utilisateurs(i_utilisateur_id, i_projet_id) VALUES
 (1, 1),
 (2, 1),
-(3, 1);
+(3, 1),
+(4, 1);
 
 INSERT INTO madera.fournisseur(i_fournisseur_id, v_raison_soc, i_adresse_id) VALUES
 (1, 'Leroy Merlin', 3),

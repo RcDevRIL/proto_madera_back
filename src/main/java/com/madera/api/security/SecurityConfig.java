@@ -13,7 +13,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * Classe permettant de configurer l'authentification
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-RELEASE
+ * @version 0.2-PRE-RELEASE
  */
 @Configuration
 @EnableWebSecurity

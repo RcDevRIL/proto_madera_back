@@ -5,24 +5,26 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * DTO User
- * 
+ *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-RELEASE
+ * @version 0.2-PRE-RELEASE
  */
 @JsonSerialize
 @JsonDeserialize
 public class User {
 
+    Integer utilisateurId;
+
     String login;
 
-    String password;
+    String token;
 
-    public String getPassword() {
-        return password;
+    public String getToken() {
+        return token;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getLogin() {
@@ -33,16 +35,25 @@ public class User {
         this.login = login;
     }
 
+    public Integer getUtilisateurId() {
+        return utilisateurId;
+    }
+
+    public void setUtilisateurId(Integer userId) {
+        this.utilisateurId = userId;
+    }
+
     public User() {
     }
 
-    public User(String login, String password) {
+    public User(Integer userId, String login, String token) {
+        this.utilisateurId = userId;
         this.login = login;
-        this.password = password;
+        this.token = token;
     }
 
     @Override
     public String toString() {
-        return "User: " + this.login + ", password: " + this.password;
+        return "User: " + this.login + ", password: " + this.token;
     }
 }
