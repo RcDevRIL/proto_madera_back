@@ -1,5 +1,5 @@
-# proto_madera_back - README V0.2.1
-* __Tests coverage :__ ![Coverage](https://github.com/RcDevRIL/proto_madera_back/blob/readMe/coverage/coverage.svg)
+# proto_madera_back - README V1.0
+![Coverage](https://github.com/RcDevRIL/proto_madera_back/blob/readMe/coverage/coverage.svg)
 
 Welcome on our development repository for our graduation project!! 
 
@@ -17,9 +17,10 @@ This README will guide you through the setup and deployment of this application 
 ###### Things to add on this README:
 
 * [ ] Jenkins badges to show build/test status
-* [ ] librairies used to run the app
+* [X] Test coverage badge
+* [X] librairies used to run the app
 * [X] How to run app on localhost
-* [ ] How to run tests
+* [X] How to run tests
 * [X] How to setup local database
 * [ ] Write specific steps on Linux OS if needed
 * [ ] How to ...
@@ -54,7 +55,7 @@ To build the database, copy paste [madera_dump.sql] content into the Query Tool 
 
 ### Build & Run
 
-To build the application run:
+To start the installation of the application:
 
 * `mvn clean install -DskipTests=true`
 
@@ -63,19 +64,26 @@ There is now two ways to launch application:
 
 * `mvn spring-boot:run`
 
-* `java -jar [path_to_jar]/api-[VERSION]`
+* `java -jar [path_to_jar]/api-[VERSION]` (__TODO__ vérifier)
 
 ## Run tests
 
 _This paragraph explain how to trigger tests written in the **[test]** folder of this repository._
 
-You need the local database to run tests and see green, so if you haven't done it already, please refer to the **Setup the local database** section
+You need the local database to run tests and see green, so if you haven't done it already, please refer to the **[Setup the local database](https://github.com/RcDevRIL/proto_madera_back/tree/readMe#setup-the-local-database)** section
 
-__*TODO*__
+To start tests, execute this command:
+
+* `mvn clean test`
+
+This will trigger the execution of tests. Maven will output result and possible errors. 
 
 ## Built With
 
 * [Spring] - The Java framework used to build this server
+* __TODO__ which spring modules are used 
+* [Jooq] - The 'ORM' used to build and generate database interaction code
+* [JUnit] - The popular unit test framework
 
 ## Contributing
 
@@ -98,6 +106,8 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE
 * As I mentionned before, this is still a work in progress. :upside_down_face:
 
 [Spring]: https://spring.io/
+[Jooq]: https://www.jooq.org/
+[JUnit]: https://junit.org/junit4/
 [Github root]: https://github.com/RcDevRIL/proto_madera_back/
 [test]: https://github.com/RcDevRIL/proto_madera_back/tree/master/src/test/java/com/madera/api
 [RcDevRIL]: https://github.com/RcDevRIL
