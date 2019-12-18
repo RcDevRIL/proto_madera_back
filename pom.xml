@@ -102,7 +102,7 @@
 				<version>0.8.2</version>
 				<configuration>
 					<excludes>
-						<exclude>com/madera/jooq/tables/records/**/*</exclude>
+						<exclude>com/madera/jooq/**/*</exclude>
 					</excludes>
 				</configuration>
 				<executions>
