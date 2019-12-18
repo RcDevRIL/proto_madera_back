@@ -558,14 +558,6 @@ ALTER TABLE ONLY madera.client_adresse
     ADD CONSTRAINT fk_adresse_2 FOREIGN KEY (i_adresse_id) REFERENCES madera.adresse(i_adresse_id);
 
 
---
--- TOC entry 2795 (class 2606 OID 24676)
--- Name: projet fk_client; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.projet
-    ADD CONSTRAINT fk_client FOREIGN KEY (i_client_id) REFERENCES madera.client(i_client_id);
-
 ALTER TABLE ONLY madera.projet
     ADD CONSTRAINT fk_devis_etat FOREIGN KEY (i_devis_etat_id) REFERENCES madera.devis_etat(i_devis_etat_id);
 --

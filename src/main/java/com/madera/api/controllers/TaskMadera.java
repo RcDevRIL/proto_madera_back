@@ -79,8 +79,11 @@ public class TaskMadera {
 
     @PostMapping(path = "/adresse", consumes = "application/json")
     public ResponseEntity<Object> createAdresse(@RequestBody List<Adresse> listAdresse) {
-        clientRepository.createAdresse(listAdresse);
-        //TODO gérer si adresse pas renseigné ?
-        return new ResponseEntity<>(HttpStatus.OK);
+        Boolean isInserted = clientRepository.createAdresse(listAdresse) != 0;
+        if(isInserted) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

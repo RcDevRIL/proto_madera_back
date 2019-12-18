@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.madera.jooq.Tables.*;
+import static org.jooq.impl.DSL.delete;
 
 @Repository
 public class ProjetRepository {
@@ -59,18 +60,60 @@ public class ProjetRepository {
                 .returning(PROJET.I_PROJET_ID)
                 .fetchOne();
 
+            var query = context
+                    .insertInto(PROJET_MODULE)
+                    .columns(PROJET_MODULE.I_MODULE_ID, PROJET_MODULE.I_PROJET_ID);
             listProjetModule.forEach((projetModule -> {
-                DSL.using(configuration).insertInto(PROJET_MODULE)
-                        .set(PROJET_MODULE.I_MODULE_ID, projetModule.getModuleId())
-                        .set(PROJET_MODULE.I_PROJET_ID, record.get(PROJET.I_PROJET_ID))
-                        .execute();
+                query.values(projetModule.getModuleId(), record.get(PROJET.I_PROJET_ID));
             }));
+            query.execute();
 
             DSL.using(configuration).insertInto(PROJET_UTILISATEURS)
                     .set(PROJET_UTILISATEURS.I_PROJET_ID, record.get(PROJET.I_PROJET_ID))
                     .set(PROJET_UTILISATEURS.I_UTILISATEUR_ID, utilisateurId)
                     .execute();
             return record.get(PROJET.I_PROJET_ID);
+        });
+    }
+
+    public Integer updateProject(Projet projet) {
+        return context
+                .update(PROJET)
+                .set(PROJET.V_NOM_PROJET, projet.getNomProjet())
+                .set(PROJET.V_REF_PROJET, projet.getRefProjet())
+                .set(PROJET.D_DATE_PROJET, projet.getDateProjet())
+                .set(PROJET.F_PRIX, projet.getPrix())
+                .set(PROJET.I_DEVIS_ETAT_ID, projet.getDevisEtatId())
+                .where(PROJET.V_REF_PROJET.eq(projet.getRefProjet()))
+                .execute();
+    }
+
+    public Integer deleteProject(String refProjet) {
+        //Récupére le projetId suivant le refProjet passé en paramètre
+        Record record = context
+                .select(PROJET.I_PROJET_ID)
+                .from(PROJET)
+                .where(PROJET.V_REF_PROJET.eq(refProjet))
+                .fetchOne();
+        System.out.println(record.get(PROJET.I_PROJET_ID));
+        return context.transactionResult(configuration -> {
+            Integer linesDeleted = null;
+            //Delete des projets_modules
+            linesDeleted = DSL.using(configuration)
+                    .delete(PROJET_MODULE)
+                    .where(PROJET_MODULE.I_PROJET_ID.eq(record.get(PROJET.I_PROJET_ID)))
+                    .execute();
+            //Delete des projets_utilisateurs
+            linesDeleted = linesDeleted + DSL.using(configuration)
+                    .delete(PROJET_UTILISATEURS)
+                    .where(PROJET_UTILISATEURS.I_PROJET_ID.eq(record.get(PROJET.I_PROJET_ID)))
+                    .execute();
+            //Delete du projet
+            linesDeleted = linesDeleted + DSL.using(configuration)
+                    .delete(PROJET)
+                    .where(PROJET.V_REF_PROJET.eq(refProjet))
+                    .execute();
+            return linesDeleted;
         });
     }
 }

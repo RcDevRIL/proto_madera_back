@@ -26,6 +26,21 @@ public class ClientRepository {
     @Autowired
     DSLContext context;
 
+    public List<Client> getAllClient() {
+        return context
+                .select(CLIENT.fields())
+                .from(CLIENT)
+                .fetch(Helper::RecordToClient);
+    }
+
+    public Client getClientByNomAndPrenom(String nom, String prenom) {
+        return context
+                .select(CLIENT.fields())
+                .from(CLIENT)
+                .where(CLIENT.V_NOM.like(nom).and(CLIENT.V_PRENOM.like(prenom)))
+                .fetchOne(Helper::RecordToClient);
+    }
+
     public Integer createClient(Client client) {
         Record record = context
                 .insertInto(CLIENT)
@@ -38,11 +53,32 @@ public class ClientRepository {
         return record.get(CLIENT.I_CLIENT_ID);
     }
 
-    public List<Client> getAllClient() {
+    public Integer updateClient(Client client) {
         return context
-                .select(CLIENT.fields())
-                .from(CLIENT)
-                .fetch(Helper::RecordToClient);
+                .update(CLIENT)
+                .set(CLIENT.V_NOM, client.getNom())
+                .set(CLIENT.V_PRENOM, client.getPrenom())
+                .set(CLIENT.V_MAIL, client.getMail())
+                .set(CLIENT.V_TEL, client.getNumTel())
+                .where(CLIENT.I_CLIENT_ID.eq(client.getId()))
+                .execute();
+    }
+
+    //Supprime le client
+    //TODO Enlever contrainte étrangère clientId sur projet
+    public Integer deleteClient(Integer clientId) {
+        return context.transactionResult(configuration -> {
+            Integer linesDeleted = null;
+            linesDeleted = DSL.using(configuration)
+                    .delete(CLIENT_ADRESSE)
+                    .where(CLIENT_ADRESSE.I_CLIENT_ID.eq(clientId))
+                    .execute();
+            linesDeleted = linesDeleted + DSL.using(configuration)
+                    .delete(CLIENT)
+                    .where(CLIENT.I_CLIENT_ID.eq(clientId))
+                    .execute();
+            return linesDeleted;
+        });
     }
 
     public List<ClientAdresse> getAllClientAdresse() {
@@ -52,29 +88,40 @@ public class ClientRepository {
                 .fetch(Helper::RecordToClientAdresse);
     }
 
-    public void addClientAdresse(List<ClientAdresse> listClientAdresse) {
-        context.transaction(configuration -> {
-            listClientAdresse.forEach(clientAdresse -> {
-                    DSL.using(configuration)
-                            .insertInto(CLIENT_ADRESSE)
-                            .set(CLIENT_ADRESSE.I_CLIENT_ID, clientAdresse.getClientId())
-                            .set(CLIENT_ADRESSE.I_ADRESSE_ID, clientAdresse.getAdresseId())
-                            .set(CLIENT_ADRESSE.B_ADRESSE_FACTURATION, clientAdresse.getAdresseFacturation())
-                            .execute();
-            });
+    public Integer addClientAdresse(List<ClientAdresse> listClientAdresse) {
+        var query = context
+                .insertInto(CLIENT_ADRESSE)
+                .columns(CLIENT_ADRESSE.I_CLIENT_ID,
+                        CLIENT_ADRESSE.I_ADRESSE_ID,
+                        CLIENT_ADRESSE.B_ADRESSE_FACTURATION
+                );
+        listClientAdresse.forEach(clientAdresse -> {
+            query.values(
+                    clientAdresse.getClientId(),
+                    clientAdresse.getAdresseId(),
+                    clientAdresse.getAdresseFacturation()
+            );
         });
+        return query.execute();
     }
 
-    public void createAdresse(List<Adresse> listAdresse) {
+    public Integer createAdresse(List<Adresse> listAdresse) {
+        var query = context
+                .insertInto(ADRESSE)
+                .columns(ADRESSE.V_VILLE,
+                        ADRESSE.V_CODE_POSTALE,
+                        ADRESSE.V_RUE,
+                        ADRESSE.V_COMPLEMENT,
+                        ADRESSE.V_NUMERO
+                );
         listAdresse.forEach(adresse -> {
-            context
-                    .insertInto(ADRESSE)
-                    .set(ADRESSE.V_VILLE, adresse.getVille())
-                    .set(ADRESSE.V_CODE_POSTALE, adresse.getCodePostale())
-                    .set(ADRESSE.V_RUE, adresse.getRue())
-                    .set(ADRESSE.V_COMPLEMENT, adresse.getComplement())
-                    .set(ADRESSE.V_NUMERO, adresse.getNumero())
-                    .execute();
+            query.values(
+                    adresse.getVille(),
+                    adresse.getCodePostale(),
+                    adresse.getRue(),
+                    adresse.getComplement(),
+                    adresse.getNumero());
         });
+        return query.execute();
     }
 }

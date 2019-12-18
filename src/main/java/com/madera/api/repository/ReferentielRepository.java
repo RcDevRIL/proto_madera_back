@@ -1,10 +1,9 @@
 package com.madera.api.repository;
 
-import com.madera.api.models.*;
 import com.madera.api.models.Module;
+import com.madera.api.models.*;
 import com.madera.api.utils.Helper;
-import org.jooq.*;
-import org.jooq.impl.DSL;
+import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

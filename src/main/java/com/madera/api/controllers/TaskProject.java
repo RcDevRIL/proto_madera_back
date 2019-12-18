@@ -30,8 +30,13 @@ public class TaskProject {
         this.projetRepository = projetRepository;
     }
 
+    //TODO attention qu'un seul requestbody est autorisé !
     @PostMapping(path = "/project", consumes = "application/json")
-    public ResponseEntity<Object> createProject(@RequestBody Projet projet, @RequestBody List<ProjetModule> listProjetModule, @RequestBody Integer utilisateurId) {
+    public ResponseEntity<Object> createProject(
+            @RequestBody Projet projet,
+            @RequestBody List<ProjetModule> listProjetModule,
+            @RequestBody Integer utilisateurId)
+    {
         Map<String, Object> mapResponse = new HashMap<>();
         Integer projetId = projetRepository.createProjet(projet, listProjetModule, utilisateurId);
         if(projetId != null) {
@@ -43,8 +48,14 @@ public class TaskProject {
     }
 
     @PutMapping(path = "/project", consumes = "application/json")
-    public ResponseEntity<Object> updateProject() {
+    public ResponseEntity<Object> updateProject(
+            @RequestBody Projet projet,
+            @RequestBody List<ProjetModule> listProjetModule,
+            @RequestBody Integer utilisateurId)
+    {
         Map<String, Object> mapResponse = new HashMap<>();
+        projetRepository.updateProject(projet);
+        //projetRepository.updateProjectModule(projet);
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
@@ -52,9 +63,20 @@ public class TaskProject {
     public ResponseEntity<Object> getAllProject(@PathVariable("id") Integer id) {
         Map<String, Object> mapResponse = new HashMap<>();
         List<Projet> listProjets = projetRepository.getAllProjectsByUserId(id);
-        System.out.println(listProjets);
         mapResponse.put("listProjets", listProjets);
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/project/{refProjet}", consumes = "application/json")
+    public ResponseEntity<Object> deleteProjectByRef(@PathVariable("refProjet") String refProjet) {
+        Map<String, Object> mapResponse = new HashMap<>();
+        Boolean isDeleted = projetRepository.deleteProject(refProjet) != 0;
+        mapResponse.put("isDeleted", isDeleted);
+        if(isDeleted) {
+            return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(mapResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping(path = "/quote/{id}", consumes = "application/json")

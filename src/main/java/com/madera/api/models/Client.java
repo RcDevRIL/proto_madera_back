@@ -1,5 +1,7 @@
 package com.madera.api.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.beans.ConstructorProperties;
@@ -11,6 +13,7 @@ import java.beans.ConstructorProperties;
  * @version 0.1-RELEASE
  */
 @JsonSerialize
+@JsonDeserialize
 public class Client {
 
     public Integer id;

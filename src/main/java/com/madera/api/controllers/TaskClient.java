@@ -3,13 +3,11 @@ package com.madera.api.controllers;
 import com.madera.api.models.Client;
 import com.madera.api.models.ClientAdresse;
 import com.madera.api.repository.ClientRepository;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +24,20 @@ public class TaskClient {
         this.clientRepository = clientRepository;
     }
 
+    //TODO get Client by id
+
+    @GetMapping(path = "/client", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> getClient(@RequestParam("nom") String nom, @RequestParam("prenom") String prenom) {
+        Map<String, Object> mapResponse = new HashMap<>();
+        Client client = clientRepository.getClientByNomAndPrenom(nom, prenom);
+        mapResponse.put("client", client);
+        if(client != null) {
+            return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping(path = "/client", consumes = "application/json")
     public ResponseEntity<Object> createClient(@RequestBody Client client) {
         //TODO client_adresse et adresse ?
@@ -39,11 +51,34 @@ public class TaskClient {
         }
     }
 
+    @PutMapping(path = "/client", consumes = "application/json")
+    public ResponseEntity<Object> updateClient(@RequestBody Client client) {
+        Boolean isUpdated = clientRepository.updateClient(client) == 1;
+        if(isUpdated) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping(path = "/client", consumes = "application/json")
+    public ResponseEntity<Object> deleteClient(@RequestBody Integer clientId) {
+        Boolean isDeleted = clientRepository.deleteClient(clientId) != 0;
+        if(isDeleted) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping(path = "/clientadresse", consumes = "application/json")
     public ResponseEntity<Object> addClientAdresse(@RequestBody List<ClientAdresse> listClientAdresse) {
         Map<String, Object> mapResponse = new HashMap<>();
-        clientRepository.addClientAdresse(listClientAdresse);
-        //TODO gérer si adresse pas renseigné ?
-        return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+        Boolean isInserted = clientRepository.addClientAdresse(listClientAdresse) != 0;
+        if(isInserted) {
+            return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(mapResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 }
