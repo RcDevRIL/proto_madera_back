@@ -2,8 +2,6 @@ package com.madera.api.repository;
 
 import com.madera.api.models.*;
 import com.madera.api.utils.Helper;
-import com.madera.jooq.tables.records.ProjetRecord;
-import com.madera.jooq.tables.records.UtilisateurRecord;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.impl.DSL;

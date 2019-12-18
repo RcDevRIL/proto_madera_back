@@ -1,7 +1,5 @@
 package com.madera.api.models;
 
-import java.util.List;
-
 /**
  * DTO Module
  *
