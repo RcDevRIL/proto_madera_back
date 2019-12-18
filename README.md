@@ -1,4 +1,4 @@
-# proto_madera_back - README V1.0.1
+# proto_madera_back - README V1.0.2
   ![Coverage](https://github.com/RcDevRIL/proto_madera_back/blob/master/coverage/coverage.svg)
 
 Welcome on our development repository for our graduation project!! 
@@ -22,6 +22,7 @@ This README will guide you through the setup and deployment of this application 
 * [X] How to run app on localhost
 * [X] How to run tests
 * [X] How to setup local database
+* [ ] Add details on spring modules used if needed
 * [ ] Write specific steps on Linux OS if needed
 * [ ] How to ...
 
@@ -70,7 +71,7 @@ There is now two ways to launch application:
 
 _This paragraph explain how to trigger tests written in the **[test]** folder of this repository._
 
-You need the local database to run tests and see green, so if you haven't done it already, please refer to the **[Setup the local database](https://github.com/RcDevRIL/proto_madera_back/tree/readMe#setup-the-local-database)** section
+You need the local database to run tests and see green, so if you haven't done it already, please refer to the **[Setup the local database](https://github.com/RcDevRIL/proto_madera_back#setup-the-local-database)** section
 
 To start tests, execute this command:
 
@@ -81,7 +82,6 @@ This will trigger the execution of tests. Maven will output result and possible 
 ## Built With
 
 * [Spring] - The Java framework used to build this server
-* __TODO__ which spring modules are used 
 * [Jooq] - The 'ORM' used to build and generate database interaction code
 * [JUnit4] - The popular unit test framework
 
