@@ -1,5 +1,5 @@
-# proto_madera_back - README V1.0
-![Coverage](https://github.com/RcDevRIL/proto_madera_back/blob/readMe/coverage/coverage.svg)
+# proto_madera_back - README V1.0.1
+  ![Coverage](https://github.com/RcDevRIL/proto_madera_back/blob/master/coverage/coverage.svg)
 
 Welcome on our development repository for our graduation project!! 
 
@@ -83,7 +83,7 @@ This will trigger the execution of tests. Maven will output result and possible 
 * [Spring] - The Java framework used to build this server
 * __TODO__ which spring modules are used 
 * [Jooq] - The 'ORM' used to build and generate database interaction code
-* [JUnit] - The popular unit test framework
+* [JUnit4] - The popular unit test framework
 
 ## Contributing
 
@@ -107,7 +107,7 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE
 
 [Spring]: https://spring.io/
 [Jooq]: https://www.jooq.org/
-[JUnit]: https://junit.org/junit4/
+[JUnit4]: https://junit.org/junit4/
 [Github root]: https://github.com/RcDevRIL/proto_madera_back/
 [test]: https://github.com/RcDevRIL/proto_madera_back/tree/master/src/test/java/com/madera/api
 [RcDevRIL]: https://github.com/RcDevRIL
@@ -115,8 +115,8 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE
 [LadouceFabien]: https://github.com/LadouceFabien
 [contributors]: https://github.com/RcDevRIL/proto_madera_back/contributors
 [LICENSE.md]: https://github.com/RcDevRIL/proto_madera_back/blob/master/LICENSE
-[JDK]: https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+[JDK]: https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html
 [Maven]: https://maven.apache.org/download.cgi
 [pgAdmin]: https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
-[madera_dump.sql]: https://github.com/RcDevRIL/proto_madera_back/tree/master/madera-scripts/dumps/madera_dump.sql
-[data_dump.sql]: https://github.com/RcDevRIL/proto_madera_back/tree/master/madera-scripts/dumps/data_dump.sql
+[madera_dump.sql]: https://github.com/RcDevRIL/proto_madera_back/blob/master/madera-scripts/dumps/madera_dump.sql
+[data_dump.sql]: https://github.com/RcDevRIL/proto_madera_back/blob/master/madera-scripts/dumps/data_dump.sql
