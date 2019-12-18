@@ -1,8 +1,10 @@
 package com.madera.api;
 
+import com.madera.api.controllers.TaskClient;
 import com.madera.api.controllers.TaskMadera;
+import com.madera.api.controllers.TaskProject;
+import com.madera.api.controllers.TaskSynchro;
 import com.madera.api.models.*;
-import org.apache.coyote.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -26,13 +28,17 @@ import static org.junit.Assert.assertNotNull;
 @WebAppConfiguration
 @SpringBootTest
 public class ApiApplicationTests {
-	// TODO Tester plus que simplement un code 200, s'il y a des données de tests
-	// c'est pas que pour les afficher ;)
 
 	private static final Logger log = LoggerFactory.getLogger(ApiApplicationTests.class);
 
 	@Autowired
 	private TaskMadera taskMadera;
+	@Autowired
+	private TaskClient taskClient;
+	@Autowired
+	private TaskSynchro taskSynchro;
+	@Autowired
+	private TaskProject taskProject;
 
 	@Test
 	public void contextLoads() {
@@ -70,8 +76,17 @@ public class ApiApplicationTests {
 
 	@Test
 	public void responseReferentiel() {
-		ResponseEntity<Object> responseEntity = taskMadera.getReferentiel();
+		ResponseEntity<Object> responseEntity = taskSynchro.getReferentiel();
 		// Test si le résultat est null
+		assertNotNull(responseEntity);
+		// Test si la méthode renvoi un code 200
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+	}
+
+	@Test
+	public void responseSynchroData() {
+		ResponseEntity<Object> responseEntity = taskSynchro.getSynchro(4);
+		//Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
@@ -92,7 +107,7 @@ public class ApiApplicationTests {
 		listProjetModule.add(new ProjetModule(2));
 		listProjetModule.add(new ProjetModule(3));
 		listProjetModule.add(new ProjetModule(4));
-		ResponseEntity<Object> responseEntity = taskMadera.createProject(projet, listProjetModule, 4);
+		ResponseEntity<Object> responseEntity = taskProject.createProject(projet, listProjetModule, 4);
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
@@ -102,7 +117,7 @@ public class ApiApplicationTests {
 	@Test
 	public void responseAllproject() {
 		// TODO Mettre l'id de l'utilisateur de test
-		ResponseEntity<Object> responseEntity = taskMadera.getAllProject(null);
+		ResponseEntity<Object> responseEntity = taskProject.getAllProject(null);
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
@@ -111,7 +126,7 @@ public class ApiApplicationTests {
 
 	@Test
 	public void responseUpdate() {
-		ResponseEntity<Object> responseEntity = taskMadera.updateProject();
+		ResponseEntity<Object> responseEntity = taskProject.updateProject();
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
@@ -120,7 +135,7 @@ public class ApiApplicationTests {
 
 	@Test
 	public void response() {
-		ResponseEntity<Object> responseEntity = taskMadera.getQuote(0);
+		ResponseEntity<Object> responseEntity = taskProject.getQuote(0);
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
@@ -134,7 +149,7 @@ public class ApiApplicationTests {
 		client.setPrenom("Yaourt");
 		client.setMail("toto.yaourt@gmail.com");
 		client.setNumTel("0600000000");
-		ResponseEntity<Object> responseEntity = taskMadera.createClient(client);
+		ResponseEntity<Object> responseEntity = taskClient.createClient(client);
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		// Test si la méthode renvoi un code 200
@@ -143,11 +158,11 @@ public class ApiApplicationTests {
 
 	@Test
 	public void responseAddClientAdresse() {
-		List<ClientAdresse> listClientAdresse = new ArrayList();
+		List<ClientAdresse> listClientAdresse = new ArrayList<>();
 		//Id de l'utilisateur de test : 4
 		listClientAdresse.add(new ClientAdresse(4, 1, false));
 		listClientAdresse.add(new ClientAdresse(4, 7, true));
-		ResponseEntity<Object> responseEntity = taskMadera.addClientAdresse(listClientAdresse);
+		ResponseEntity<Object> responseEntity = taskClient.addClientAdresse(listClientAdresse);
 		// Test si le résultat est null
 		assertNotNull(responseEntity);
 		//Test si la méthode renvoi un code 200
