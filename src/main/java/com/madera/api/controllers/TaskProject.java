@@ -80,7 +80,7 @@ public class TaskProject {
     }
 
     @GetMapping(path = "/quote/{id}", consumes = "application/json")
-    public ResponseEntity<Object> getQuote(@RequestParam Integer id) {
+    public ResponseEntity<Object> getQuote(@PathVariable ("id") Integer id) {
         Map<String, Object> mapResponse = new HashMap<>();
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }

@@ -55,6 +55,7 @@ public class TaskMadera {
             User user = userRepository.checkUser(userAuth);
             if (user != null) {
                 Map<String, String> mapResponse = new HashMap<>();
+                //TODO Générer un token avec des librairies SSL ?
                 String token = UUID.randomUUID().toString();
                 userRepository.insertToken(userAuth, token);
                 user.setToken(token);
