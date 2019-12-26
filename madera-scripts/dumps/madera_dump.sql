@@ -188,9 +188,8 @@ CREATE TABLE madera.module (
     i_gammes_id integer NOT NULL,
     i_module_referentiel_id integer NOT NULL,
     v_nom varchar(50),
-    v_angle varchar(25),
     v_nature_module character varying(45),
-    b_modele boolean
+    f_prix_module double precision
 );
 
 
@@ -224,10 +223,7 @@ CREATE TABLE madera.module_referentiel (
 
 ALTER TABLE madera.module_referentiel OWNER TO postgres;
 
---
--- TOC entry 208 (class 1259 OID 24668)
--- Name: projet; Type: TABLE; Schema: madera; Owner: postgres
---
+-- Un client va créer un projet
 
 CREATE TABLE madera.projet (
     i_projet_id serial,
@@ -237,27 +233,54 @@ CREATE TABLE madera.projet (
     d_date_projet date,
     v_signature_projet bytea,
     i_devis_etat_id integer,
-    f_prix double precision
+    f_prix_total double precision
 );
 
---
--- TOC entry 215 (class 1259 OID 24829)
--- Name: projet_module; Type: TABLE; Schema: madera; Owner: postgres
---
+-- CREATE TABLE madera.projet_devis ? un projet peut avoir plusieurs devis si plusieurs produits ?
 
-CREATE TABLE madera.projet_module (
-    i_projet_module_id serial,
-    i_projet_id integer NOT NULL,
-    i_module_id integer NOT NULL
+-- Dans produit seront regroupés les produits des clients mais également ceux des modèles
+CREATE TABLE madera.produit (
+    i_produit_id serial,
+    v_produit_nom varchar(50),
+    i_gammes_id integer NOT NULL, -- Foreign key gammes
+    f_prix_produit double precision,
+    b_modele boolean default false
 );
 
+-- le type de remplissage et les finitions doivent être modifiable si le client le souhaite
+-- Je pense ............
+--Quid de la coupe de principe ?
 
-ALTER TABLE madera.projet_module OWNER TO postgres;
+-- Le projet peux contenir plusieurs produits
 
---
--- TOC entry 214 (class 1259 OID 24800)
--- Name: projet_utilisateurs; Type: TABLE; Schema: madera; Owner: postgres
---
+CREATE TABLE madera.projet_produits (
+    i_projet_id integer NOT NULL, -- Foreign key projet
+    i_produit_id integer -- Foreign key produits
+);
+
+-- Un produit contient des modules avec des modifications apportées par le client
+
+CREATE TABLE madera.produit_module (--changement nom table
+    i_produit_module_id serial,
+    i_produit_id integer NOT NULL, -- Foreign key produit
+    i_module_id integer NOT NULL, -- Foreign key module
+    v_nom_module varchar(50)
+);
+
+-- Pour chaque module il faudra renseigner la longueur de chaque section (une section dans ce contexte
+-- là est le pan mur jusqu'à l'angle ensuite on passe sur une autre section).
+-- Exemple : mur droit n'aura qu'une section et donc qu'une longueur
+-- Et mur avec angle : aura donc 2 sections avec deux longueurs différentes
+
+CREATE TABLE madera.produit_module_section (
+    i_produit_module_id integer NOT NULL,
+    v_produit_module_angle varchar(30),
+    f_longueur_section double precision,
+    f_longueur_section_2 double precision
+);
+
+ALTER TABLE madera.produit_module OWNER TO postgres;
+
 
 CREATE TABLE madera.projet_utilisateurs (
     i_utilisateur_id integer NOT NULL,
@@ -267,10 +290,6 @@ CREATE TABLE madera.projet_utilisateurs (
 
 ALTER TABLE madera.projet_utilisateurs OWNER TO postgres;
 
---
--- TOC entry 206 (class 1259 OID 24652)
--- Name: role; Type: TABLE; Schema: madera; Owner: postgres
---
 
 CREATE TABLE madera.role (
     i_role_id serial,
@@ -280,10 +299,6 @@ CREATE TABLE madera.role (
 
 ALTER TABLE madera.role OWNER TO postgres;
 
---
--- TOC entry 207 (class 1259 OID 24657)
--- Name: utilisateur; Type: TABLE; Schema: madera; Owner: postgres
---
 
 CREATE TABLE madera.utilisateur (
     i_utilisateur_id serial,
