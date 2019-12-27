@@ -236,13 +236,12 @@ CREATE TABLE madera.projet (
     f_prix_total double precision
 );
 
--- CREATE TABLE madera.projet_devis ? un projet peut avoir plusieurs devis si plusieurs produits ?
 
 -- Dans produit seront regroupés les produits des clients mais également ceux des modèles
 CREATE TABLE madera.produit (
     i_produit_id serial,
-    v_produit_nom varchar(50),
-    i_gammes_id integer NOT NULL, -- Foreign key gammes
+    v_produit_nom varchar(50) NOT NULL,
+    i_gammes_id integer NOT NULL,
     f_prix_produit double precision,
     b_modele boolean default false
 );
@@ -254,30 +253,24 @@ CREATE TABLE madera.produit (
 -- Le projet peux contenir plusieurs produits
 
 CREATE TABLE madera.projet_produits (
-    i_projet_id integer NOT NULL, -- Foreign key projet
-    i_produit_id integer -- Foreign key produits
+    i_projet_id integer NOT NULL,
+    i_produit_id integer NOT NULL
 );
 
 -- Un produit contient des modules avec des modifications apportées par le client
-
-CREATE TABLE madera.produit_module (--changement nom table
-    i_produit_module_id serial,
-    i_produit_id integer NOT NULL, -- Foreign key produit
-    i_module_id integer NOT NULL, -- Foreign key module
-    v_nom_module varchar(50)
-);
-
 -- Pour chaque module il faudra renseigner la longueur de chaque section (une section dans ce contexte
 -- là est le pan mur jusqu'à l'angle ensuite on passe sur une autre section).
 -- Exemple : mur droit n'aura qu'une section et donc qu'une longueur
 -- Et mur avec angle : aura donc 2 sections avec deux longueurs différentes
-
-CREATE TABLE madera.produit_module_section (
-    i_produit_module_id integer NOT NULL,
+CREATE TABLE madera.produit_module (--changement nom table
+    i_produit_module_id serial,
+    i_produit_id integer NOT NULL, -- Foreign key produit
+    i_module_id integer NOT NULL, -- Foreign key module
+    v_produit_module_nom varchar(50),
     v_produit_module_angle varchar(30),
-    f_longueur_section double precision,
-    f_longueur_section_2 double precision
+    j_section_longueur jsonb
 );
+
 
 ALTER TABLE madera.produit_module OWNER TO postgres;
 
@@ -316,202 +309,20 @@ CREATE TABLE madera.utilisateur (
 
 ALTER TABLE madera.utilisateur OWNER TO postgres;
 
---
--- TOC entry 2745 (class 2606 OID 24586)
--- Name: adresse adresse_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.adresse
-    ADD CONSTRAINT adresse_pkey PRIMARY KEY (i_adresse_id);
-
-
---
--- TOC entry 2743 (class 2606 OID 24581)
--- Name: client client_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.client
-    ADD CONSTRAINT client_pkey PRIMARY KEY (i_client_id);
-
-
---
--- TOC entry 2775 (class 2606 OID 24700)
--- Name: composant_fournisseur composant_fournisseur_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.composant_fournisseur
-    ADD CONSTRAINT composant_fournisseur_pkey PRIMARY KEY (i_fournisseur_id, i_composant_id);
-
-
---
--- TOC entry 2758 (class 2606 OID 24629)
--- Name: composant_groupe composant_groupe_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.composant_groupe
-    ADD CONSTRAINT composant_groupe_pkey PRIMARY KEY (i_composant_groupe_id);
-
-
---
--- TOC entry 2762 (class 2606 OID 24639)
--- Name: composant composant_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.composant
-    ADD CONSTRAINT composant_pkey PRIMARY KEY (i_composant_id);
-
-
---
--- TOC entry 2760 (class 2606 OID 24634)
--- Name: composant_referentiel composant_referentiel_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.composant_referentiel
-    ADD CONSTRAINT composant_referentiel_pkey PRIMARY KEY (i_composant_referentiel_id);
-
-
---
--- TOC entry 2778 (class 2606 OID 24716)
--- Name: devis_etat devis_etat_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.devis_etat
-    ADD CONSTRAINT devis_etat_pkey PRIMARY KEY (i_devis_etat_id);
-
-
---
--- TOC entry 2748 (class 2606 OID 24591)
--- Name: fournisseur fournisseur_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.fournisseur
-    ADD CONSTRAINT fournisseur_pkey PRIMARY KEY (i_fournisseur_id);
-
-
---
--- TOC entry 2750 (class 2606 OID 24602)
--- Name: gammes gammes_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.gammes
-    ADD CONSTRAINT gammes_pkey PRIMARY KEY (i_gammes_id);
-
-
---
--- TOC entry 2756 (class 2606 OID 24612)
--- Name: module module_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.module
-    ADD CONSTRAINT module_pkey PRIMARY KEY (i_module_id);
-
-
---
--- TOC entry 2752 (class 2606 OID 24607)
--- Name: module_referentiel module_referentiel_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.module_referentiel
-    ADD CONSTRAINT module_referentiel_pkey PRIMARY KEY (i_module_referentiel_id);
-
-
-
---
--- TOC entry 2788 (class 2606 OID 24833)
--- Name: projet_module projet_module_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.projet_module
-    ADD CONSTRAINT projet_module_pkey PRIMARY KEY (i_projet_module_id);
-
-
---
--- TOC entry 2772 (class 2606 OID 24675)
--- Name: projet projet_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.projet
-    ADD CONSTRAINT projet_pkey PRIMARY KEY (i_projet_id);
-
-
---
--- TOC entry 2766 (class 2606 OID 24656)
--- Name: role role_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.role
-    ADD CONSTRAINT role_pkey PRIMARY KEY (i_role_id);
-
-
---
--- TOC entry 2769 (class 2606 OID 24661)
--- Name: utilisateur utilisateur_pkey; Type: CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.utilisateur
-    ADD CONSTRAINT utilisateur_pkey PRIMARY KEY (i_utilisateur_id);
-
-
---
--- TOC entry 2746 (class 1259 OID 24597)
--- Name: fk_adresse_idx; Type: INDEX; Schema: madera; Owner: postgres
---
-
 CREATE INDEX fk_adresse_idx ON madera.fournisseur USING btree (i_adresse_id);
-
-
---
--- TOC entry 2783 (class 1259 OID 24786)
--- Name: fk_adresse_idx_2; Type: INDEX; Schema: madera; Owner: postgres
---
 
 CREATE INDEX fk_adresse_idx_2 ON madera.client_adresse USING btree (i_adresse_id);
 
-
---
--- TOC entry 2770 (class 1259 OID 24681)
--- Name: fk_client_idx; Type: INDEX; Schema: madera; Owner: postgres
---
-
 CREATE INDEX fk_client_idx ON madera.projet USING btree (i_client_id);
-
-
---
--- TOC entry 2763 (class 1259 OID 24650)
--- Name: fk_composant_groupe_idx; Type: INDEX; Schema: madera; Owner: postgres
---
 
 CREATE INDEX fk_composant_groupe_idx ON madera.composant USING btree (i_composant_groupe_id);
 
-
---
--- TOC entry 2773 (class 1259 OID 24695)
--- Name: fk_composant_idx; Type: INDEX; Schema: madera; Owner: postgres
---
-
 CREATE INDEX fk_composant_idx ON madera.module_composant USING btree (i_composant_id);
-
-
---
--- TOC entry 2764 (class 1259 OID 24651)
--- Name: fk_composant_referentiel_idx; Type: INDEX; Schema: madera; Owner: postgres
---
 
 CREATE INDEX fk_composant_referentiel_idx ON madera.composant USING btree (i_composant_referentiel_id);
 
-
---
--- TOC entry 2776 (class 1259 OID 24711)
--- Name: fk_fournisseur_idx; Type: INDEX; Schema: madera; Owner: postgres
---
-
 CREATE INDEX fk_fournisseur_idx ON madera.composant_fournisseur USING btree (i_fournisseur_id);
 
-
---
--- TOC entry 2753 (class 1259 OID 24623)
--- Name: fk_gammes_idx; Type: INDEX; Schema: madera; Owner: postgres
---
 
 CREATE INDEX fk_gammes_idx ON madera.module USING btree (i_gammes_id);
 
@@ -521,7 +332,7 @@ CREATE INDEX fk_gammes_idx ON madera.module USING btree (i_gammes_id);
 -- Name: fk_module_idx; Type: INDEX; Schema: madera; Owner: postgres
 --
 
-CREATE INDEX fk_module_idx ON madera.projet_module USING btree (i_module_id);
+CREATE INDEX fk_module_idx ON madera.projet_produits USING btree (i_projet_id, i_produit_id);
 
 
 --
@@ -544,7 +355,7 @@ CREATE INDEX fk_projet_idx_2 ON madera.projet_utilisateurs USING btree (i_projet
 -- Name: fk_projet_idx_3; Type: INDEX; Schema: madera; Owner: postgres
 --
 
-CREATE INDEX fk_projet_idx_3 ON madera.projet_module USING btree (i_projet_id);
+CREATE INDEX fk_projet_idx_3 ON madera.produit_module USING btree (i_produit_module_id);
 
 
 --
@@ -555,157 +366,181 @@ CREATE INDEX fk_projet_idx_3 ON madera.projet_module USING btree (i_projet_id);
 CREATE INDEX fk_role_idx ON madera.utilisateur USING btree (i_role_id);
 
 
---
--- TOC entry 2789 (class 2606 OID 24592)
--- Name: fournisseur fk_adresse_2; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
 
-ALTER TABLE ONLY madera.fournisseur
-    ADD CONSTRAINT fk_adresse_2 FOREIGN KEY (i_adresse_id) REFERENCES madera.adresse(i_adresse_id);
+-- Contrainte madera.adresse
+
+ALTER TABLE ONLY madera.adresse
+    ADD CONSTRAINT adresse_pkey PRIMARY KEY (i_adresse_id);
 
 
---
--- TOC entry 2803 (class 2606 OID 24781)
--- Name: client_adresse fk_adresse_2; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
+-- Contrainte madera.client
+
+ALTER TABLE ONLY madera.client
+    ADD CONSTRAINT client_pkey PRIMARY KEY (i_client_id);
+
+
+-- Contrainte madera.client_adresse
 
 ALTER TABLE ONLY madera.client_adresse
     ADD CONSTRAINT fk_adresse_2 FOREIGN KEY (i_adresse_id) REFERENCES madera.adresse(i_adresse_id);
-
-
-ALTER TABLE ONLY madera.projet
-    ADD CONSTRAINT fk_devis_etat FOREIGN KEY (i_devis_etat_id) REFERENCES madera.devis_etat(i_devis_etat_id);
---
--- TOC entry 2802 (class 2606 OID 24776)
--- Name: client_adresse fk_client_2; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
 
 ALTER TABLE ONLY madera.client_adresse
     ADD CONSTRAINT fk_client_2 FOREIGN KEY (i_client_id) REFERENCES madera.client(i_client_id);
 
+-- Contrainte madera.composant_groupe
 
---
--- TOC entry 2797 (class 2606 OID 24690)
--- Name: module_composant fk_composant; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.module_composant
-    ADD CONSTRAINT fk_composant FOREIGN KEY (i_composant_id) REFERENCES madera.composant(i_composant_id);
+ALTER TABLE ONLY madera.composant_groupe
+    ADD CONSTRAINT composant_groupe_pkey PRIMARY KEY (i_composant_groupe_id);
 
 
---
--- TOC entry 2798 (class 2606 OID 24701)
--- Name: composant_fournisseur fk_composant_2; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
+-- Contrainte madera.composant_referentiel
 
-ALTER TABLE ONLY madera.composant_fournisseur
-    ADD CONSTRAINT fk_composant_2 FOREIGN KEY (i_composant_id) REFERENCES madera.composant(i_composant_id);
+ALTER TABLE ONLY madera.composant_referentiel
+    ADD CONSTRAINT composant_referentiel_pkey PRIMARY KEY (i_composant_referentiel_id);
 
 
---
--- TOC entry 2792 (class 2606 OID 24640)
--- Name: composant fk_composant_groupe; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
+-- Contrainte madera.composant
+
+ALTER TABLE ONLY madera.composant
+    ADD CONSTRAINT composant_pkey PRIMARY KEY (i_composant_id);
 
 ALTER TABLE ONLY madera.composant
     ADD CONSTRAINT fk_composant_groupe FOREIGN KEY (i_composant_groupe_id) REFERENCES madera.composant_groupe(i_composant_groupe_id);
-
-
---
--- TOC entry 2793 (class 2606 OID 24645)
--- Name: composant fk_composant_referentiel; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
 
 ALTER TABLE ONLY madera.composant
     ADD CONSTRAINT fk_composant_referentiel FOREIGN KEY (i_composant_referentiel_id) REFERENCES madera.composant_referentiel(i_composant_referentiel_id);
 
 
+-- Contrainte madera.fournisseur
 
---
--- TOC entry 2799 (class 2606 OID 24706)
--- Name: composant_fournisseur fk_fournisseur; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
+ALTER TABLE ONLY madera.fournisseur
+    ADD CONSTRAINT fournisseur_pkey PRIMARY KEY (i_fournisseur_id);
+
+ALTER TABLE ONLY madera.fournisseur
+    ADD CONSTRAINT fk_adresse_2 FOREIGN KEY (i_adresse_id) REFERENCES madera.adresse(i_adresse_id);
+
+
+-- Contrainte madera.composant_fournisseur
+
+ALTER TABLE ONLY madera.composant_fournisseur
+    ADD CONSTRAINT composant_fournisseur_pkey PRIMARY KEY (i_fournisseur_id, i_composant_id);
+
+ALTER TABLE ONLY madera.composant_fournisseur
+    ADD CONSTRAINT fk_composant_2 FOREIGN KEY (i_composant_id) REFERENCES madera.composant(i_composant_id);
 
 ALTER TABLE ONLY madera.composant_fournisseur
     ADD CONSTRAINT fk_fournisseur FOREIGN KEY (i_fournisseur_id) REFERENCES madera.fournisseur(i_fournisseur_id);
 
 
---
--- TOC entry 2790 (class 2606 OID 24613)
--- Name: module fk_gammes; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
+-- Contrainte madera.devis_etat
+
+ALTER TABLE ONLY madera.devis_etat
+    ADD CONSTRAINT devis_etat_pkey PRIMARY KEY (i_devis_etat_id);
+
+
+
+-- Contrainte madera.gammes
+
+ALTER TABLE ONLY madera.gammes
+    ADD CONSTRAINT gammes_pkey PRIMARY KEY (i_gammes_id);
+
+
+-- Contrainte madera.module_referentiel
+
+ALTER TABLE ONLY madera.module_referentiel
+    ADD CONSTRAINT module_referentiel_pkey PRIMARY KEY (i_module_referentiel_id);
+
+
+-- Contrainte madera.module
+
+ALTER TABLE ONLY madera.module
+    ADD CONSTRAINT module_pkey PRIMARY KEY (i_module_id);
 
 ALTER TABLE ONLY madera.module
     ADD CONSTRAINT fk_gammes FOREIGN KEY (i_gammes_id) REFERENCES madera.gammes(i_gammes_id);
-
-
---
--- TOC entry 2796 (class 2606 OID 24685)
--- Name: module_composant fk_module; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.module_composant
-    ADD CONSTRAINT fk_module FOREIGN KEY (i_module_id) REFERENCES madera.module(i_module_id);
-
-
---
--- TOC entry 2807 (class 2606 OID 24839)
--- Name: projet_module fk_module_2; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.projet_module
-    ADD CONSTRAINT fk_module_2 FOREIGN KEY (i_module_id) REFERENCES madera.module(i_module_id);
-
-
---
--- TOC entry 2791 (class 2606 OID 24618)
--- Name: module fk_module_referentiel; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
 
 ALTER TABLE ONLY madera.module
     ADD CONSTRAINT fk_module_referentiel FOREIGN KEY (i_module_referentiel_id) REFERENCES madera.module_referentiel(i_module_referentiel_id);
 
 
+-- Contrainte madera.module_composant
 
---
--- TOC entry 2806 (class 2606 OID 24834)
--- Name: projet_module fk_projet_2; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
+ALTER TABLE ONLY madera.module_composant
+    ADD CONSTRAINT fk_composant FOREIGN KEY (i_composant_id) REFERENCES madera.composant(i_composant_id);
 
-ALTER TABLE ONLY madera.projet_module
+ALTER TABLE ONLY madera.module_composant
+    ADD CONSTRAINT fk_module FOREIGN KEY (i_module_id) REFERENCES madera.module(i_module_id);
+
+
+-- Contrainte madera.projet
+
+ALTER TABLE ONLY madera.projet
+    ADD CONSTRAINT projet_pkey PRIMARY KEY (i_projet_id);
+
+ALTER TABLE ONLY madera.projet
+    ADD CONSTRAINT fk_devis_etat FOREIGN KEY (i_devis_etat_id) REFERENCES madera.devis_etat(i_devis_etat_id);
+
+
+-- Contrainte madera.produit
+
+ALTER TABLE ONLY madera.produit
+    ADD CONSTRAINT produit_key PRIMARY KEY (i_produit_id);
+
+ALTER TABLE ONLY madera.produit
+    ADD CONSTRAINT produit FOREIGN KEY (i_gammes_id) REFERENCES madera.gammes(i_gammes_id);
+
+
+-- Contrainte madera.projet_produits
+
+ALTER TABLE ONLY madera.projet_produits
+    ADD CONSTRAINT projet_produits_pkey PRIMARY KEY (i_projet_id, i_produit_id);
+
+ALTER TABLE ONLY madera.projet_produits
     ADD CONSTRAINT fk_projet_2 FOREIGN KEY (i_projet_id) REFERENCES madera.projet(i_projet_id);
 
-
---
--- TOC entry 2805 (class 2606 OID 24808)
--- Name: projet_utilisateurs fk_projet_3; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
-
-ALTER TABLE ONLY madera.projet_utilisateurs
-    ADD CONSTRAINT fk_projet_3 FOREIGN KEY (i_projet_id) REFERENCES madera.projet(i_projet_id);
+ALTER TABLE ONLY madera.projet_produits
+    ADD CONSTRAINT fk_projet_produits FOREIGN KEY (i_produit_id) REFERENCES madera.produit(i_produit_id);
 
 
---
--- TOC entry 2794 (class 2606 OID 24662)
--- Name: utilisateur fk_role; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
+-- Contrainte produit_modules
+
+ALTER TABLE ONLY madera.produit_module
+    ADD CONSTRAINT produit_module_pkey PRIMARY KEY (i_produit_module_id);
+
+ALTER TABLE ONLY madera.produit_module
+    ADD CONSTRAINT fk_produit_module FOREIGN KEY (i_produit_id) REFERENCES madera.produit(i_produit_id);
+
+ALTER TABLE ONLY madera.produit_module
+    ADD CONSTRAINT fk_module_2 FOREIGN KEY (i_module_id) REFERENCES madera.module(i_module_id);
+
+
+-- Contrainte madera.role
+
+ALTER TABLE ONLY madera.role
+    ADD CONSTRAINT role_pkey PRIMARY KEY (i_role_id);
+
+
+-- Contrainte madera.utilisateur
+
+ALTER TABLE ONLY madera.utilisateur
+    ADD CONSTRAINT utilisateur_pkey PRIMARY KEY (i_utilisateur_id);
 
 ALTER TABLE ONLY madera.utilisateur
     ADD CONSTRAINT fk_role FOREIGN KEY (i_role_id) REFERENCES madera.role(i_role_id);
 
 
---
--- TOC entry 2804 (class 2606 OID 24803)
--- Name: projet_utilisateurs fk_utilisateurs; Type: FK CONSTRAINT; Schema: madera; Owner: postgres
---
+-- Contrainte madera.projet_utilisateurs
+
+ALTER TABLE ONLY madera.projet_utilisateurs
+    ADD CONSTRAINT projet_utilisateurs_pkey PRIMARY KEY (i_utilisateur_id, i_projet_id);
+
+ALTER TABLE ONLY madera.projet_utilisateurs
+    ADD CONSTRAINT fk_projet_3 FOREIGN KEY (i_projet_id) REFERENCES madera.projet(i_projet_id);
 
 ALTER TABLE ONLY madera.projet_utilisateurs
     ADD CONSTRAINT fk_utilisateurs FOREIGN KEY (i_utilisateur_id) REFERENCES madera.utilisateur(i_utilisateur_id);
 
-
--- Completed on 2019-10-16 16:48:01
-
 --
--- PostgreSQL database dump complete
+-- TOC entry 2746 (class 1259 OID 24597)
+-- Name: fk_adresse_idx; Type: INDEX; Schema: madera; Owner: postgres
 --
-
