@@ -17,8 +17,10 @@ import com.madera.jooq.tables.Gammes;
 import com.madera.jooq.tables.Module;
 import com.madera.jooq.tables.ModuleComposant;
 import com.madera.jooq.tables.ModuleReferentiel;
+import com.madera.jooq.tables.Produit;
+import com.madera.jooq.tables.ProduitModule;
 import com.madera.jooq.tables.Projet;
-import com.madera.jooq.tables.ProjetModule;
+import com.madera.jooq.tables.ProjetProduits;
 import com.madera.jooq.tables.ProjetUtilisateurs;
 import com.madera.jooq.tables.Role;
 import com.madera.jooq.tables.Utilisateur;
@@ -35,7 +37,9 @@ import com.madera.jooq.tables.records.GammesRecord;
 import com.madera.jooq.tables.records.ModuleComposantRecord;
 import com.madera.jooq.tables.records.ModuleRecord;
 import com.madera.jooq.tables.records.ModuleReferentielRecord;
-import com.madera.jooq.tables.records.ProjetModuleRecord;
+import com.madera.jooq.tables.records.ProduitModuleRecord;
+import com.madera.jooq.tables.records.ProduitRecord;
+import com.madera.jooq.tables.records.ProjetProduitsRecord;
 import com.madera.jooq.tables.records.ProjetRecord;
 import com.madera.jooq.tables.records.ProjetUtilisateursRecord;
 import com.madera.jooq.tables.records.RoleRecord;
@@ -77,8 +81,9 @@ public class Keys {
     public static final Identity<GammesRecord, Integer> IDENTITY_GAMMES = Identities0.IDENTITY_GAMMES;
     public static final Identity<ModuleRecord, Integer> IDENTITY_MODULE = Identities0.IDENTITY_MODULE;
     public static final Identity<ModuleReferentielRecord, Integer> IDENTITY_MODULE_REFERENTIEL = Identities0.IDENTITY_MODULE_REFERENTIEL;
+    public static final Identity<ProduitRecord, Integer> IDENTITY_PRODUIT = Identities0.IDENTITY_PRODUIT;
+    public static final Identity<ProduitModuleRecord, Integer> IDENTITY_PRODUIT_MODULE = Identities0.IDENTITY_PRODUIT_MODULE;
     public static final Identity<ProjetRecord, Integer> IDENTITY_PROJET = Identities0.IDENTITY_PROJET;
-    public static final Identity<ProjetModuleRecord, Integer> IDENTITY_PROJET_MODULE = Identities0.IDENTITY_PROJET_MODULE;
     public static final Identity<RoleRecord, Integer> IDENTITY_ROLE = Identities0.IDENTITY_ROLE;
     public static final Identity<UtilisateurRecord, Integer> IDENTITY_UTILISATEUR = Identities0.IDENTITY_UTILISATEUR;
 
@@ -97,8 +102,11 @@ public class Keys {
     public static final UniqueKey<GammesRecord> GAMMES_PKEY = UniqueKeys0.GAMMES_PKEY;
     public static final UniqueKey<ModuleRecord> MODULE_PKEY = UniqueKeys0.MODULE_PKEY;
     public static final UniqueKey<ModuleReferentielRecord> MODULE_REFERENTIEL_PKEY = UniqueKeys0.MODULE_REFERENTIEL_PKEY;
+    public static final UniqueKey<ProduitRecord> PRODUIT_KEY = UniqueKeys0.PRODUIT_KEY;
+    public static final UniqueKey<ProduitModuleRecord> PRODUIT_MODULE_PKEY = UniqueKeys0.PRODUIT_MODULE_PKEY;
     public static final UniqueKey<ProjetRecord> PROJET_PKEY = UniqueKeys0.PROJET_PKEY;
-    public static final UniqueKey<ProjetModuleRecord> PROJET_MODULE_PKEY = UniqueKeys0.PROJET_MODULE_PKEY;
+    public static final UniqueKey<ProjetProduitsRecord> PROJET_PRODUITS_PKEY = UniqueKeys0.PROJET_PRODUITS_PKEY;
+    public static final UniqueKey<ProjetUtilisateursRecord> PROJET_UTILISATEURS_PKEY = UniqueKeys0.PROJET_UTILISATEURS_PKEY;
     public static final UniqueKey<RoleRecord> ROLE_PKEY = UniqueKeys0.ROLE_PKEY;
     public static final UniqueKey<UtilisateurRecord> UTILISATEUR_PKEY = UniqueKeys0.UTILISATEUR_PKEY;
 
@@ -117,10 +125,12 @@ public class Keys {
     public static final ForeignKey<ModuleRecord, ModuleReferentielRecord> MODULE__FK_MODULE_REFERENTIEL = ForeignKeys0.MODULE__FK_MODULE_REFERENTIEL;
     public static final ForeignKey<ModuleComposantRecord, ModuleRecord> MODULE_COMPOSANT__FK_MODULE = ForeignKeys0.MODULE_COMPOSANT__FK_MODULE;
     public static final ForeignKey<ModuleComposantRecord, ComposantRecord> MODULE_COMPOSANT__FK_COMPOSANT = ForeignKeys0.MODULE_COMPOSANT__FK_COMPOSANT;
-    public static final ForeignKey<ProjetRecord, ClientRecord> PROJET__FK_CLIENT = ForeignKeys0.PROJET__FK_CLIENT;
+    public static final ForeignKey<ProduitRecord, GammesRecord> PRODUIT__PRODUIT = ForeignKeys0.PRODUIT__PRODUIT;
+    public static final ForeignKey<ProduitModuleRecord, ProduitRecord> PRODUIT_MODULE__FK_PRODUIT_MODULE = ForeignKeys0.PRODUIT_MODULE__FK_PRODUIT_MODULE;
+    public static final ForeignKey<ProduitModuleRecord, ModuleRecord> PRODUIT_MODULE__FK_MODULE_2 = ForeignKeys0.PRODUIT_MODULE__FK_MODULE_2;
     public static final ForeignKey<ProjetRecord, DevisEtatRecord> PROJET__FK_DEVIS_ETAT = ForeignKeys0.PROJET__FK_DEVIS_ETAT;
-    public static final ForeignKey<ProjetModuleRecord, ProjetRecord> PROJET_MODULE__FK_PROJET_2 = ForeignKeys0.PROJET_MODULE__FK_PROJET_2;
-    public static final ForeignKey<ProjetModuleRecord, ModuleRecord> PROJET_MODULE__FK_MODULE_2 = ForeignKeys0.PROJET_MODULE__FK_MODULE_2;
+    public static final ForeignKey<ProjetProduitsRecord, ProjetRecord> PROJET_PRODUITS__FK_PROJET_2 = ForeignKeys0.PROJET_PRODUITS__FK_PROJET_2;
+    public static final ForeignKey<ProjetProduitsRecord, ProduitRecord> PROJET_PRODUITS__FK_PROJET_PRODUITS = ForeignKeys0.PROJET_PRODUITS__FK_PROJET_PRODUITS;
     public static final ForeignKey<ProjetUtilisateursRecord, UtilisateurRecord> PROJET_UTILISATEURS__FK_UTILISATEURS = ForeignKeys0.PROJET_UTILISATEURS__FK_UTILISATEURS;
     public static final ForeignKey<ProjetUtilisateursRecord, ProjetRecord> PROJET_UTILISATEURS__FK_PROJET_3 = ForeignKeys0.PROJET_UTILISATEURS__FK_PROJET_3;
     public static final ForeignKey<UtilisateurRecord, RoleRecord> UTILISATEUR__FK_ROLE = ForeignKeys0.UTILISATEUR__FK_ROLE;
@@ -140,8 +150,9 @@ public class Keys {
         public static Identity<GammesRecord, Integer> IDENTITY_GAMMES = Internal.createIdentity(Gammes.GAMMES, Gammes.GAMMES.I_GAMMES_ID);
         public static Identity<ModuleRecord, Integer> IDENTITY_MODULE = Internal.createIdentity(Module.MODULE, Module.MODULE.I_MODULE_ID);
         public static Identity<ModuleReferentielRecord, Integer> IDENTITY_MODULE_REFERENTIEL = Internal.createIdentity(ModuleReferentiel.MODULE_REFERENTIEL, ModuleReferentiel.MODULE_REFERENTIEL.I_MODULE_REFERENTIEL_ID);
+        public static Identity<ProduitRecord, Integer> IDENTITY_PRODUIT = Internal.createIdentity(Produit.PRODUIT, Produit.PRODUIT.I_PRODUIT_ID);
+        public static Identity<ProduitModuleRecord, Integer> IDENTITY_PRODUIT_MODULE = Internal.createIdentity(ProduitModule.PRODUIT_MODULE, ProduitModule.PRODUIT_MODULE.I_PRODUIT_MODULE_ID);
         public static Identity<ProjetRecord, Integer> IDENTITY_PROJET = Internal.createIdentity(Projet.PROJET, Projet.PROJET.I_PROJET_ID);
-        public static Identity<ProjetModuleRecord, Integer> IDENTITY_PROJET_MODULE = Internal.createIdentity(ProjetModule.PROJET_MODULE, ProjetModule.PROJET_MODULE.I_PROJET_MODULE_ID);
         public static Identity<RoleRecord, Integer> IDENTITY_ROLE = Internal.createIdentity(Role.ROLE, Role.ROLE.I_ROLE_ID);
         public static Identity<UtilisateurRecord, Integer> IDENTITY_UTILISATEUR = Internal.createIdentity(Utilisateur.UTILISATEUR, Utilisateur.UTILISATEUR.I_UTILISATEUR_ID);
     }
@@ -158,8 +169,11 @@ public class Keys {
         public static final UniqueKey<GammesRecord> GAMMES_PKEY = Internal.createUniqueKey(Gammes.GAMMES, "gammes_pkey", Gammes.GAMMES.I_GAMMES_ID);
         public static final UniqueKey<ModuleRecord> MODULE_PKEY = Internal.createUniqueKey(Module.MODULE, "module_pkey", Module.MODULE.I_MODULE_ID);
         public static final UniqueKey<ModuleReferentielRecord> MODULE_REFERENTIEL_PKEY = Internal.createUniqueKey(ModuleReferentiel.MODULE_REFERENTIEL, "module_referentiel_pkey", ModuleReferentiel.MODULE_REFERENTIEL.I_MODULE_REFERENTIEL_ID);
+        public static final UniqueKey<ProduitRecord> PRODUIT_KEY = Internal.createUniqueKey(Produit.PRODUIT, "produit_key", Produit.PRODUIT.I_PRODUIT_ID);
+        public static final UniqueKey<ProduitModuleRecord> PRODUIT_MODULE_PKEY = Internal.createUniqueKey(ProduitModule.PRODUIT_MODULE, "produit_module_pkey", ProduitModule.PRODUIT_MODULE.I_PRODUIT_MODULE_ID);
         public static final UniqueKey<ProjetRecord> PROJET_PKEY = Internal.createUniqueKey(Projet.PROJET, "projet_pkey", Projet.PROJET.I_PROJET_ID);
-        public static final UniqueKey<ProjetModuleRecord> PROJET_MODULE_PKEY = Internal.createUniqueKey(ProjetModule.PROJET_MODULE, "projet_module_pkey", ProjetModule.PROJET_MODULE.I_PROJET_MODULE_ID);
+        public static final UniqueKey<ProjetProduitsRecord> PROJET_PRODUITS_PKEY = Internal.createUniqueKey(ProjetProduits.PROJET_PRODUITS, "projet_produits_pkey", ProjetProduits.PROJET_PRODUITS.I_PROJET_ID, ProjetProduits.PROJET_PRODUITS.I_PRODUIT_ID);
+        public static final UniqueKey<ProjetUtilisateursRecord> PROJET_UTILISATEURS_PKEY = Internal.createUniqueKey(ProjetUtilisateurs.PROJET_UTILISATEURS, "projet_utilisateurs_pkey", ProjetUtilisateurs.PROJET_UTILISATEURS.I_UTILISATEUR_ID, ProjetUtilisateurs.PROJET_UTILISATEURS.I_PROJET_ID);
         public static final UniqueKey<RoleRecord> ROLE_PKEY = Internal.createUniqueKey(Role.ROLE, "role_pkey", Role.ROLE.I_ROLE_ID);
         public static final UniqueKey<UtilisateurRecord> UTILISATEUR_PKEY = Internal.createUniqueKey(Utilisateur.UTILISATEUR, "utilisateur_pkey", Utilisateur.UTILISATEUR.I_UTILISATEUR_ID);
     }
@@ -176,10 +190,12 @@ public class Keys {
         public static final ForeignKey<ModuleRecord, ModuleReferentielRecord> MODULE__FK_MODULE_REFERENTIEL = Internal.createForeignKey(com.madera.jooq.Keys.MODULE_REFERENTIEL_PKEY, Module.MODULE, "module__fk_module_referentiel", Module.MODULE.I_MODULE_REFERENTIEL_ID);
         public static final ForeignKey<ModuleComposantRecord, ModuleRecord> MODULE_COMPOSANT__FK_MODULE = Internal.createForeignKey(com.madera.jooq.Keys.MODULE_PKEY, ModuleComposant.MODULE_COMPOSANT, "module_composant__fk_module", ModuleComposant.MODULE_COMPOSANT.I_MODULE_ID);
         public static final ForeignKey<ModuleComposantRecord, ComposantRecord> MODULE_COMPOSANT__FK_COMPOSANT = Internal.createForeignKey(com.madera.jooq.Keys.COMPOSANT_PKEY, ModuleComposant.MODULE_COMPOSANT, "module_composant__fk_composant", ModuleComposant.MODULE_COMPOSANT.I_COMPOSANT_ID);
-        public static final ForeignKey<ProjetRecord, ClientRecord> PROJET__FK_CLIENT = Internal.createForeignKey(com.madera.jooq.Keys.CLIENT_PKEY, Projet.PROJET, "projet__fk_client", Projet.PROJET.I_CLIENT_ID);
+        public static final ForeignKey<ProduitRecord, GammesRecord> PRODUIT__PRODUIT = Internal.createForeignKey(com.madera.jooq.Keys.GAMMES_PKEY, Produit.PRODUIT, "produit__produit", Produit.PRODUIT.I_GAMMES_ID);
+        public static final ForeignKey<ProduitModuleRecord, ProduitRecord> PRODUIT_MODULE__FK_PRODUIT_MODULE = Internal.createForeignKey(com.madera.jooq.Keys.PRODUIT_KEY, ProduitModule.PRODUIT_MODULE, "produit_module__fk_produit_module", ProduitModule.PRODUIT_MODULE.I_PRODUIT_ID);
+        public static final ForeignKey<ProduitModuleRecord, ModuleRecord> PRODUIT_MODULE__FK_MODULE_2 = Internal.createForeignKey(com.madera.jooq.Keys.MODULE_PKEY, ProduitModule.PRODUIT_MODULE, "produit_module__fk_module_2", ProduitModule.PRODUIT_MODULE.I_MODULE_ID);
         public static final ForeignKey<ProjetRecord, DevisEtatRecord> PROJET__FK_DEVIS_ETAT = Internal.createForeignKey(com.madera.jooq.Keys.DEVIS_ETAT_PKEY, Projet.PROJET, "projet__fk_devis_etat", Projet.PROJET.I_DEVIS_ETAT_ID);
-        public static final ForeignKey<ProjetModuleRecord, ProjetRecord> PROJET_MODULE__FK_PROJET_2 = Internal.createForeignKey(com.madera.jooq.Keys.PROJET_PKEY, ProjetModule.PROJET_MODULE, "projet_module__fk_projet_2", ProjetModule.PROJET_MODULE.I_PROJET_ID);
-        public static final ForeignKey<ProjetModuleRecord, ModuleRecord> PROJET_MODULE__FK_MODULE_2 = Internal.createForeignKey(com.madera.jooq.Keys.MODULE_PKEY, ProjetModule.PROJET_MODULE, "projet_module__fk_module_2", ProjetModule.PROJET_MODULE.I_MODULE_ID);
+        public static final ForeignKey<ProjetProduitsRecord, ProjetRecord> PROJET_PRODUITS__FK_PROJET_2 = Internal.createForeignKey(com.madera.jooq.Keys.PROJET_PKEY, ProjetProduits.PROJET_PRODUITS, "projet_produits__fk_projet_2", ProjetProduits.PROJET_PRODUITS.I_PROJET_ID);
+        public static final ForeignKey<ProjetProduitsRecord, ProduitRecord> PROJET_PRODUITS__FK_PROJET_PRODUITS = Internal.createForeignKey(com.madera.jooq.Keys.PRODUIT_KEY, ProjetProduits.PROJET_PRODUITS, "projet_produits__fk_projet_produits", ProjetProduits.PROJET_PRODUITS.I_PRODUIT_ID);
         public static final ForeignKey<ProjetUtilisateursRecord, UtilisateurRecord> PROJET_UTILISATEURS__FK_UTILISATEURS = Internal.createForeignKey(com.madera.jooq.Keys.UTILISATEUR_PKEY, ProjetUtilisateurs.PROJET_UTILISATEURS, "projet_utilisateurs__fk_utilisateurs", ProjetUtilisateurs.PROJET_UTILISATEURS.I_UTILISATEUR_ID);
         public static final ForeignKey<ProjetUtilisateursRecord, ProjetRecord> PROJET_UTILISATEURS__FK_PROJET_3 = Internal.createForeignKey(com.madera.jooq.Keys.PROJET_PKEY, ProjetUtilisateurs.PROJET_UTILISATEURS, "projet_utilisateurs__fk_projet_3", ProjetUtilisateurs.PROJET_UTILISATEURS.I_PROJET_ID);
         public static final ForeignKey<UtilisateurRecord, RoleRecord> UTILISATEUR__FK_ROLE = Internal.createForeignKey(com.madera.jooq.Keys.ROLE_PKEY, Utilisateur.UTILISATEUR, "utilisateur__fk_role", Utilisateur.UTILISATEUR.I_ROLE_ID);

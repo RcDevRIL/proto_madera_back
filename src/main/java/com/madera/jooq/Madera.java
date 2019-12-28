@@ -17,8 +17,10 @@ import com.madera.jooq.tables.Gammes;
 import com.madera.jooq.tables.Module;
 import com.madera.jooq.tables.ModuleComposant;
 import com.madera.jooq.tables.ModuleReferentiel;
+import com.madera.jooq.tables.Produit;
+import com.madera.jooq.tables.ProduitModule;
 import com.madera.jooq.tables.Projet;
-import com.madera.jooq.tables.ProjetModule;
+import com.madera.jooq.tables.ProjetProduits;
 import com.madera.jooq.tables.ProjetUtilisateurs;
 import com.madera.jooq.tables.Role;
 import com.madera.jooq.tables.Utilisateur;
@@ -48,7 +50,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Madera extends SchemaImpl {
 
-    private static final long serialVersionUID = -1217802379;
+    private static final long serialVersionUID = 1308894054;
 
     /**
      * The reference instance of <code>madera</code>
@@ -121,14 +123,24 @@ public class Madera extends SchemaImpl {
     public final ModuleReferentiel MODULE_REFERENTIEL = com.madera.jooq.tables.ModuleReferentiel.MODULE_REFERENTIEL;
 
     /**
+     * The table <code>madera.produit</code>.
+     */
+    public final Produit PRODUIT = com.madera.jooq.tables.Produit.PRODUIT;
+
+    /**
+     * The table <code>madera.produit_module</code>.
+     */
+    public final ProduitModule PRODUIT_MODULE = com.madera.jooq.tables.ProduitModule.PRODUIT_MODULE;
+
+    /**
      * The table <code>madera.projet</code>.
      */
     public final Projet PROJET = com.madera.jooq.tables.Projet.PROJET;
 
     /**
-     * The table <code>madera.projet_module</code>.
+     * The table <code>madera.projet_produits</code>.
      */
-    public final ProjetModule PROJET_MODULE = com.madera.jooq.tables.ProjetModule.PROJET_MODULE;
+    public final ProjetProduits PROJET_PRODUITS = com.madera.jooq.tables.ProjetProduits.PROJET_PRODUITS;
 
     /**
      * The table <code>madera.projet_utilisateurs</code>.
@@ -177,8 +189,9 @@ public class Madera extends SchemaImpl {
             Sequences.GAMMES_I_GAMMES_ID_SEQ,
             Sequences.MODULE_I_MODULE_ID_SEQ,
             Sequences.MODULE_REFERENTIEL_I_MODULE_REFERENTIEL_ID_SEQ,
+            Sequences.PRODUIT_I_PRODUIT_ID_SEQ,
+            Sequences.PRODUIT_MODULE_I_PRODUIT_MODULE_ID_SEQ,
             Sequences.PROJET_I_PROJET_ID_SEQ,
-            Sequences.PROJET_MODULE_I_PROJET_MODULE_ID_SEQ,
             Sequences.ROLE_I_ROLE_ID_SEQ,
             Sequences.UTILISATEUR_I_UTILISATEUR_ID_SEQ);
     }
@@ -205,8 +218,10 @@ public class Madera extends SchemaImpl {
             Module.MODULE,
             ModuleComposant.MODULE_COMPOSANT,
             ModuleReferentiel.MODULE_REFERENTIEL,
+            Produit.PRODUIT,
+            ProduitModule.PRODUIT_MODULE,
             Projet.PROJET,
-            ProjetModule.PROJET_MODULE,
+            ProjetProduits.PROJET_PRODUITS,
             ProjetUtilisateurs.PROJET_UTILISATEURS,
             Role.ROLE,
             Utilisateur.UTILISATEUR);

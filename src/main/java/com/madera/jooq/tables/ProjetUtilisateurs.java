@@ -23,6 +23,7 @@ import org.jooq.Row2;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
+import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
 
@@ -40,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ProjetUtilisateurs extends TableImpl<ProjetUtilisateursRecord> {
 
-    private static final long serialVersionUID = -344905800;
+    private static final long serialVersionUID = 1980177873;
 
     /**
      * The reference instance of <code>madera.projet_utilisateurs</code>
@@ -105,7 +106,17 @@ public class ProjetUtilisateurs extends TableImpl<ProjetUtilisateursRecord> {
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.FK_PROJET_IDX_2);
+        return Arrays.<Index>asList(Indexes.FK_PROJET_IDX_2, Indexes.PROJET_UTILISATEURS_PKEY);
+    }
+
+    @Override
+    public UniqueKey<ProjetUtilisateursRecord> getPrimaryKey() {
+        return Keys.PROJET_UTILISATEURS_PKEY;
+    }
+
+    @Override
+    public List<UniqueKey<ProjetUtilisateursRecord>> getKeys() {
+        return Arrays.<UniqueKey<ProjetUtilisateursRecord>>asList(Keys.PROJET_UTILISATEURS_PKEY);
     }
 
     @Override
