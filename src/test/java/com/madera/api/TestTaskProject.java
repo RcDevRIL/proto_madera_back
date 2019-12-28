@@ -2,7 +2,7 @@ package com.madera.api;
 
 import com.madera.api.controllers.TaskProject;
 import com.madera.api.models.Projet;
-import com.madera.api.models.ProjetModule;
+import com.madera.api.models.ProduitModule;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
@@ -54,11 +54,11 @@ public class TestTaskProject {
         projet.setClientId(4);
         projet.setDevisEtatId(1);
 
-        List<ProjetModule> listProjetModule = new ArrayList<>();
-        listProjetModule.add(new ProjetModule(1));
-        listProjetModule.add(new ProjetModule(2));
-        listProjetModule.add(new ProjetModule(3));
-        listProjetModule.add(new ProjetModule(4));
+        List<ProduitModule> listProjetModule = new ArrayList<>();
+        listProjetModule.add(new ProduitModule(1));
+        listProjetModule.add(new ProduitModule(2));
+        listProjetModule.add(new ProduitModule(3));
+        listProjetModule.add(new ProduitModule(4));
         ResponseEntity<Object> responseEntity = taskProject.createProject(projet, listProjetModule, 4);
         // Test si le résultat est null
         assertNotNull(responseEntity);
@@ -83,12 +83,12 @@ public class TestTaskProject {
         projet.setClientId(4);
         projet.setDevisEtatId(4);
 
-        List<ProjetModule> listProjetModule = new ArrayList<>();
-        listProjetModule.add(new ProjetModule(1));
-        listProjetModule.add(new ProjetModule(2));
-        listProjetModule.add(new ProjetModule(3));
-        listProjetModule.add(new ProjetModule(4));
-        listProjetModule.add(new ProjetModule(3));
+        List<ProduitModule> listProjetModule = new ArrayList<>();
+        listProjetModule.add(new ProduitModule(1));
+        listProjetModule.add(new ProduitModule(2));
+        listProjetModule.add(new ProduitModule(3));
+        listProjetModule.add(new ProduitModule(4));
+        listProjetModule.add(new ProduitModule(3));
 
         ResponseEntity<Object> responseEntity = taskProject.updateProject(projet, listProjetModule, 4);
         // Test si le résultat est null

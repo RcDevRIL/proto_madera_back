@@ -57,6 +57,7 @@ public class TaskSynchro {
         mapResponse.put("module", listModules);
         mapResponse.put("moduleComposant", listModuleComposants);
         mapResponse.put("devisEtat", listDevisEtat);
+        mapResponse.put("produitModele", null);
 
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
@@ -67,13 +68,14 @@ public class TaskSynchro {
         Map<String, Object> mapResponse = new HashMap<>();
 
         List<Projet> listProjet = projetRepository.getAllProjectsByUserId(utilisateurId);
-        List<ProjetModule> listProjetModule = projetRepository.getAllProjectModuleByUserId(utilisateurId);
+        List<ProduitModule> listProjetModule = projetRepository.getAllProduitModuleByUserId(utilisateurId);
+        //TODO projetproduits
         List<Client> listClient = clientRepository.getAllClient();
         List<ClientAdresse> listClientAdresse = clientRepository.getAllClientAdresse();
         List<Adresse> listAdresse = projetRepository.getAllAdresse();
 
         mapResponse.put("projet", listProjet);
-        mapResponse.put("projetModule", listProjetModule);
+        mapResponse.put("produitModule", listProjetModule);
         mapResponse.put("client", listClient);
         mapResponse.put("clientAdresse", listClientAdresse);
         mapResponse.put("adresse", listAdresse);

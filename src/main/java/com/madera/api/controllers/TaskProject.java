@@ -1,7 +1,8 @@
 package com.madera.api.controllers;
 
 import com.madera.api.models.Projet;
-import com.madera.api.models.ProjetModule;
+import com.madera.api.models.ProduitModule;
+import com.madera.api.models.ProjetWithAllInfos;
 import com.madera.api.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,34 +31,37 @@ public class TaskProject {
         this.projetRepository = projetRepository;
     }
 
-    //TODO attention qu'un seul requestbody est autorisé !
+    /**
+     * Structure attendue : projet : {produit: {infosProduits, listModules: infosModules}}
+     * @param projetWithAllInfos
+     * @return
+     */
     @PostMapping(path = "/project", consumes = "application/json")
     public ResponseEntity<Object> createProject(
-            @RequestBody Projet projet,
-            @RequestBody List<ProjetModule> listProjetModule,
-            @RequestBody Integer utilisateurId)
+            @RequestBody ProjetWithAllInfos projetWithAllInfos)
     {
         Map<String, Object> mapResponse = new HashMap<>();
-        Integer projetId = projetRepository.createProjet(projet, listProjetModule, utilisateurId);
-        if(projetId != null) {
-            mapResponse.put("projetId", projetId);
+        List<Integer> listProduitId = projetRepository.createAll(projetWithAllInfos);
+        if(listProduitId != null) {
+            mapResponse.put("listProduitId", listProduitId);
             return new ResponseEntity<>(mapResponse, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PutMapping(path = "/project", consumes = "application/json")
+    //TODO a refaire
+    /*@PutMapping(path = "/project", consumes = "application/json")
     public ResponseEntity<Object> updateProject(
             @RequestBody Projet projet,
-            @RequestBody List<ProjetModule> listProjetModule,
+            @RequestBody List<ProduitModule> listProjetModule,
             @RequestBody Integer utilisateurId)
     {
         Map<String, Object> mapResponse = new HashMap<>();
-        projetRepository.updateProject(projet);
+        //projetRepository.updateProject(projet);
         //projetRepository.updateProjectModule(projet);
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping(path = "/projects/{id}", produces = "application/json")
     public ResponseEntity<Object> getAllProject(@PathVariable("id") Integer id) {
@@ -67,7 +71,8 @@ public class TaskProject {
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
-    @DeleteMapping(path = "/project/{refProjet}", consumes = "application/json")
+    //TODO a refaire
+    /*@DeleteMapping(path = "/project/{refProjet}", consumes = "application/json")
     public ResponseEntity<Object> deleteProjectByRef(@PathVariable("refProjet") String refProjet) {
         Map<String, Object> mapResponse = new HashMap<>();
         Boolean isDeleted = projetRepository.deleteProject(refProjet) != 0;
@@ -77,7 +82,7 @@ public class TaskProject {
         } else {
             return new ResponseEntity<>(mapResponse, HttpStatus.BAD_REQUEST);
         }
-    }
+    }*/
 
     @GetMapping(path = "/quote/{id}", consumes = "application/json")
     public ResponseEntity<Object> getQuote(@PathVariable ("id") Integer id) {

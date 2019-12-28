@@ -139,8 +139,8 @@ public class Helper {
         return moduleComposant;
     }
 
-    public static ProjetModule RecordToProjetModule(Record record) {
-        ProjetModule projetModule = new ProjetModule();
+    public static ProduitModule RecordToProjetModule(Record record) {
+        ProduitModule projetModule = new ProduitModule();
         projetModule.setProjetModuleId(record.get(PROJET_MODULE.I_PROJET_MODULE_ID));
         projetModule.setProjetId(record.get(PROJET_MODULE.I_PROJET_ID));
         projetModule.setModuleId(record.get(PROJET_MODULE.I_MODULE_ID));
