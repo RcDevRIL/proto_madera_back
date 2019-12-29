@@ -30,7 +30,7 @@ public class UserRepository {
                 .select(UTILISATEUR.fields())
                 .from(UTILISATEUR)
                 .where(UTILISATEUR.V_LOGIN.eq(user.getLogin()).and(UTILISATEUR.V_PASSWORD.eq(user.getPassword())))
-                .fetchOne(Helper::RecordToUser);
+                .fetchOne(Helper::recordToUser);
     }
 
     public void insertToken(UserAuth user, String token) {
@@ -44,7 +44,7 @@ public class UserRepository {
                 .on(ROLE.I_ROLE_ID.eq(UTILISATEUR.I_ROLE_ID)).where(UTILISATEUR.V_TOKEN.like(token))
                 // .and(UTILISATEUR.I_ROLE_ID.notEqual(3)) TODO: trier les roles dans
                 // AuthentificationFilter
-                .fetchOne(Helper::RecordToSecurityUser);
+                .fetchOne(Helper::recordToSecurityUser);
     }
 
     public int deleteToken(String login) {

@@ -30,7 +30,7 @@ public class ClientRepository {
         return context
                 .select(CLIENT.fields())
                 .from(CLIENT)
-                .fetch(Helper::RecordToClient);
+                .fetch(Helper::recordToClient);
     }
 
     public Client getClientByNomAndPrenom(String nom, String prenom) {
@@ -38,7 +38,7 @@ public class ClientRepository {
                 .select(CLIENT.fields())
                 .from(CLIENT)
                 .where(CLIENT.V_NOM.like(nom).and(CLIENT.V_PRENOM.like(prenom)))
-                .fetchOne(Helper::RecordToClient);
+                .fetchOne(Helper::recordToClient);
     }
 
     public Integer createClient(Client client) {
@@ -85,7 +85,7 @@ public class ClientRepository {
         return context
                 .select(CLIENT_ADRESSE.fields())
                 .from(CLIENT_ADRESSE)
-                .fetch(Helper::RecordToClientAdresse);
+                .fetch(Helper::recordToClientAdresse);
     }
 
     public Integer addClientAdresse(List<ClientAdresse> listClientAdresse) {

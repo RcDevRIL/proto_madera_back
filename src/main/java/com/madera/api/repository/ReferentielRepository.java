@@ -34,18 +34,18 @@ public class ReferentielRepository {
             .join(COMPOSANT_GROUPE)
             .on(COMPOSANT_GROUPE.I_COMPOSANT_GROUPE_ID.eq(COMPOSANT.I_COMPOSANT_GROUPE_ID))
             .where(COMPOSANT.I_COMPOSANT_REFERENTIEL_ID.eq(COMPOSANT_REFERENTIEL.I_COMPOSANT_REFERENTIEL_ID))
-            .fetch(Helper::RecordToComposant);
+            .fetch(Helper::recordToComposant);
     }
 
     public List<ComposantGroupe> getAllComposantGroupe() {
         return context
             .select(COMPOSANT_GROUPE.fields())
             .from(COMPOSANT_GROUPE)
-            .fetch(Helper::RecordToComposantGroupe);
+            .fetch(Helper::recordToComposantGroupe);
     }
 
     public List<Gamme> getAllGammes() {
-        return context.select(GAMMES.fields()).from(GAMMES).fetch(Helper::RecordToGamme);
+        return context.select(GAMMES.fields()).from(GAMMES).fetch(Helper::recordToGamme);
     }
 
     public List<Module> getAllModules() {
@@ -55,35 +55,20 @@ public class ReferentielRepository {
             .from(MODULE)
             .join(MODULE_REFERENTIEL)
             .on(MODULE_REFERENTIEL.I_MODULE_REFERENTIEL_ID.eq(MODULE.I_MODULE_REFERENTIEL_ID))
-            .fetch(Helper::RecordToModule);
+            .fetch(Helper::recordToModule);
     }
 
     public List<ModuleComposant> getAllModuleComposant() {
         return context
             .select(MODULE_COMPOSANT.fields())
             .from(MODULE_COMPOSANT)
-            .fetch(Helper::RecordToModuleComposant);
-    }
-
-    public List<Projet> getAllProjects(Integer userId) {
-        return context
-            .select(PROJET.fields())
-            .select(CLIENT.fields())
-            .select(DEVIS_ETAT.fields())
-            .from(PROJET)
-            .join(CLIENT)
-            .using(CLIENT.I_CLIENT_ID)
-            .join(DEVIS_ETAT)
-            .using(DEVIS_ETAT.I_DEVIS_ETAT_ID)
-            .join(PROJET_UTILISATEURS)
-            .on(PROJET_UTILISATEURS.I_PROJET_ID.eq(userId))
-            .fetch(Helper::RecordToProjet);
+            .fetch(Helper::recordToModuleComposant);
     }
 
     public List<DevisEtat> getAllDevisEtat() {
         return context
             .select(DEVIS_ETAT.fields())
             .from(DEVIS_ETAT)
-            .fetch(Helper::RecordToDevisEtat);
+            .fetch(Helper::recordToDevisEtat);
     }
 }

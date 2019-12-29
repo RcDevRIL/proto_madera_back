@@ -14,15 +14,9 @@ public class Module {
 
     String uniteUsage;
 
-    //TODO rajouter la liste des composants
-
     String nom;
 
-    String angle;
-
     String natureModule;
-
-    Boolean modele;
 
     public Module() {
     }
@@ -34,9 +28,7 @@ public class Module {
         this.caracteristiqueReferentiel = caracteristiqueReferentiel;
         this.uniteUsage = uniteUsage;
         this.nom = nom;
-        this.angle = angle;
         this.natureModule = natureModule;
-        this.modele = modele;
     }
 
     public Integer getModuleReferentielId() {
@@ -87,27 +79,11 @@ public class Module {
         this.nom = nom;
     }
 
-    public String getAngle() {
-        return angle;
-    }
-
-    public void setAngle(String angle) {
-        this.angle = angle;
-    }
-
     public String getNatureModule() {
         return natureModule;
     }
 
     public void setNatureModule(String natureModule) {
         this.natureModule = natureModule;
-    }
-
-    public Boolean getModele() {
-        return modele;
-    }
-
-    public void setModele(Boolean modele) {
-        this.modele = modele;
     }
 }

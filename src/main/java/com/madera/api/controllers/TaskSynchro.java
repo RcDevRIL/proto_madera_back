@@ -50,6 +50,7 @@ public class TaskSynchro {
         List<ModuleComposant> listModuleComposants = referentielRepository.getAllModuleComposant();
         List<ComposantGroupe> listComposantGroupe = referentielRepository.getAllComposantGroupe();
         List<DevisEtat> listDevisEtat = referentielRepository.getAllDevisEtat();
+        List<Produit> listProduitModele = projetRepository.getAllProduitModele();
 
         mapResponse.put("composant", listComposants);
         mapResponse.put("composantGroupe", listComposantGroupe);
@@ -57,7 +58,7 @@ public class TaskSynchro {
         mapResponse.put("module", listModules);
         mapResponse.put("moduleComposant", listModuleComposants);
         mapResponse.put("devisEtat", listDevisEtat);
-        mapResponse.put("produitModele", null);
+        mapResponse.put("produitModele", listProduitModele);
 
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
@@ -66,15 +67,17 @@ public class TaskSynchro {
     @ResponseBody
     public ResponseEntity<Object> getSynchro(@PathVariable("id") Integer utilisateurId) {
         Map<String, Object> mapResponse = new HashMap<>();
-
         List<Projet> listProjet = projetRepository.getAllProjectsByUserId(utilisateurId);
         List<ProduitModule> listProjetModule = projetRepository.getAllProduitModuleByUserId(utilisateurId);
-        //TODO projetproduits
+        List<ProjetProduits> listProjetProduits = projetRepository.getAllProjetProduit(utilisateurId);
+        List<Produit> listProduits = projetRepository.getAllProduit(utilisateurId);
         List<Client> listClient = clientRepository.getAllClient();
         List<ClientAdresse> listClientAdresse = clientRepository.getAllClientAdresse();
         List<Adresse> listAdresse = projetRepository.getAllAdresse();
 
         mapResponse.put("projet", listProjet);
+        mapResponse.put("projetProduits", listProjetProduits);
+        mapResponse.put("produit", listProduits);
         mapResponse.put("produitModule", listProjetModule);
         mapResponse.put("client", listClient);
         mapResponse.put("clientAdresse", listClientAdresse);

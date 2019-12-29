@@ -34,6 +34,7 @@ public class TestTaskSynchro {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
+
     @Test
     public void responseSynchroData() {
         ResponseEntity<Object> responseEntity = taskSynchro.getSynchro(4);

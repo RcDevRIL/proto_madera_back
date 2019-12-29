@@ -24,30 +24,80 @@ public class ProjetRepository {
     @Autowired
     DSLContext context;
 
+    /**
+     *
+     * @param utilisateurId id de utilisateur
+     * @return listProjet
+     */
     public List<Projet> getAllProjectsByUserId(Integer utilisateurId) {
         return context
             .select(PROJET.fields())
             .from(PROJET)
             .join(PROJET_UTILISATEURS).on(PROJET_UTILISATEURS.I_PROJET_ID.eq(PROJET.I_PROJET_ID))
             .where(PROJET_UTILISATEURS.I_UTILISATEUR_ID.eq(utilisateurId))
-            .fetch(Helper::RecordToProjet);
+            .fetch(Helper::recordToProjet);
     }
 
+    /**
+     *
+     * @return listProduit qui sont des modèles
+     */
+    public List<Produit> getAllProduitModele() {
+        return context
+                .select(PRODUIT.fields())
+                .from(PRODUIT)
+                .where(PRODUIT.B_MODELE.isTrue())
+                .fetch(Helper::recordToProduit);
+    }
+
+    /**
+     *
+     * @param utilisateurId id de l'utilisateur
+     * @return listProduitModule
+     */
     public List<ProduitModule> getAllProduitModuleByUserId(Integer utilisateurId) {
         return context
             .select(PRODUIT_MODULE.fields())
             .from(PRODUIT_MODULE)
-            .join(PROJET_PRODUITS).on(PROJET_PRODUITS.I_PRODUIT_ID.eq(PRODUIT.I_PRODUIT_ID))
+            .join(PROJET_PRODUITS).on(PROJET_PRODUITS.I_PRODUIT_ID.eq(PRODUIT_MODULE.I_PRODUIT_ID))
             .join(PROJET_UTILISATEURS).on(PROJET_UTILISATEURS.I_PROJET_ID.eq(PROJET_PRODUITS.I_PROJET_ID))
             .where(PROJET_UTILISATEURS.I_UTILISATEUR_ID.eq(utilisateurId))
-            .fetch(Helper::RecordToProjetModule);
+            .fetch(Helper::recordToProduitModule);
     }
 
+    /**
+     *
+     * @return listAdresse
+     */
     public List<Adresse> getAllAdresse() {
         return context
             .select(ADRESSE.fields())
             .from(ADRESSE)
-            .fetch(Helper::RecordToAdresse);
+            .fetch(Helper::recordToAdresse);
+    }
+
+    /**
+     *
+     * @param utilisateurId id de l'utilisateur
+     * @return listProjetProduits(projetId, produitId)
+     */
+    public List<ProjetProduits> getAllProjetProduit(Integer utilisateurId) {
+        return context
+                .select(PROJET_PRODUITS.fields())
+                .from(PROJET_PRODUITS)
+                .join(PROJET_UTILISATEURS).on(PROJET_UTILISATEURS.I_PROJET_ID.eq(PROJET_PRODUITS.I_PROJET_ID))
+                .where(PROJET_UTILISATEURS.I_UTILISATEUR_ID.eq(utilisateurId))
+                .fetch(Helper::recordToProjetProduits);
+    }
+
+    public List<Produit> getAllProduit(Integer utilisateurId) {
+        return context
+                .select(PRODUIT.fields())
+                .from(PRODUIT)
+                .join(PROJET_PRODUITS).on(PROJET_PRODUITS.I_PRODUIT_ID.eq(PRODUIT.I_PRODUIT_ID))
+                .join(PROJET_UTILISATEURS).on(PROJET_UTILISATEURS.I_PROJET_ID.eq(PROJET_PRODUITS.I_PROJET_ID))
+                .where(PROJET_UTILISATEURS.I_UTILISATEUR_ID.eq(utilisateurId))
+                .fetch(Helper::recordToProduit);
     }
 
     //TODO deleteAll
@@ -95,7 +145,7 @@ public class ProjetRepository {
                         projet.getNomProjet(),
                         projet.getRefProjet(),
                         projet.getDateProjet(),
-                        projet.getPrix(),
+                        projet.getPrixTotal(),
                         projet.getClientId(),
                         projet.getDevisEtatId()
                 )

@@ -23,7 +23,7 @@ public class Projet {
     @JsonFormat(pattern = "yyyy-MM-dd")
     public Date dateProjet;
 
-    public double prix;
+    public double prixTotal;
 
     public Integer clientId;
 
@@ -80,11 +80,11 @@ public class Projet {
         this.dateProjet = dateProjet;
     }
 
-    public double getPrix() {
-        return prix;
+    public double getPrixTotal() {
+        return prixTotal;
     }
 
-    public void setPrix(double prix) {
-        this.prix = prix;
+    public void setPrixTotal(double prixTotal) {
+        this.prixTotal = prixTotal;
     }
 }
