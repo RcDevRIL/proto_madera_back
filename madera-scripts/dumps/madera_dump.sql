@@ -480,6 +480,8 @@ ALTER TABLE ONLY madera.projet
 ALTER TABLE ONLY madera.projet
     ADD CONSTRAINT fk_devis_etat FOREIGN KEY (i_devis_etat_id) REFERENCES madera.devis_etat(i_devis_etat_id);
 
+ALTER TABLE madera.projet
+    ADD CONSTRAINT ref_projet_unique UNIQUE (v_ref_projet);
 
 -- Contrainte madera.produit
 

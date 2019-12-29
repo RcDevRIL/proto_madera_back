@@ -73,6 +73,7 @@ public class Indexes {
     public static final Index PRODUIT_MODULE_PKEY = Indexes0.PRODUIT_MODULE_PKEY;
     public static final Index FK_CLIENT_IDX = Indexes0.FK_CLIENT_IDX;
     public static final Index PROJET_PKEY = Indexes0.PROJET_PKEY;
+    public static final Index REF_PROJET_UNIQUE = Indexes0.REF_PROJET_UNIQUE;
     public static final Index FK_MODULE_IDX = Indexes0.FK_MODULE_IDX;
     public static final Index PROJET_PRODUITS_PKEY = Indexes0.PROJET_PRODUITS_PKEY;
     public static final Index FK_PROJET_IDX_2 = Indexes0.FK_PROJET_IDX_2;
@@ -110,6 +111,7 @@ public class Indexes {
         public static Index PRODUIT_MODULE_PKEY = Internal.createIndex("produit_module_pkey", ProduitModule.PRODUIT_MODULE, new OrderField[] { ProduitModule.PRODUIT_MODULE.I_PRODUIT_MODULE_ID }, true);
         public static Index FK_CLIENT_IDX = Internal.createIndex("fk_client_idx", Projet.PROJET, new OrderField[] { Projet.PROJET.I_CLIENT_ID }, false);
         public static Index PROJET_PKEY = Internal.createIndex("projet_pkey", Projet.PROJET, new OrderField[] { Projet.PROJET.I_PROJET_ID }, true);
+        public static Index REF_PROJET_UNIQUE = Internal.createIndex("ref_projet_unique", Projet.PROJET, new OrderField[] { Projet.PROJET.V_REF_PROJET }, true);
         public static Index FK_MODULE_IDX = Internal.createIndex("fk_module_idx", ProjetProduits.PROJET_PRODUITS, new OrderField[] { ProjetProduits.PROJET_PRODUITS.I_PROJET_ID, ProjetProduits.PROJET_PRODUITS.I_PRODUIT_ID }, false);
         public static Index PROJET_PRODUITS_PKEY = Internal.createIndex("projet_produits_pkey", ProjetProduits.PROJET_PRODUITS, new OrderField[] { ProjetProduits.PROJET_PRODUITS.I_PROJET_ID, ProjetProduits.PROJET_PRODUITS.I_PRODUIT_ID }, true);
         public static Index FK_PROJET_IDX_2 = Internal.createIndex("fk_projet_idx_2", ProjetUtilisateurs.PROJET_UTILISATEURS, new OrderField[] { ProjetUtilisateurs.PROJET_UTILISATEURS.I_PROJET_ID }, false);

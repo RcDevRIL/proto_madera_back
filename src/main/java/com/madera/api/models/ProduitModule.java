@@ -14,6 +14,16 @@ public class ProduitModule {
 
     String produitModuleSectionLongueur;
 
+    public ProduitModule() {
+    }
+
+    public ProduitModule(Integer moduleId, String produitModuleNom, String produitModuleAngle, String produitModuleSectionLongueur) {
+        this.moduleId = moduleId;
+        this.produitModuleNom = produitModuleNom;
+        this.produitModuleAngle = produitModuleAngle;
+        this.produitModuleSectionLongueur = produitModuleSectionLongueur;
+    }
+
     public Integer getProduitModuleId() {
         return produitModuleId;
     }

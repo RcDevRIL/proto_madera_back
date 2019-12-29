@@ -43,7 +43,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Projet extends TableImpl<ProjetRecord> {
 
-    private static final long serialVersionUID = 881455518;
+    private static final long serialVersionUID = 1053495118;
 
     /**
      * The reference instance of <code>madera.projet</code>
@@ -138,7 +138,7 @@ public class Projet extends TableImpl<ProjetRecord> {
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.FK_CLIENT_IDX, Indexes.PROJET_PKEY);
+        return Arrays.<Index>asList(Indexes.FK_CLIENT_IDX, Indexes.PROJET_PKEY, Indexes.REF_PROJET_UNIQUE);
     }
 
     @Override
@@ -153,7 +153,7 @@ public class Projet extends TableImpl<ProjetRecord> {
 
     @Override
     public List<UniqueKey<ProjetRecord>> getKeys() {
-        return Arrays.<UniqueKey<ProjetRecord>>asList(Keys.PROJET_PKEY);
+        return Arrays.<UniqueKey<ProjetRecord>>asList(Keys.PROJET_PKEY, Keys.REF_PROJET_UNIQUE);
     }
 
     @Override

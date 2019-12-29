@@ -105,6 +105,7 @@ public class Keys {
     public static final UniqueKey<ProduitRecord> PRODUIT_KEY = UniqueKeys0.PRODUIT_KEY;
     public static final UniqueKey<ProduitModuleRecord> PRODUIT_MODULE_PKEY = UniqueKeys0.PRODUIT_MODULE_PKEY;
     public static final UniqueKey<ProjetRecord> PROJET_PKEY = UniqueKeys0.PROJET_PKEY;
+    public static final UniqueKey<ProjetRecord> REF_PROJET_UNIQUE = UniqueKeys0.REF_PROJET_UNIQUE;
     public static final UniqueKey<ProjetProduitsRecord> PROJET_PRODUITS_PKEY = UniqueKeys0.PROJET_PRODUITS_PKEY;
     public static final UniqueKey<ProjetUtilisateursRecord> PROJET_UTILISATEURS_PKEY = UniqueKeys0.PROJET_UTILISATEURS_PKEY;
     public static final UniqueKey<RoleRecord> ROLE_PKEY = UniqueKeys0.ROLE_PKEY;
@@ -172,6 +173,7 @@ public class Keys {
         public static final UniqueKey<ProduitRecord> PRODUIT_KEY = Internal.createUniqueKey(Produit.PRODUIT, "produit_key", Produit.PRODUIT.I_PRODUIT_ID);
         public static final UniqueKey<ProduitModuleRecord> PRODUIT_MODULE_PKEY = Internal.createUniqueKey(ProduitModule.PRODUIT_MODULE, "produit_module_pkey", ProduitModule.PRODUIT_MODULE.I_PRODUIT_MODULE_ID);
         public static final UniqueKey<ProjetRecord> PROJET_PKEY = Internal.createUniqueKey(Projet.PROJET, "projet_pkey", Projet.PROJET.I_PROJET_ID);
+        public static final UniqueKey<ProjetRecord> REF_PROJET_UNIQUE = Internal.createUniqueKey(Projet.PROJET, "ref_projet_unique", Projet.PROJET.V_REF_PROJET);
         public static final UniqueKey<ProjetProduitsRecord> PROJET_PRODUITS_PKEY = Internal.createUniqueKey(ProjetProduits.PROJET_PRODUITS, "projet_produits_pkey", ProjetProduits.PROJET_PRODUITS.I_PROJET_ID, ProjetProduits.PROJET_PRODUITS.I_PRODUIT_ID);
         public static final UniqueKey<ProjetUtilisateursRecord> PROJET_UTILISATEURS_PKEY = Internal.createUniqueKey(ProjetUtilisateurs.PROJET_UTILISATEURS, "projet_utilisateurs_pkey", ProjetUtilisateurs.PROJET_UTILISATEURS.I_UTILISATEUR_ID, ProjetUtilisateurs.PROJET_UTILISATEURS.I_PROJET_ID);
         public static final UniqueKey<RoleRecord> ROLE_PKEY = Internal.createUniqueKey(Role.ROLE, "role_pkey", Role.ROLE.I_ROLE_ID);

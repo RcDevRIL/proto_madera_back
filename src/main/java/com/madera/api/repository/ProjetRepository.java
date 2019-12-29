@@ -112,7 +112,8 @@ public class ProjetRepository {
     public List<Integer> createAll(ProjetWithAllInfos projetWithAllInfos) {
         return context.transactionResult(configuration -> {
             Integer projetId = createProjet(configuration, projetWithAllInfos.getProjet());
-            if(projetId != null) {
+            Integer isUserAddProjet = addUserOnProjet(configuration, projetId, projetWithAllInfos.getListUtilisateurId());
+            if(projetId != null && isUserAddProjet != null) {
                 log.info("Le projet " + projetId + "a été créé.");
                 return createProduitsAndModules(configuration, projetWithAllInfos.getProduitWithModule(), projetId);
             } else {
@@ -156,6 +157,20 @@ public class ProjetRepository {
                 .getValue(PROJET.I_PROJET_ID);
     }
 
+    public Integer addUserOnProjet(Configuration configuration, Integer projetId, List<Integer> listUtilisateurId) {
+        //Initialise le ctx selon celui en est cours (context ou transaction)
+        DSLContext ctx = configuration == null ? context : DSL.using(configuration);
+        var query = ctx
+                .insertInto(PROJET_UTILISATEURS)
+                .columns(
+                        PROJET_UTILISATEURS.I_PROJET_ID,
+                        PROJET_UTILISATEURS.I_UTILISATEUR_ID
+                );
+        listUtilisateurId.forEach((utilisateurId -> query.values(projetId, utilisateurId)));
+        return query.execute();
+
+    }
+
     /**
      *
      * @param configuration configuration d'une transaction
@@ -163,7 +178,7 @@ public class ProjetRepository {
      * @param projetId projet
      * @return listProduitId inseré
      */
-    private List<Integer> createProduitsAndModules(Configuration configuration, List<ProduitWithModule> listProduitWithModule, Integer projetId) {
+    private List<Integer> createProduitsAndModules(Configuration configuration, List<ProduitWithProduitModule> listProduitWithModule, Integer projetId) {
 
         List<Integer> listProduitId = new ArrayList<>();
         listProduitWithModule.forEach((produitWithModule -> {
