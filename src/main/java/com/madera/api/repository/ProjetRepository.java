@@ -4,7 +4,10 @@ import com.madera.api.models.*;
 import com.madera.api.utils.Helper;
 import com.madera.jooq.tables.records.ProduitRecord;
 import com.madera.jooq.tables.records.ProjetProduitsRecord;
-import org.jooq.*;
+import org.jooq.Configuration;
+import org.jooq.DSLContext;
+import org.jooq.DeleteWhereStep;
+import org.jooq.JSONB;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.madera.jooq.Tables.*;
-import static org.jooq.impl.DSL.list;
 import static org.jooq.impl.DSL.select;
 
 @Repository
@@ -48,7 +50,7 @@ public class ProjetRepository {
         return context
                 .select(PRODUIT.fields())
                 .from(PRODUIT)
-                .where(PRODUIT.B_MODELE.isTrue())
+                .where(PRODUIT.B_MODELE.eq(true))
                 .fetch(Helper::recordToProduit);
     }
 
@@ -100,6 +102,15 @@ public class ProjetRepository {
                 .join(PROJET_UTILISATEURS).on(PROJET_UTILISATEURS.I_PROJET_ID.eq(PROJET_PRODUITS.I_PROJET_ID))
                 .where(PROJET_UTILISATEURS.I_UTILISATEUR_ID.eq(utilisateurId))
                 .fetch(Helper::recordToProduit);
+    }
+
+    public List<ProduitModule> getAllProduitModuleForModele() {
+        return context
+                .select(PRODUIT_MODULE.fields())
+                .from(PRODUIT_MODULE)
+                .join(PRODUIT).on(PRODUIT.I_PRODUIT_ID.eq(PRODUIT_MODULE.I_PRODUIT_ID))
+                .where(PRODUIT.B_MODELE.eq(true))
+                .fetch(Helper::recordToProduitModule);
     }
 
     /**
@@ -436,7 +447,7 @@ public class ProjetRepository {
                                 .from(PROJET_PRODUITS)
                                 .join(PROJET).on(PROJET.I_PROJET_ID.eq(PROJET_PRODUITS.I_PROJET_ID))
                                 .where(PROJET.V_REF_PROJET.eq(refProjet)))
-                        .and(PRODUIT.B_MODELE.isFalse())
+                        .and(PRODUIT.B_MODELE.eq(false))
                 )
                 .execute();
     }

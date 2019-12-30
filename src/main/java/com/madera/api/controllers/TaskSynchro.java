@@ -51,6 +51,7 @@ public class TaskSynchro {
         List<ComposantGroupe> listComposantGroupe = referentielRepository.getAllComposantGroupe();
         List<DevisEtat> listDevisEtat = referentielRepository.getAllDevisEtat();
         List<Produit> listProduitModele = projetRepository.getAllProduitModele();
+        List<ProduitModule> listProjetModule = projetRepository.getAllProduitModuleForModele();
 
         mapResponse.put("composant", listComposants);
         mapResponse.put("composantGroupe", listComposantGroupe);
@@ -59,6 +60,7 @@ public class TaskSynchro {
         mapResponse.put("moduleComposant", listModuleComposants);
         mapResponse.put("devisEtat", listDevisEtat);
         mapResponse.put("produitModele", listProduitModele);
+        mapResponse.put("produitModuleModele", listProjetModule);
 
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }

@@ -10,7 +10,7 @@ public class Produit {
 
     double prixProduit;
 
-    Boolean isModele;
+    Boolean modele;
 
     public Integer getProduitId() {
         return produitId;
@@ -45,10 +45,10 @@ public class Produit {
     }
 
     public Boolean getModele() {
-        return isModele;
+        return modele;
     }
 
     public void setModele(Boolean modele) {
-        isModele = modele;
+        this.modele = modele;
     }
 }
