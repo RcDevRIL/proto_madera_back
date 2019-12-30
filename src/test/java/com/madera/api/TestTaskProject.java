@@ -120,6 +120,15 @@ public class TestTaskProject {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
+    @Test
+    public void testDeleteProject() {
+        ResponseEntity<Object> responseEntity = taskProject.deleteProjectByRef("20191412-testprojet-4");
+        // Test si le résultat est null
+        assertNotNull(responseEntity);
+        // Test si la méthode renvoi un code 200
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
     //TODO refaire
     //TODO delete a faire la contrainte unique !!!
     /*@Test

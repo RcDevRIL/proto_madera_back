@@ -2,8 +2,11 @@ package com.madera.api.repository;
 
 import com.madera.api.models.*;
 import com.madera.api.utils.Helper;
+import com.madera.jooq.tables.records.ProduitRecord;
+import com.madera.jooq.tables.records.ProjetProduitsRecord;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
+import org.jooq.DeleteWhereStep;
 import org.jooq.JSONB;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.madera.jooq.Tables.*;
+import static org.jooq.impl.DSL.select;
 
 @Repository
 public class ProjetRepository {
@@ -100,10 +104,6 @@ public class ProjetRepository {
                 .fetch(Helper::recordToProduit);
     }
 
-    //TODO deleteAll
-
-    //TODO updateAll
-
     /**
      *
      * @param projetWithAllInfos (projet with listProduits with listModule)
@@ -132,6 +132,7 @@ public class ProjetRepository {
     private Integer createProjet(Configuration configuration, Projet projet) {
         //Initialise le ctx selon celui en est cours (context ou transaction)
         DSLContext ctx = configuration == null ? context : DSL.using(configuration);
+        //TODO Il semblerais avoir une erreur lorsque le onConflictDoNothing survient, aucun élément n'est renvoyer
         return ctx
                 .insertInto(PROJET)
                 .columns(
@@ -276,12 +277,166 @@ public class ProjetRepository {
                 .execute();
     }
 
-    //TODO upsert ?
+    /**
+     * Supprime tout ce qui est en relation avec la refProjet dont le projet lui même
+     * @param refProjet reference du projet en question
+     * @return un integer
+     */
+    public Integer deleteAll(String refProjet) {
+        //L'ordre est important
+        return context.transactionResult(configuration -> {
+            List<Integer> listProduitId = deleteProjetProduitByRefProjet(configuration, refProjet);
 
-    //TODO deleteProduits
+            listProduitId.forEach((produitId) -> {
+                deleteProduitModuleByProduitId(configuration, produitId);
+                deleteProduitByProduitId(configuration, produitId);
+            }
+            );
+            deleteProjetUtilisateurByRefProjet(configuration, refProjet);
+            return deleteProjetByRefProjet(configuration, refProjet);
+        });
+    }
 
-    //TODO deleteProjet
+    /**
+     * Supprime les utilisateurs liés au projet en fonction de la refprojet passé en paramètre
+     * @param configuration configuration d'une transaction
+     * @param refProjet reference du projet
+     */
+    private void deleteProjetUtilisateurByRefProjet(Configuration configuration, String refProjet) {
+        //Initialise le ctx selon celui en est cours (context ou transaction)
+        DSLContext ctx = configuration == null ? context : DSL.using(configuration);
+        ctx
+                .delete(PROJET_UTILISATEURS)
+                .where(PROJET_UTILISATEURS.I_PROJET_ID.in(
+                        select(PROJET.I_PROJET_ID)
+                                .from(PROJET)
+                                .where(PROJET.V_REF_PROJET.eq(refProjet)))
+                )
+                .execute();
+    }
 
+    /**
+     * Supprime le projet suivant le refProjet passé en paramètre
+     * @param configuration configuration d'une transaction
+     * @param refProjet reference du projet
+     */
+    private Integer deleteProjetByRefProjet(Configuration configuration, String refProjet) {
+        //Initialise le ctx selon celui en est cours (context ou transaction)
+        DSLContext ctx = configuration == null ? context : DSL.using(configuration);
+        return ctx
+                .delete(PROJET)
+                .where(PROJET.V_REF_PROJET.eq(refProjet))
+                .execute();
+    }
+
+    private DeleteWhereStep<ProjetProduitsRecord> deleteProjetProduitQuery(Configuration configuration) {
+        //Initialise le ctx selon celui en est cours (context ou transaction)
+        DSLContext ctx = configuration == null ? context : DSL.using(configuration);
+        return ctx
+                .delete(PROJET_PRODUITS);
+    }
+
+    /**
+     * Delete de projetProduit by refProjet
+     * @param configuration configuration d'une transaction
+     * @param refProjet reference du projet
+     */
+    private List<Integer> deleteProjetProduitByRefProjet(Configuration configuration, String refProjet) {
+        return deleteProjetProduitQuery(configuration)
+                .where(PROJET_PRODUITS.I_PROJET_ID.in(
+                        select(PROJET.I_PROJET_ID)
+                                .from(PROJET)
+                                .where(PROJET.V_REF_PROJET.eq(refProjet))
+                        )
+                )
+                .returning(PROJET_PRODUITS.I_PRODUIT_ID)
+                .fetch()
+                .getValues(PROJET_PRODUITS.I_PRODUIT_ID);
+    }
+
+    /**
+     * Supprime un produit
+     * @param configuration configuration d'une transaction
+     * @param produitId produitId
+     * @return != 0 si des éléments ont été supprimés
+     */
+    public Integer deleteProduit(Configuration configuration, Integer produitId) {
+        Integer isDeleted = deleteProjetProduitByProduitId(configuration, produitId);
+        if(isDeleted != 0) {
+            //Si au moins une ligne a été supprimée on continue
+            deleteProduitByProduitId(configuration, produitId);
+        }
+        return isDeleted;
+    }
+
+    /**
+     * Delete de projetProduit by produitId
+     * @param configuration configuration d'une transaction
+     * @param produitId Integer
+     * @return un integer suivant si le projet_produits a été supprimé.
+     */
+    private Integer deleteProjetProduitByProduitId(Configuration configuration, Integer produitId) {
+        return deleteProjetProduitQuery(configuration)
+                .where(PROJET_PRODUITS.I_PRODUIT_ID.eq(produitId))
+                .execute();
+    }
+
+    /**
+     *
+     * @param configuration configuration d'une transaction
+     * @return query deleteProduit
+     */
+    private DeleteWhereStep<ProduitRecord> deleteProduitQuery(Configuration configuration) {
+        //Initialise le ctx selon celui en est cours (context ou transaction)
+        DSLContext ctx = configuration == null ? context : DSL.using(configuration);
+        return ctx
+                .delete(PRODUIT);
+    }
+
+    /**
+     * Supprime tous les produits d'un projet
+     * @param configuration configuration d'une transaction
+     * @param refProjet reference d'un projet
+     * @return un integer suivant si le ou les produits ont été supprimés.
+     */
+    public void deleteProduitByRefProjet(Configuration configuration, String refProjet) {
+        deleteProduitQuery(configuration)
+                .where(PRODUIT.I_PRODUIT_ID.in(
+                        select(PROJET_PRODUITS.I_PRODUIT_ID)
+                                .from(PROJET_PRODUITS)
+                                .join(PROJET).on(PROJET.I_PROJET_ID.eq(PROJET_PRODUITS.I_PROJET_ID))
+                                .where(PROJET.V_REF_PROJET.eq(refProjet)))
+                        .and(PRODUIT.B_MODELE.isFalse())
+                )
+                .execute();
+    }
+
+    /**
+     * Supprime un produit spécifique, il faut supprimer l'occurence dans projet_produits si le produitId est présent avant
+     * de supprimer dans la table produit.
+     * @param configuration configuration d'une transaction
+     * @param produitId produitId
+     * @return un integer suivant si le produit a été supprimé.
+     */
+    public void deleteProduitByProduitId(Configuration configuration, Integer produitId) {
+        deleteProduitQuery(configuration)
+                .where(PRODUIT.I_PRODUIT_ID.eq(produitId))
+                .execute();
+    }
+
+    public void deleteProduitModuleByProduitId(Configuration configuration, Integer produitId) {
+        //Initialise le ctx selon celui en est cours (context ou transaction)
+        DSLContext ctx = configuration == null ? context : DSL.using(configuration);
+        ctx
+                .delete(PRODUIT_MODULE)
+                .where(PRODUIT_MODULE.I_PRODUIT_ID.eq(produitId))
+                .execute();
+    }
+
+    //TODO updateProjet ? uppdateProduit ?
+    public void updateAll() {
+
+    }
     //TODO updateProjet
 
     //TODO updateProduit
@@ -291,83 +446,4 @@ public class ProjetRepository {
     //TODO updateProduitModule
 
     //TODO list produits, listModule,
-    /*public Integer createProjet(
-            Projet projet,
-            List<ProduitModule> listProduitModule,
-            Integer utilisateurId
-    ) {
-        return context.transactionResult(configuration-> {
-            Record record =
-                DSL.using(configuration).insertInto(
-                    PROJET)
-                    .set(PROJET.V_NOM_PROJET,projet.nomProjet)
-                    .set(PROJET.V_REF_PROJET, projet.refProjet)
-                    .set(PROJET.D_DATE_PROJET, projet.dateProjet)
-                    .set(PROJET.F_PRIX_TOTAL, projet.prix)
-                    .set(PROJET.I_CLIENT_ID, projet.clientId)
-                    .set(PROJET.I_DEVIS_ETAT_ID, projet.devisEtatId)
-                .returning(PROJET.I_PROJET_ID)
-                .fetchOne();
-
-            //Insert into produits
-
-            //Insert into produits projet
-            //Factoring
-
-            var query = context
-                    .insertInto(PRODUIT_MODULE)
-                    .columns(PRODUIT_MODULE.I_MODULE_ID, PRODUIT_MODULE.I_PRODUIT_ID);
-            listProduitModule.forEach((produitModule -> {
-                query.values(produitModule.getModuleId(), record.get(PROJET.I_PROJET_ID));
-            }));
-            query.execute();
-
-            DSL.using(configuration).insertInto(PROJET_UTILISATEURS)
-                    .set(PROJET_UTILISATEURS.I_PROJET_ID, record.get(PROJET.I_PROJET_ID))
-                    .set(PROJET_UTILISATEURS.I_UTILISATEUR_ID, utilisateurId)
-                    .execute();
-            return record.get(PROJET.I_PROJET_ID);
-        });
-    }*/
-
-    /*public Integer updateProject(Projet projet) {
-        return context
-                .update(PROJET)
-                .set(PROJET.V_NOM_PROJET, projet.getNomProjet())
-                .set(PROJET.V_REF_PROJET, projet.getRefProjet())
-                .set(PROJET.D_DATE_PROJET, projet.getDateProjet())
-                .set(PROJET.F_PRIX_TOTAL, projet.getPrix())
-                .set(PROJET.I_DEVIS_ETAT_ID, projet.getDevisEtatId())
-                .where(PROJET.V_REF_PROJET.eq(projet.getRefProjet()))
-                .execute();
-    }
-
-    public Integer deleteProject(String refProjet) {
-        //Récupére le projetId suivant le refProjet passé en paramètre
-        Record record = context
-                .select(PROJET.I_PROJET_ID)
-                .from(PROJET)
-                .where(PROJET.V_REF_PROJET.eq(refProjet))
-                .fetchOne();
-        System.out.println(record.get(PROJET.I_PROJET_ID));
-        return context.transactionResult(configuration -> {
-            Integer linesDeleted = null;
-            //Delete des projets_modules
-            linesDeleted = DSL.using(configuration)
-                    .delete(PRODUIT_MODULE)
-                    .where(PRODUIT_MODULE.I_PROJET_ID.eq(record.get(PROJET.I_PROJET_ID)))
-                    .execute();
-            //Delete des projets_utilisateurs
-            linesDeleted = linesDeleted + DSL.using(configuration)
-                    .delete(PROJET_UTILISATEURS)
-                    .where(PROJET_UTILISATEURS.I_PROJET_ID.eq(record.get(PROJET.I_PROJET_ID)))
-                    .execute();
-            //Delete du projet
-            linesDeleted = linesDeleted + DSL.using(configuration)
-                    .delete(PROJET)
-                    .where(PROJET.V_REF_PROJET.eq(refProjet))
-                    .execute();
-            return linesDeleted;
-        });
-    }*/
 }
