@@ -33,8 +33,8 @@ public class TaskProject {
 
     /**
      * Structure attendue : projet : {produit: {infosProduits, listModules: infosModules}}
-     * @param projetWithAllInfos
-     * @return
+     * @param projetWithAllInfos projetWithAllInfos
+     * @return Ok or BadRequest
      */
     @PostMapping(path = "/project", consumes = "application/json")
     public ResponseEntity<Object> createProject(
@@ -50,17 +50,21 @@ public class TaskProject {
         }
     }
 
-    //TODO a refaire
+    /**
+     * Structure attendue : projet : infosProjet.., produit :[{produit: {infosProduits, listModules: [infosModules, ...]}, {produit:...}]}
+     * @param projetWithAllInfos projetWithAllInfos
+     * @return Ok or badRequest
+     */
     @PutMapping(path = "/project", consumes = "application/json")
-    public ResponseEntity<Object> updateProject(
-            @RequestBody Projet projet,
-            @RequestBody List<ProduitModule> listProjetModule,
-            @RequestBody Integer utilisateurId)
+    public ResponseEntity<Object> updateProject(@RequestBody ProjetWithAllInfos projetWithAllInfos)
     {
         Map<String, Object> mapResponse = new HashMap<>();
-        //projetRepository.updateProject(projet);
-        //projetRepository.updateProjectModule(projet);
-        return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+        Boolean isUpdated = projetRepository.updateAll(projetWithAllInfos) != 0;
+        if(isUpdated) {
+            return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(mapResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping(path = "/projects/{id}", produces = "application/json")
@@ -71,7 +75,11 @@ public class TaskProject {
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
-    //TODO a refaire
+    /**
+     * Supprime le projet suivant la refProjet passé en param
+     * @param refProjet reference du projet
+     * @return Ok or BadRequest
+     */
     @DeleteMapping(path = "/project/{refProjet}", consumes = "application/json")
     public ResponseEntity<Object> deleteProjectByRef(@PathVariable("refProjet") String refProjet) {
         Boolean isDeleted = projetRepository.deleteAll(refProjet) != 0;
@@ -82,6 +90,11 @@ public class TaskProject {
         }
     }
 
+    /**
+     * Retourne un devis ?
+     * @param id id du projet
+     * @return un devis ?
+     */
     @GetMapping(path = "/quote/{id}", consumes = "application/json")
     public ResponseEntity<Object> getQuote(@PathVariable ("id") Integer id) {
         Map<String, Object> mapResponse = new HashMap<>();

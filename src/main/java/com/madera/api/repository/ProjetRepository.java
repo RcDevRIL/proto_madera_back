@@ -4,10 +4,7 @@ import com.madera.api.models.*;
 import com.madera.api.utils.Helper;
 import com.madera.jooq.tables.records.ProduitRecord;
 import com.madera.jooq.tables.records.ProjetProduitsRecord;
-import org.jooq.Configuration;
-import org.jooq.DSLContext;
-import org.jooq.DeleteWhereStep;
-import org.jooq.JSONB;
+import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.madera.jooq.Tables.*;
+import static org.jooq.impl.DSL.list;
 import static org.jooq.impl.DSL.select;
 
 @Repository
@@ -109,6 +107,7 @@ public class ProjetRepository {
      * @param projetWithAllInfos (projet with listProduits with listModule)
      * @return list des produitsId insérer
      */
+    //TODO attention si les finitions et le type de remplissages sont mis à jour !
     public List<Integer> createAll(ProjetWithAllInfos projetWithAllInfos) {
         return context.transactionResult(configuration -> {
             Integer projetId = createProjet(configuration, projetWithAllInfos.getProjet());
@@ -158,6 +157,13 @@ public class ProjetRepository {
                 .getValue(PROJET.I_PROJET_ID);
     }
 
+    /**
+     * Ajoute un utilisateur sur un projet
+     * @param configuration configuration d'une transaction
+     * @param projetId projetId
+     * @param listUtilisateurId utilisateurId
+     * @return != 0 si l'utilisateur a bien été ajouté
+     */
     public Integer addUserOnProjet(Configuration configuration, Integer projetId, List<Integer> listUtilisateurId) {
         //Initialise le ctx selon celui en est cours (context ou transaction)
         DSLContext ctx = configuration == null ? context : DSL.using(configuration);
@@ -255,11 +261,12 @@ public class ProjetRepository {
      * @param configuration configuration d'une transaction
      * @param produitId produit
      * @param produitModule produitModule
+     * @return != 0 si le produitModule a été ajouté.
      */
-    private void createProduitModule(Configuration configuration, Integer produitId, ProduitModule produitModule) {
+    private Integer createProduitModule(Configuration configuration, Integer produitId, ProduitModule produitModule) {
         //Initialise le ctx selon celui en est cours (context ou transaction)
         DSLContext ctx = configuration == null ? context : DSL.using(configuration);
-        ctx.insertInto(PRODUIT_MODULE)
+        return ctx.insertInto(PRODUIT_MODULE)
                 .columns(
                         PRODUIT_MODULE.I_PRODUIT_ID,
                         PRODUIT_MODULE.I_MODULE_ID,
@@ -275,6 +282,28 @@ public class ProjetRepository {
                         JSONB.valueOf(produitModule.getProduitModuleSectionLongueur())
                         )
                 .execute();
+    }
+
+    /**
+     *
+     * @param configuration configuration d'une transaction
+     * @param projetId projetId
+     * @param listUtilisateurId listUtilisateurId a relié au projet
+     * @param produit produit
+     * @param listProduitModule listProduitModule
+     */
+    public void createProduitAndProduitModule(Configuration configuration, Integer projetId, List<Integer> listUtilisateurId, Produit produit, List<ProduitModule> listProduitModule) {
+        Integer produitId = createProduit(configuration, produit);
+        if(produitId != null) {
+            boolean isProjetProduit = createProjetProduit(configuration, projetId, produitId) != 0;
+            boolean isUserAddProjet = addUserOnProjet(configuration, projetId, listUtilisateurId) != 0;
+            if(isProjetProduit && isUserAddProjet) {
+                listProduitModule.forEach((produitModule ->
+                        createProduitModule(configuration, produit.getProduitId(), produitModule)
+                        )
+                );
+            }
+        }
     }
 
     /**
@@ -340,6 +369,7 @@ public class ProjetRepository {
      * Delete de projetProduit by refProjet
      * @param configuration configuration d'une transaction
      * @param refProjet reference du projet
+     * @return la liste des produitsId qui ont été supprimés de projetProduit
      */
     private List<Integer> deleteProjetProduitByRefProjet(Configuration configuration, String refProjet) {
         return deleteProjetProduitQuery(configuration)
@@ -424,6 +454,11 @@ public class ProjetRepository {
                 .execute();
     }
 
+    /**
+     * Supprime tous les produitsModule suivant le produitId passé en param
+     * @param configuration configuration d'une transaction
+     * @param produitId produitId
+     */
     public void deleteProduitModuleByProduitId(Configuration configuration, Integer produitId) {
         //Initialise le ctx selon celui en est cours (context ou transaction)
         DSLContext ctx = configuration == null ? context : DSL.using(configuration);
@@ -433,17 +468,132 @@ public class ProjetRepository {
                 .execute();
     }
 
-    //TODO updateProjet ? uppdateProduit ?
-    public void updateAll() {
+    /**
+     * Mise à jour de tous les éléments
+     * @param projetWithAllInfos projetWithAllInfos
+     * @return != 0 si les mises à jour ont été effectuées.
+     */
+    public Integer updateAll(ProjetWithAllInfos projetWithAllInfos) {
+        //TODO attention à l'état du devis !
+        return context.transactionResult(configuration -> {
+            Integer isUpdated = updateProjet(configuration, projetWithAllInfos.getProjet());
+            if(isUpdated != 0) {
+                updateProduitAndModule(configuration, projetWithAllInfos.getProjet().getProjetId(), projetWithAllInfos.getListUtilisateurId(), projetWithAllInfos.getProduitWithModule());
+            }
+            return isUpdated;
+        });
+    }
+
+
+    /**
+     * Met à jour les uniquement informations du projet (nomProjet, devisEtat)
+     * @param configuration configuration d'une transaction
+     * @param projet
+     * @return
+     */
+    public Integer updateProjet(Configuration configuration, Projet projet) {
+        //Initialise le ctx selon celui en est cours (context ou transaction)
+        DSLContext ctx = configuration == null ? context : DSL.using(configuration);
+        //TODO modifier plus de champs ?
+        return ctx
+                .update(PROJET)
+                .set(PROJET.V_NOM_PROJET, projet.getNomProjet())
+                .set(PROJET.I_DEVIS_ETAT_ID, projet.getDevisEtatId())
+                .where(PROJET.I_PROJET_ID.eq(projet.getProjetId()))
+                .execute();
+    }
+
+    /**
+     * Mise à jour du produit et de ses produitModules
+     * @param configuration configuration d'une transaction
+     * @param listProduitWithProduitModule listProduitWithProduitModule
+     */
+    public void updateProduitAndModule(Configuration configuration, Integer projetId, List<Integer> listUtilisateurId, List<ProduitWithProduitModule> listProduitWithProduitModule) {
+        listProduitWithProduitModule.forEach((produitWithProduitModule) -> {
+            //Si le produit existe alors on le met à jour
+            if(isProduitExists(configuration, produitWithProduitModule.getProduit().getProduitId())) {
+                updateProduit(configuration, produitWithProduitModule.getProduit());
+                updateProduitModule(configuration, produitWithProduitModule.getListModules(), produitWithProduitModule.getProduit().getProduitId());
+            } else {
+                //Sinon on l'ajoute ainsi que ses produitModules
+                createProduitAndProduitModule(configuration, projetId, listUtilisateurId, produitWithProduitModule.getProduit(), produitWithProduitModule.getListModules());
+            }
+        });
+    }
+
+    /**
+     * Vérifie que le produit existe
+     * @param configuration configuration d'une transaction
+     * @param produitId produitId
+     * @return true si le produit existe et false l'inverse
+     */
+    public Boolean isProduitExists(Configuration configuration, Integer produitId) {
+        //Initialise le ctx selon celui en est cours (context ou transaction)
+        DSLContext ctx = configuration == null ? context : DSL.using(configuration);
+        return ctx
+                .select(PRODUIT.fields())
+                .from(PRODUIT)
+                .where(PRODUIT.I_PRODUIT_ID.eq(produitId))
+                .execute() != 0;
+    }
+
+    /**
+     * Mise à jour du produit
+     * @param configuration configuration d'une transaction
+     * @param produit produit
+     */
+    public void updateProduit(Configuration configuration, Produit produit) {
+        //Initialise le ctx selon celui en est cours (context ou transaction)
+        DSLContext ctx = configuration == null ? context : DSL.using(configuration);
+        ctx
+                .update(PRODUIT)
+                .set(PRODUIT.V_PRODUIT_NOM, produit.getProduitNom())
+                .set(PRODUIT.I_GAMMES_ID, produit.getGammesId())
+                .set(PRODUIT.F_PRIX_PRODUIT, produit.getPrixProduit());
+    }
+
+    /**
+     * Mise à jour du produitModule, s'il existe pas alors il est ajouté
+     * @param configuration configuration d'une transaction
+     * @param listProduitModule listProduitModule
+     * @param produitId produitId
+     */
+    public void updateProduitModule(Configuration configuration, List<ProduitModule> listProduitModule, Integer produitId) {
+        //Initialise le ctx selon celui en est cours (context ou transaction)
+        DSLContext ctx = configuration == null ? context : DSL.using(configuration);
+        var query = ctx.update(PRODUIT_MODULE);
+
+        listProduitModule.forEach((produitModule) -> {
+            //Vérifie que le produitModule existe avant de le mettre à jour
+            if(isProduitModuleExists(configuration, produitModule.getProduitModuleId())) {
+                query
+                        .set(PRODUIT_MODULE.V_PRODUIT_MODULE_NOM, produitModule.getProduitModuleNom())
+                        .set(PRODUIT_MODULE.V_PRODUIT_MODULE_ANGLE, produitModule.getProduitModuleAngle())
+                        .set(PRODUIT_MODULE.J_SECTION_LONGUEUR, JSONB.valueOf(produitModule.getProduitModuleSectionLongueur()))
+                        .where(PRODUIT_MODULE.I_PRODUIT_MODULE_ID.eq(produitModule.getProduitModuleId()))
+                .execute();
+            } else {
+                //Sinon on l'ajoute
+                Integer isInserted = createProduitModule(configuration, produitId, produitModule);
+            }
+        }
+        );
+    }
+
+    /**
+     * Vérifie que le produitModule existe
+     * @param configuration configuration d'une transaction
+     * @param produitModuleId produitModuleId
+     * @return true si le produitModule est présent, et false l'inverse
+     */
+    public Boolean isProduitModuleExists(Configuration configuration, Integer produitModuleId) {
+        //Initialise le ctx selon celui en est cours (context ou transaction)
+        DSLContext ctx = configuration == null ? context : DSL.using(configuration);
+        return ctx
+                .select(PRODUIT_MODULE.I_PRODUIT_MODULE_ID)
+                .from(PRODUIT_MODULE)
+                .where(PRODUIT_MODULE.I_PRODUIT_MODULE_ID.eq(produitModuleId))
+                .execute() != 0;
 
     }
-    //TODO updateProjet
-
-    //TODO updateProduit
-
-    //TODO updateProjetProduit
-
-    //TODO updateProduitModule
-
-    //TODO list produits, listModule,
 }
