@@ -1,5 +1,6 @@
 package com.madera.api.controllers;
 
+import org.junit.runner.Request;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -24,14 +26,14 @@ public class TaskError implements ErrorController {
     @RequestMapping("/error")
     @ResponseBody
     public String handleError(HttpServletRequest request) {
-        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-        Exception exception = (Exception) request.getAttribute("javax.servlet.error.exception");
-        // normalement c'est ça... :/
-        log.error("Error with server {}", exception == null ? "N/A" : exception.getMessage());
+        Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        String messageError = (String)request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
+        //Exception exception = (Exception) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+        log.error("Error with server {}", messageError == null ? "N/A" : messageError);
         return String.format(
-                "<html>" + "<body>" + "<h2>Une Erreur sauvage apparaît !</h2>" + "<div>Status code: <b>%s</b></div>"
+                "<html>" + "<body>" + "<h2>Une Erreur est survenue !</h2>" + "<div>Status code: <b>%s</b></div>"
                         + "<div>Exception Message: <b>%s</b></div>" + "</body>" + "</html>",
-                statusCode, exception == null ? "N/A" : exception.getMessage());
+                statusCode, messageError == null ? "N/A" : messageError);
     }
 
     @Override
