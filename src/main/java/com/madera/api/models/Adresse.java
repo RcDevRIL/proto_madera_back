@@ -23,6 +23,14 @@ public class Adresse {
     public Adresse() {
     }
 
+    public Adresse(String ville, String codePostale, String rue, String complement, String numero) {
+        this.ville = ville;
+        this.codePostale = codePostale;
+        this.rue = rue;
+        this.complement = complement;
+        this.numero = numero;
+    }
+
     public Integer getAdresseId() {
         return adresseId;
     }

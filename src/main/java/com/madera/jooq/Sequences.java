@@ -74,14 +74,19 @@ public class Sequences {
     public static final Sequence<Integer> MODULE_REFERENTIEL_I_MODULE_REFERENTIEL_ID_SEQ = new SequenceImpl<Integer>("module_referentiel_i_module_referentiel_id_seq", Madera.MADERA, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
 
     /**
+     * The sequence <code>madera.produit_i_produit_id_seq</code>
+     */
+    public static final Sequence<Integer> PRODUIT_I_PRODUIT_ID_SEQ = new SequenceImpl<Integer>("produit_i_produit_id_seq", Madera.MADERA, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
+
+    /**
+     * The sequence <code>madera.produit_module_i_produit_module_id_seq</code>
+     */
+    public static final Sequence<Integer> PRODUIT_MODULE_I_PRODUIT_MODULE_ID_SEQ = new SequenceImpl<Integer>("produit_module_i_produit_module_id_seq", Madera.MADERA, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
+
+    /**
      * The sequence <code>madera.projet_i_projet_id_seq</code>
      */
     public static final Sequence<Integer> PROJET_I_PROJET_ID_SEQ = new SequenceImpl<Integer>("projet_i_projet_id_seq", Madera.MADERA, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
-
-    /**
-     * The sequence <code>madera.projet_module_i_projet_module_id_seq</code>
-     */
-    public static final Sequence<Integer> PROJET_MODULE_I_PROJET_MODULE_ID_SEQ = new SequenceImpl<Integer>("projet_module_i_projet_module_id_seq", Madera.MADERA, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
 
     /**
      * The sequence <code>madera.role_i_role_id_seq</code>

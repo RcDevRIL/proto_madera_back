@@ -24,7 +24,12 @@ public class Helper {
 
     UserRepository userRepository = new UserRepository();
 
-    public static User RecordToUser(Record record) {
+    /**
+     *
+     * @param record resultat requete sql
+     * @return User
+     */
+    public static User recordToUser(Record record) {
         User user = new User();
         user.setUtilisateurId(record.get(UTILISATEUR.I_UTILISATEUR_ID));
         user.setLogin(record.get(UTILISATEUR.V_LOGIN));
@@ -32,19 +37,31 @@ public class Helper {
         return user;
     }
 
-    public static Projet RecordToProjet(Record record) {
+    /**
+     *
+     * @param record resultat requete sql
+     * @return projet
+     */
+    public static Projet recordToProjet(Record record) {
         Projet projet = new Projet();
         projet.setProjetId(record.get(PROJET.I_PROJET_ID));
         projet.setNomProjet(record.get(PROJET.V_NOM_PROJET));
         projet.setRefProjet(record.get(PROJET.V_REF_PROJET));
         projet.setDateProjet(record.get(PROJET.D_DATE_PROJET));
-        projet.setPrix(record.get(PROJET.F_PRIX));
+        //TODO add trigger in bdd après chaque insert de module pour recalculer le prix du projet
+        //TODO temporaire
+        projet.setPrixTotal(record.get(PROJET.F_PRIX_TOTAL) == null ? 0 : record.get(PROJET.F_PRIX_TOTAL));
         projet.setClientId(record.get(PROJET.I_CLIENT_ID));
         projet.setDevisEtatId(record.get(PROJET.I_DEVIS_ETAT_ID));
         return projet;
     }
 
-    public static Client RecordToClient(Record record) {
+    /**
+     *
+     * @param record resultat requete sql
+     * @return Client
+     */
+    public static Client recordToClient(Record record) {
         Client client = new Client();
         client.setId(record.get(CLIENT.I_CLIENT_ID));
         client.setNom(record.get(CLIENT.V_NOM));
@@ -54,7 +71,12 @@ public class Helper {
         return client;
     }
 
-    public static DevisEtat RecordToDevisEtat(Record record) {
+    /**
+     *
+     * @param record resultat requete sql
+     * @return DevisEtat
+     */
+    public static DevisEtat recordToDevisEtat(Record record) {
         DevisEtat devisEtat = new DevisEtat();
         devisEtat.setDevisEtatId(record.get(DEVIS_ETAT.I_DEVIS_ETAT_ID));
         devisEtat.setDevisEtatLibelle(record.get(DEVIS_ETAT.V_DEVIS_ETAT_LIBELLE));
@@ -62,16 +84,20 @@ public class Helper {
         return devisEtat;
     }
 
-    // Construct a instance of securityUser
-    public static SecurityUser RecordToSecurityUser(Record record) {
+    /**
+     * Construct a instance of securityUser
+     * @param record resultat requete sql
+     * @return SecurityUser
+     */
+    public static SecurityUser recordToSecurityUser(Record record) {
         SecurityUser securityUser = new SecurityUser();
         securityUser.setUsername(record.get(UTILISATEUR.V_LOGIN));
         securityUser.setRole(record.get(ROLE.V_LIBELLE_ROLE));
         return securityUser;
     }
 
-    // TODO A supprimer ?
-    public static ComposantReferentiel RecordToComposantReferentiel(Record record) {
+    //TODO A supprimer ?
+    public static ComposantReferentiel recordToComposantReferentiel(Record record) {
         ComposantReferentiel composantReferentiel = new ComposantReferentiel();
         composantReferentiel.setComposantReferentielId(record.get(COMPOSANT_REFERENTIEL.I_COMPOSANT_REFERENTIEL_ID));
         composantReferentiel.setCaracteristiqueReferentiel(record.get(COMPOSANT_REFERENTIEL.V_CARACTERISTIQUE));
@@ -79,14 +105,24 @@ public class Helper {
         return composantReferentiel;
     }
 
-    public static ComposantGroupe RecordToComposantGroupe(Record record) {
+    /**
+     *
+     * @param record resultat requete sql
+     * @return ComposantGroupe
+     */
+    public static ComposantGroupe recordToComposantGroupe(Record record) {
         ComposantGroupe composantGroupe = new ComposantGroupe();
         composantGroupe.setComposantGroupeId(record.get(COMPOSANT_GROUPE.I_COMPOSANT_GROUPE_ID));
         composantGroupe.setLibelleGroupe(record.get(COMPOSANT_GROUPE.V_LIBELLE_GROUPE));
         return composantGroupe;
     }
 
-    public static Composant RecordToComposant(Record record) {
+    /**
+     *
+     * @param record resultat requete sql
+     * @return Composant
+     */
+    public static Composant recordToComposant(Record record) {
         Composant composant = new Composant();
         composant.setComposantId(record.get(COMPOSANT.I_COMPOSANT_ID));
         // ComposantGroupe
@@ -102,7 +138,12 @@ public class Helper {
         return composant;
     }
 
-    public static Module RecordToModule(Record record) {
+    /**
+     *
+     * @param record resultat requete sql
+     * @return Module
+     */
+    public static Module recordToModule(Record record) {
         Module module = new Module();
         module.setModuleId(record.get(MODULE.I_MODULE_ID));
         module.setGammeId(record.get(GAMMES.I_GAMMES_ID));
@@ -110,20 +151,23 @@ public class Helper {
         module.setCaracteristiqueReferentiel(record.get(MODULE_REFERENTIEL.V_CARACTERISTIQUE));
         module.setUniteUsage(record.get(MODULE_REFERENTIEL.V_UNITE_USAGE));
         module.setNom(record.get(MODULE.V_NOM));
-        module.setAngle(record.get(MODULE.V_ANGLE));
         module.setNatureModule(record.get(MODULE.V_NATURE_MODULE));
-        module.setModele(record.get(MODULE.B_MODELE));
         return module;
     }
 
-    public static Gamme RecordToGamme(Record record) {
+    /**
+     *
+     * @param record resultat requete sql
+     * @return gamme
+     */
+    public static Gamme recordToGamme(Record record) {
         Gamme gamme = new Gamme();
         gamme.setGammeId(record.get(GAMMES.I_GAMMES_ID));
         gamme.setLibelleGammes(record.get(GAMMES.V_LIBELLE_GAMMES));
         return gamme;
     }
 
-    public static ModuleReferentiel RecordToModuleReferentiel(Record record) {
+    public static ModuleReferentiel recordToModuleReferentiel(Record record) {
         ModuleReferentiel moduleReferentiel = new ModuleReferentiel();
         moduleReferentiel.setModuleReferentielId(record.get(MODULE_REFERENTIEL.I_MODULE_REFERENTIEL_ID));
         moduleReferentiel.setCaracteristiqueReferentiel(record.get(MODULE_REFERENTIEL.V_CARACTERISTIQUE));
@@ -131,7 +175,12 @@ public class Helper {
         return moduleReferentiel;
     }
 
-    public static ModuleComposant RecordToModuleComposant(Record record) {
+    /**
+     *
+     * @param record resultat requete sql
+     * @return Gamme
+     */
+    public static ModuleComposant recordToModuleComposant(Record record) {
         ModuleComposant moduleComposant = new ModuleComposant();
         moduleComposant.setModuleId(record.get(MODULE_COMPOSANT.I_MODULE_ID));
         moduleComposant.setComposantId(record.get(MODULE_COMPOSANT.I_COMPOSANT_ID));
@@ -139,15 +188,55 @@ public class Helper {
         return moduleComposant;
     }
 
-    public static ProjetModule RecordToProjetModule(Record record) {
-        ProjetModule projetModule = new ProjetModule();
-        projetModule.setProjetModuleId(record.get(PROJET_MODULE.I_PROJET_MODULE_ID));
-        projetModule.setProjetId(record.get(PROJET_MODULE.I_PROJET_ID));
-        projetModule.setModuleId(record.get(PROJET_MODULE.I_MODULE_ID));
-        return projetModule;
+    /**
+     *
+     * @param record resultat requete sql
+     * @return Produit
+     */
+    public static Produit recordToProduit(Record record) {
+        Produit produit = new Produit();
+        produit.setProduitId(record.get(PRODUIT.I_PRODUIT_ID));
+        produit.setGammesId(record.get(PRODUIT.I_GAMMES_ID));
+        produit.setProduitNom(record.get(PRODUIT.V_PRODUIT_NOM));
+        produit.setPrixProduit(record.get(PRODUIT.F_PRIX_PRODUIT) == null ? 0 : record.get(PRODUIT.F_PRIX_PRODUIT));
+        produit.setModele(record.get(PRODUIT.B_MODELE));
+        return produit;
     }
 
-    public static ClientAdresse RecordToClientAdresse(Record record) {
+    /**
+     *
+     * @param record resultat requete sql
+     * @return ProjetProduits
+     */
+    public static ProjetProduits recordToProjetProduits(Record record) {
+        ProjetProduits projetProduits = new ProjetProduits();
+        projetProduits.setProjetId(record.get(PROJET_PRODUITS.I_PROJET_ID));
+        projetProduits.setProduitId(record.get(PROJET_PRODUITS.I_PRODUIT_ID));
+        return projetProduits;
+    }
+
+    /**
+     *
+     * @param record resultat requete sql
+     * @return ProduitModule
+     */
+    public static ProduitModule recordToProduitModule(Record record) {
+        ProduitModule produitModule = new ProduitModule();
+        produitModule.setProduitModuleId(record.get(PRODUIT_MODULE.I_PRODUIT_MODULE_ID));
+        produitModule.setProduitId(record.get(PRODUIT_MODULE.I_PRODUIT_ID));
+        produitModule.setModuleId(record.get(PRODUIT_MODULE.I_MODULE_ID));
+        produitModule.setProduitModuleNom(record.get(PRODUIT_MODULE.V_PRODUIT_MODULE_NOM));
+        produitModule.setProduitModuleAngle(record.get(PRODUIT_MODULE.V_PRODUIT_MODULE_ANGLE));
+        produitModule.setProduitModuleSectionLongueur(record.get(PRODUIT_MODULE.J_SECTION_LONGUEUR, String.class));
+        return produitModule;
+    }
+
+    /**
+     *
+     * @param record resultat requete sql
+     * @return ClientAdresse
+     */
+    public static ClientAdresse recordToClientAdresse(Record record) {
         ClientAdresse clientAdresse = new ClientAdresse();
         clientAdresse.setClientId(record.get(CLIENT_ADRESSE.I_CLIENT_ID));
         clientAdresse.setAdresseId(record.get(CLIENT_ADRESSE.I_ADRESSE_ID));
@@ -155,7 +244,12 @@ public class Helper {
         return clientAdresse;
     }
 
-    public static Adresse RecordToAdresse(Record record) {
+    /**
+     *
+     * @param record resultat requete sql
+     * @return Adresse
+     */
+    public static Adresse recordToAdresse(Record record) {
         Adresse adresse = new Adresse();
         adresse.setAdresseId(record.get(ADRESSE.I_ADRESSE_ID));
         adresse.setVille(record.get(ADRESSE.V_VILLE));

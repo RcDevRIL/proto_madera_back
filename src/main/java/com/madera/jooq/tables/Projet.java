@@ -43,7 +43,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Projet extends TableImpl<ProjetRecord> {
 
-    private static final long serialVersionUID = 1951085278;
+    private static final long serialVersionUID = 1053495118;
 
     /**
      * The reference instance of <code>madera.projet</code>
@@ -94,9 +94,9 @@ public class Projet extends TableImpl<ProjetRecord> {
     public final TableField<ProjetRecord, Integer> I_DEVIS_ETAT_ID = createField(DSL.name("i_devis_etat_id"), org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>madera.projet.f_prix</code>.
+     * The column <code>madera.projet.f_prix_total</code>.
      */
-    public final TableField<ProjetRecord, Double> F_PRIX = createField(DSL.name("f_prix"), org.jooq.impl.SQLDataType.DOUBLE, this, "");
+    public final TableField<ProjetRecord, Double> F_PRIX_TOTAL = createField(DSL.name("f_prix_total"), org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
     /**
      * Create a <code>madera.projet</code> table reference
@@ -138,7 +138,7 @@ public class Projet extends TableImpl<ProjetRecord> {
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.FK_CLIENT_IDX, Indexes.PROJET_PKEY);
+        return Arrays.<Index>asList(Indexes.FK_CLIENT_IDX, Indexes.PROJET_PKEY, Indexes.REF_PROJET_UNIQUE);
     }
 
     @Override
@@ -153,16 +153,12 @@ public class Projet extends TableImpl<ProjetRecord> {
 
     @Override
     public List<UniqueKey<ProjetRecord>> getKeys() {
-        return Arrays.<UniqueKey<ProjetRecord>>asList(Keys.PROJET_PKEY);
+        return Arrays.<UniqueKey<ProjetRecord>>asList(Keys.PROJET_PKEY, Keys.REF_PROJET_UNIQUE);
     }
 
     @Override
     public List<ForeignKey<ProjetRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<ProjetRecord, ?>>asList(Keys.PROJET__FK_CLIENT, Keys.PROJET__FK_DEVIS_ETAT);
-    }
-
-    public Client client() {
-        return new Client(this, Keys.PROJET__FK_CLIENT);
+        return Arrays.<ForeignKey<ProjetRecord, ?>>asList(Keys.PROJET__FK_DEVIS_ETAT);
     }
 
     public DevisEtat devisEtat() {
