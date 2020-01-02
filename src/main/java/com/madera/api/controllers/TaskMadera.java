@@ -34,13 +34,21 @@ public class TaskMadera {
     private final UserRepository userRepository;
     private final ClientRepository clientRepository;
 
-    // private final Helper helper = new Helper();
 
+    /**
+     * Constructeur TaskMadera
+     * @param userRepository userRepository
+     * @param clientRepository clientRepository
+     */
     public TaskMadera(UserRepository userRepository, ClientRepository clientRepository) {
         this.userRepository = userRepository;
         this.clientRepository = clientRepository;
     }
 
+    /**
+     * Endpoint servant à tester la joignabilité du serveur
+     * @return Ok
+     */
     @RequestMapping(path = "", method = RequestMethod.GET)
     public ResponseEntity<Object> index() {
         // TODO Afficher l'IP de la machine qui ping si possible
@@ -48,6 +56,11 @@ public class TaskMadera {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    /**
+     * EndPoint authentification
+     * @param userAuth UserAuth
+     * @return Ok ou unauthorized
+     */
     @PostMapping(path = "/authentification", consumes = "application/json")
     public ResponseEntity<Object> authentification(@RequestBody UserAuth userAuth) {
         log.info("Try connection for user {}", userAuth.getLogin());
@@ -67,6 +80,11 @@ public class TaskMadera {
         return new ResponseEntity<>("Connection failed", HttpStatus.UNAUTHORIZED);
     }
 
+    /**
+     * EndPoint deconnection
+     * @param login login de la personne a deconnecter
+     * @return Ok ou BadRequest
+     */
     @PostMapping(path = "/deconnection", consumes = "application/json")
     public ResponseEntity<Object> deconnection(@RequestBody String login) {
         int isDelete = userRepository.deleteToken(login);
@@ -78,6 +96,11 @@ public class TaskMadera {
         }
     }
 
+    /**
+     * EndPoint pour ajouter des adresses
+     * @param listAdresse listAdresse
+     * @return Ok ou BadRequest
+     */
     @PostMapping(path = "/adresse", consumes = "application/json")
     public ResponseEntity<Object> createAdresse(@RequestBody List<Adresse> listAdresse) {
         boolean isInserted = clientRepository.createAdresse(listAdresse) != 0;

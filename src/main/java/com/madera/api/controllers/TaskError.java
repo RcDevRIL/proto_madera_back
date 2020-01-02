@@ -22,6 +22,11 @@ public class TaskError implements ErrorController {
 
     private static final Logger log = LoggerFactory.getLogger(TaskError.class);
 
+    /**
+     * Endpoint error
+     * @param request requete
+     * @return response html
+     */
     @RequestMapping("/error")
     @ResponseBody
     public String handleError(HttpServletRequest request) {

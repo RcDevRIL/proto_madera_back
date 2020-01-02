@@ -20,6 +20,13 @@ import java.io.IOException;
 // Return a custom response error
 public class JwtAuthentificationEntryPoint implements AuthenticationEntryPoint {
 
+    /**
+     *
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @param authException AuthenticationException
+     * @throws IOException IOException
+     */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException authException) throws IOException {

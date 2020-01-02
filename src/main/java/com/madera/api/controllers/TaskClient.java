@@ -25,6 +25,12 @@ public class TaskClient {
 
     // TODO get Client by id
 
+    /**
+     * Récupérer un client
+     * @param nom du client
+     * @param prenom du client
+     * @return Ok avec le client ou BadRequest
+     */
     @GetMapping(path = "/client", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> getClient(@RequestParam("nom") String nom, @RequestParam("prenom") String prenom) {
         Map<String, Object> mapResponse = new HashMap<>();
@@ -37,6 +43,11 @@ public class TaskClient {
         }
     }
 
+    /**
+     * EndPoint création d'un client
+     * @param client json(depuis un appel serveur) to client
+     * @return le clientId ajouté
+     */
     @PostMapping(path = "/client", consumes = "application/json")
     public ResponseEntity<Object> createClient(@RequestBody Client client) {
         // TODO client_adresse et adresse ?
@@ -50,6 +61,11 @@ public class TaskClient {
         }
     }
 
+    /**
+     * Méthode de mise à jour du client
+     * @param client json(depuis un appel serveur) to client
+     * @return Ok ou BadRequest
+     */
     @PutMapping(path = "/client", consumes = "application/json")
     public ResponseEntity<Object> updateClient(@RequestBody Client client) {
         boolean isUpdated = clientRepository.updateClient(client) == 1;
@@ -60,6 +76,11 @@ public class TaskClient {
         }
     }
 
+    /**
+     * EndPoint Suppression client
+     * @param clientId integer
+     * @return Ok ou BadRequest
+     */
     @DeleteMapping(path = "/client", consumes = "application/json")
     public ResponseEntity<Object> deleteClient(@RequestBody Integer clientId) {
         boolean isDeleted = clientRepository.deleteClient(clientId) != 0;
@@ -70,6 +91,11 @@ public class TaskClient {
         }
     }
 
+    /**
+     * Endpoint pour ajouter une liste d'adresse à un client
+     * @param listClientAdresse listClientAdresse
+     * @return OK ou BadRequest
+     */
     @PostMapping(path = "/clientadresse", consumes = "application/json")
     public ResponseEntity<Object> addClientAdresse(@RequestBody List<ClientAdresse> listClientAdresse) {
         Map<String, Object> mapResponse = new HashMap<>();

@@ -26,6 +26,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AuthentificationFilter authentificationFilter;
 
+    /**
+     * Configure les accès aux différentes routes de l'application
+     * @param http HttpSecurity
+     * @throws Exception exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 

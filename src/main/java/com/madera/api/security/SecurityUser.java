@@ -42,6 +42,10 @@ public class SecurityUser implements UserDetails {
         this.role = role;
     }
 
+    /**
+     *
+     * @return liste des autorités
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<>();
