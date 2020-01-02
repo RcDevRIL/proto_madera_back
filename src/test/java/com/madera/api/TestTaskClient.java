@@ -1,11 +1,7 @@
 package com.madera.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.madera.api.controllers.TaskClient;
 import com.madera.api.models.Client;
-import com.madera.api.models.ClientAdresse;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,10 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotNull;

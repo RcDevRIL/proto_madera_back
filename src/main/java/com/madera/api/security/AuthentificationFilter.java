@@ -35,7 +35,7 @@ public class AuthentificationFilter extends OncePerRequestFilter {
     SecurityUser jwtUserDetails;
 
     private static final Logger log = LoggerFactory.getLogger(ApiApplication.class);
-    UserRepository userRepository = new UserRepository();
+    final UserRepository userRepository = new UserRepository();
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

@@ -18,7 +18,7 @@ import static com.madera.jooq.tables.DevisEtat.DEVIS_ETAT;
  * Elle est principalement utilisé pour mapper des données actuellement.
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.2-PRE-RELEASE
+ * @version 0.3-RELEASE
  */
 public class Helper {
 
@@ -48,8 +48,9 @@ public class Helper {
         projet.setNomProjet(record.get(PROJET.V_NOM_PROJET));
         projet.setRefProjet(record.get(PROJET.V_REF_PROJET));
         projet.setDateProjet(record.get(PROJET.D_DATE_PROJET));
-        //TODO add trigger in bdd après chaque insert de module pour recalculer le prix du projet
-        //TODO temporaire
+        // TODO add trigger in bdd après chaque insert de module pour recalculer le prix
+        // du projet
+        // TODO temporaire
         projet.setPrixTotal(record.get(PROJET.F_PRIX_TOTAL) == null ? 0 : record.get(PROJET.F_PRIX_TOTAL));
         projet.setClientId(record.get(PROJET.I_CLIENT_ID));
         projet.setDevisEtatId(record.get(PROJET.I_DEVIS_ETAT_ID));
@@ -86,6 +87,7 @@ public class Helper {
 
     /**
      * Construct a instance of securityUser
+     * 
      * @param record resultat requete sql
      * @return SecurityUser
      */
@@ -96,7 +98,7 @@ public class Helper {
         return securityUser;
     }
 
-    //TODO A supprimer ?
+    // TODO A supprimer ?
     public static ComposantReferentiel recordToComposantReferentiel(Record record) {
         ComposantReferentiel composantReferentiel = new ComposantReferentiel();
         composantReferentiel.setComposantReferentielId(record.get(COMPOSANT_REFERENTIEL.I_COMPOSANT_REFERENTIEL_ID));

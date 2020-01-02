@@ -68,8 +68,7 @@ public class ClientRepository {
     //TODO Enlever contrainte étrangère clientId sur projet
     public Integer deleteClient(Integer clientId) {
         return context.transactionResult(configuration -> {
-            Integer linesDeleted = null;
-            linesDeleted = DSL.using(configuration)
+            Integer linesDeleted = DSL.using(configuration)
                     .delete(CLIENT_ADRESSE)
                     .where(CLIENT_ADRESSE.I_CLIENT_ID.eq(clientId))
                     .execute();
@@ -95,13 +94,11 @@ public class ClientRepository {
                         CLIENT_ADRESSE.I_ADRESSE_ID,
                         CLIENT_ADRESSE.B_ADRESSE_FACTURATION
                 );
-        listClientAdresse.forEach(clientAdresse -> {
-            query.values(
-                    clientAdresse.getClientId(),
-                    clientAdresse.getAdresseId(),
-                    clientAdresse.getAdresseFacturation()
-            );
-        });
+        listClientAdresse.forEach(clientAdresse -> query.values(
+                clientAdresse.getClientId(),
+                clientAdresse.getAdresseId(),
+                clientAdresse.getAdresseFacturation()
+        ));
         return query.execute();
     }
 
@@ -114,14 +111,12 @@ public class ClientRepository {
                         ADRESSE.V_COMPLEMENT,
                         ADRESSE.V_NUMERO
                 );
-        listAdresse.forEach(adresse -> {
-            query.values(
-                    adresse.getVille(),
-                    adresse.getCodePostale(),
-                    adresse.getRue(),
-                    adresse.getComplement(),
-                    adresse.getNumero());
-        });
+        listAdresse.forEach(adresse -> query.values(
+                adresse.getVille(),
+                adresse.getCodePostale(),
+                adresse.getRue(),
+                adresse.getComplement(),
+                adresse.getNumero()));
         return query.execute();
     }
 }

@@ -3,7 +3,6 @@ package com.madera.api.controllers;
 import com.madera.api.models.Client;
 import com.madera.api.models.ClientAdresse;
 import com.madera.api.repository.ClientRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,20 +17,20 @@ import java.util.Map;
 public class TaskClient {
 
     @Autowired
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
 
     public TaskClient(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 
-    //TODO get Client by id
+    // TODO get Client by id
 
     @GetMapping(path = "/client", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> getClient(@RequestParam("nom") String nom, @RequestParam("prenom") String prenom) {
         Map<String, Object> mapResponse = new HashMap<>();
         Client client = clientRepository.getClientByNomAndPrenom(nom, prenom);
         mapResponse.put("client", client);
-        if(client != null) {
+        if (client != null) {
             return new ResponseEntity<>(mapResponse, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -40,10 +39,10 @@ public class TaskClient {
 
     @PostMapping(path = "/client", consumes = "application/json")
     public ResponseEntity<Object> createClient(@RequestBody Client client) {
-        //TODO client_adresse et adresse ?
+        // TODO client_adresse et adresse ?
         Map<String, Object> mapResponse = new HashMap<>();
         Integer clientId = clientRepository.createClient(client);
-        if(clientId != null) {
+        if (clientId != null) {
             mapResponse.put("clientId", clientId);
             return new ResponseEntity<>(mapResponse, HttpStatus.OK);
         } else {
@@ -53,8 +52,8 @@ public class TaskClient {
 
     @PutMapping(path = "/client", consumes = "application/json")
     public ResponseEntity<Object> updateClient(@RequestBody Client client) {
-        Boolean isUpdated = clientRepository.updateClient(client) == 1;
-        if(isUpdated) {
+        boolean isUpdated = clientRepository.updateClient(client) == 1;
+        if (isUpdated) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -63,8 +62,8 @@ public class TaskClient {
 
     @DeleteMapping(path = "/client", consumes = "application/json")
     public ResponseEntity<Object> deleteClient(@RequestBody Integer clientId) {
-        Boolean isDeleted = clientRepository.deleteClient(clientId) != 0;
-        if(isDeleted) {
+        boolean isDeleted = clientRepository.deleteClient(clientId) != 0;
+        if (isDeleted) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -74,8 +73,8 @@ public class TaskClient {
     @PostMapping(path = "/clientadresse", consumes = "application/json")
     public ResponseEntity<Object> addClientAdresse(@RequestBody List<ClientAdresse> listClientAdresse) {
         Map<String, Object> mapResponse = new HashMap<>();
-        Boolean isInserted = clientRepository.addClientAdresse(listClientAdresse) != 0;
-        if(isInserted) {
+        boolean isInserted = clientRepository.addClientAdresse(listClientAdresse) != 0;
+        if (isInserted) {
             return new ResponseEntity<>(mapResponse, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(mapResponse, HttpStatus.BAD_REQUEST);

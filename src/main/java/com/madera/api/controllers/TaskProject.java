@@ -1,7 +1,6 @@
 package com.madera.api.controllers;
 
 import com.madera.api.models.Projet;
-import com.madera.api.models.ProduitModule;
 import com.madera.api.models.ProjetWithAllInfos;
 import com.madera.api.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +58,7 @@ public class TaskProject {
     public ResponseEntity<Object> updateProject(@RequestBody ProjetWithAllInfos projetWithAllInfos)
     {
         Map<String, Object> mapResponse = new HashMap<>();
-        Boolean isUpdated = projetRepository.updateAll(projetWithAllInfos) != 0;
+        boolean isUpdated = projetRepository.updateAll(projetWithAllInfos) != 0;
         if(isUpdated) {
             return new ResponseEntity<>(mapResponse, HttpStatus.OK);
         } else {
@@ -82,7 +81,7 @@ public class TaskProject {
      */
     @DeleteMapping(path = "/project/{refProjet}", consumes = "application/json")
     public ResponseEntity<Object> deleteProjectByRef(@PathVariable("refProjet") String refProjet) {
-        Boolean isDeleted = projetRepository.deleteAll(refProjet) != 0;
+        boolean isDeleted = projetRepository.deleteAll(refProjet) != 0;
         if(isDeleted) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
