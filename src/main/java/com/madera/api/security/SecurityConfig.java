@@ -13,7 +13,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * Classe permettant de configurer l'authentification
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.2-PRE-RELEASE
+ * @version 0.3-RELEASE
  */
 @Configuration
 @EnableWebSecurity
@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // We don't need CSRF for this example
         http.csrf().disable().httpBasic().disable().formLogin().disable()
                 // dont authenticat this particular requests
-                .authorizeRequests().antMatchers("/madera/authentification", "/madera").permitAll().
+                .authorizeRequests().antMatchers("/api/authentification", "/api").permitAll().
                 // all other requests need to be authenticated
                 anyRequest().authenticated().and()
                 // make sure we use stateless session; session won't be used to

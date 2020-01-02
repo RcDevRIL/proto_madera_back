@@ -4,7 +4,7 @@ package com.madera.api.models;
  * DTO Adresse
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.2-PRE-RELEASE
+ * @version 0.3-RELEASE
  */
 public class Adresse {
 
@@ -21,6 +21,14 @@ public class Adresse {
     String numero;
 
     public Adresse() {
+    }
+
+    public Adresse(String ville, String codePostale, String rue, String complement, String numero) {
+        this.ville = ville;
+        this.codePostale = codePostale;
+        this.rue = rue;
+        this.complement = complement;
+        this.numero = numero;
     }
 
     public Integer getAdresseId() {

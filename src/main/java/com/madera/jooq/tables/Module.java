@@ -20,7 +20,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row7;
+import org.jooq.Row6;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -42,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Module extends TableImpl<ModuleRecord> {
 
-    private static final long serialVersionUID = 838085000;
+    private static final long serialVersionUID = 304121941;
 
     /**
      * The reference instance of <code>madera.module</code>
@@ -78,19 +78,14 @@ public class Module extends TableImpl<ModuleRecord> {
     public final TableField<ModuleRecord, String> V_NOM = createField(DSL.name("v_nom"), org.jooq.impl.SQLDataType.VARCHAR(50), this, "");
 
     /**
-     * The column <code>madera.module.v_angle</code>.
-     */
-    public final TableField<ModuleRecord, String> V_ANGLE = createField(DSL.name("v_angle"), org.jooq.impl.SQLDataType.VARCHAR(25), this, "");
-
-    /**
      * The column <code>madera.module.v_nature_module</code>.
      */
     public final TableField<ModuleRecord, String> V_NATURE_MODULE = createField(DSL.name("v_nature_module"), org.jooq.impl.SQLDataType.VARCHAR(45), this, "");
 
     /**
-     * The column <code>madera.module.b_modele</code>.
+     * The column <code>madera.module.f_prix_module</code>.
      */
-    public final TableField<ModuleRecord, Boolean> B_MODELE = createField(DSL.name("b_modele"), org.jooq.impl.SQLDataType.BOOLEAN, this, "");
+    public final TableField<ModuleRecord, Double> F_PRIX_MODULE = createField(DSL.name("f_prix_module"), org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
     /**
      * Create a <code>madera.module</code> table reference
@@ -190,11 +185,11 @@ public class Module extends TableImpl<ModuleRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row7 type methods
+    // Row6 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row7<Integer, Integer, Integer, String, String, String, Boolean> fieldsRow() {
-        return (Row7) super.fieldsRow();
+    public Row6<Integer, Integer, Integer, String, String, Double> fieldsRow() {
+        return (Row6) super.fieldsRow();
     }
 }

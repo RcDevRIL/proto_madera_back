@@ -30,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ProjetRecord extends UpdatableRecordImpl<ProjetRecord> implements Record8<Integer, Integer, String, String, Date, byte[], Integer, Double> {
 
-    private static final long serialVersionUID = -573243107;
+    private static final long serialVersionUID = 647693988;
 
     /**
      * Setter for <code>madera.projet.i_projet_id</code>.
@@ -131,16 +131,16 @@ public class ProjetRecord extends UpdatableRecordImpl<ProjetRecord> implements R
     }
 
     /**
-     * Setter for <code>madera.projet.f_prix</code>.
+     * Setter for <code>madera.projet.f_prix_total</code>.
      */
-    public void setFPrix(Double value) {
+    public void setFPrixTotal(Double value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>madera.projet.f_prix</code>.
+     * Getter for <code>madera.projet.f_prix_total</code>.
      */
-    public Double getFPrix() {
+    public Double getFPrixTotal() {
         return (Double) get(7);
     }
 
@@ -204,7 +204,7 @@ public class ProjetRecord extends UpdatableRecordImpl<ProjetRecord> implements R
 
     @Override
     public Field<Double> field8() {
-        return Projet.PROJET.F_PRIX;
+        return Projet.PROJET.F_PRIX_TOTAL;
     }
 
     @Override
@@ -244,7 +244,7 @@ public class ProjetRecord extends UpdatableRecordImpl<ProjetRecord> implements R
 
     @Override
     public Double component8() {
-        return getFPrix();
+        return getFPrixTotal();
     }
 
     @Override
@@ -284,7 +284,7 @@ public class ProjetRecord extends UpdatableRecordImpl<ProjetRecord> implements R
 
     @Override
     public Double value8() {
-        return getFPrix();
+        return getFPrixTotal();
     }
 
     @Override
@@ -331,7 +331,7 @@ public class ProjetRecord extends UpdatableRecordImpl<ProjetRecord> implements R
 
     @Override
     public ProjetRecord value8(Double value) {
-        setFPrix(value);
+        setFPrixTotal(value);
         return this;
     }
 
@@ -362,7 +362,7 @@ public class ProjetRecord extends UpdatableRecordImpl<ProjetRecord> implements R
     /**
      * Create a detached, initialised ProjetRecord
      */
-    public ProjetRecord(Integer iProjetId, Integer iClientId, String vNomProjet, String vRefProjet, Date dDateProjet, byte[] vSignatureProjet, Integer iDevisEtatId, Double fPrix) {
+    public ProjetRecord(Integer iProjetId, Integer iClientId, String vNomProjet, String vRefProjet, Date dDateProjet, byte[] vSignatureProjet, Integer iDevisEtatId, Double fPrixTotal) {
         super(Projet.PROJET);
 
         set(0, iProjetId);
@@ -372,6 +372,6 @@ public class ProjetRecord extends UpdatableRecordImpl<ProjetRecord> implements R
         set(4, dDateProjet);
         set(5, vSignatureProjet);
         set(6, iDevisEtatId);
-        set(7, fPrix);
+        set(7, fPrixTotal);
     }
 }

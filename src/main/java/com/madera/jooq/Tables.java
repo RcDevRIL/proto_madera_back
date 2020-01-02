@@ -17,8 +17,10 @@ import com.madera.jooq.tables.Gammes;
 import com.madera.jooq.tables.Module;
 import com.madera.jooq.tables.ModuleComposant;
 import com.madera.jooq.tables.ModuleReferentiel;
+import com.madera.jooq.tables.Produit;
+import com.madera.jooq.tables.ProduitModule;
 import com.madera.jooq.tables.Projet;
-import com.madera.jooq.tables.ProjetModule;
+import com.madera.jooq.tables.ProjetProduits;
 import com.madera.jooq.tables.ProjetUtilisateurs;
 import com.madera.jooq.tables.Role;
 import com.madera.jooq.tables.Utilisateur;
@@ -105,14 +107,24 @@ public class Tables {
     public static final ModuleReferentiel MODULE_REFERENTIEL = ModuleReferentiel.MODULE_REFERENTIEL;
 
     /**
+     * The table <code>madera.produit</code>.
+     */
+    public static final Produit PRODUIT = Produit.PRODUIT;
+
+    /**
+     * The table <code>madera.produit_module</code>.
+     */
+    public static final ProduitModule PRODUIT_MODULE = ProduitModule.PRODUIT_MODULE;
+
+    /**
      * The table <code>madera.projet</code>.
      */
     public static final Projet PROJET = Projet.PROJET;
 
     /**
-     * The table <code>madera.projet_module</code>.
+     * The table <code>madera.projet_produits</code>.
      */
-    public static final ProjetModule PROJET_MODULE = ProjetModule.PROJET_MODULE;
+    public static final ProjetProduits PROJET_PRODUITS = ProjetProduits.PROJET_PRODUITS;
 
     /**
      * The table <code>madera.projet_utilisateurs</code>.

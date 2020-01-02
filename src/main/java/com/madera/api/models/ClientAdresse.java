@@ -4,7 +4,7 @@ package com.madera.api.models;
  * DTO ClientAdresse
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.2-PRE-RELEASE
+ * @version 0.3-RELEASE
  */
 public class ClientAdresse {
 
@@ -15,6 +15,12 @@ public class ClientAdresse {
     Boolean adresseFacturation;
 
     public ClientAdresse() {
+    }
+
+    public ClientAdresse(Integer clientId, Integer adresseId, Boolean adresseFacturation) {
+        this.clientId = clientId;
+        this.adresseId = adresseId;
+        this.adresseFacturation = adresseFacturation;
     }
 
     public Integer getClientId() {
@@ -40,4 +46,5 @@ public class ClientAdresse {
     public void setAdresseFacturation(Boolean adresseFacturation) {
         this.adresseFacturation = adresseFacturation;
     }
+
 }

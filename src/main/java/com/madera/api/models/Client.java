@@ -1,5 +1,6 @@
 package com.madera.api.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.beans.ConstructorProperties;
@@ -8,9 +9,10 @@ import java.beans.ConstructorProperties;
  * DTO Client
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.2-PRE-RELEASE
+ * @version 0.3-RELEASE
  */
 @JsonSerialize
+@JsonDeserialize
 public class Client {
 
     public Integer id;

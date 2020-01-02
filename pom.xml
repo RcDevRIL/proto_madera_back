@@ -12,7 +12,7 @@
 
 	<groupId>com.madera</groupId>
 	<artifactId>api</artifactId>
-	<version>0.2.1-RELEASE</version>
+	<version>0.3.1-RELEASE</version>
 	<packaging>jar</packaging>
 
 	<name>Madera API prototype</name>
@@ -22,6 +22,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>11</java.version>
+		<db.url>jdbc:postgresql://127.0.0.1:5432/madera</db.url>
+		<db.user>postgres</db.user>
+		<db.password></db.password>
 	</properties>
 
 	<dependencies>
@@ -95,6 +98,39 @@
 				<configuration>
 					<mainClass>com.madera.api.ApiApplication</mainClass>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jooq</groupId>
+				<artifactId>jooq-codegen-maven</artifactId>
+				<version>3.12.3</version>
+
+				<executions>
+					<execution>
+						<id>default-cli</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+
+						<configuration>
+							<jdbc>
+								<url>${db.url}</url>
+								<user>${db.user}</user>
+								<password>${db.password}</password>
+							</jdbc>
+							<generator>
+								<database>
+									<includes>.*</includes>
+									<inputSchema>madera</inputSchema>
+								</database>
+								<target>
+									<packageName>com.madera.jooq</packageName>
+									<directory>src/main/java</directory>
+								</target>
+							</generator>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
