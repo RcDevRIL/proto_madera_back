@@ -20,7 +20,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row5;
+import org.jooq.Row6;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -42,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Composant extends TableImpl<ComposantRecord> {
 
-    private static final long serialVersionUID = 1008718970;
+    private static final long serialVersionUID = 1789055329;
 
     /**
      * The reference instance of <code>madera.composant</code>
@@ -81,6 +81,11 @@ public class Composant extends TableImpl<ComposantRecord> {
      * The column <code>madera.composant.f_section</code>.
      */
     public final TableField<ComposantRecord, Double> F_SECTION = createField(DSL.name("f_section"), org.jooq.impl.SQLDataType.DOUBLE, this, "");
+
+    /**
+     * The column <code>madera.composant.f_composant_prix</code>.
+     */
+    public final TableField<ComposantRecord, Double> F_COMPOSANT_PRIX = createField(DSL.name("f_composant_prix"), org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
     /**
      * Create a <code>madera.composant</code> table reference
@@ -180,11 +185,11 @@ public class Composant extends TableImpl<ComposantRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row5 type methods
+    // Row6 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Integer, Integer, String, Integer, Double> fieldsRow() {
-        return (Row5) super.fieldsRow();
+    public Row6<Integer, Integer, String, Integer, Double, Double> fieldsRow() {
+        return (Row6) super.fieldsRow();
     }
 }
