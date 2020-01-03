@@ -26,6 +26,10 @@ public class ClientRepository {
     @Autowired
     DSLContext context;
 
+    /**
+     * Méthode pour récupérer la liste des clients
+     * @return listClient
+     */
     public List<Client> getAllClient() {
         return context
                 .select(CLIENT.fields())
@@ -33,6 +37,12 @@ public class ClientRepository {
                 .fetch(Helper::recordToClient);
     }
 
+    /**
+     * Méthode récupérant un client
+     * @param nom du client
+     * @param prenom du client
+     * @return client
+     */
     public Client getClientByNomAndPrenom(String nom, String prenom) {
         return context
                 .select(CLIENT.fields())
@@ -41,6 +51,11 @@ public class ClientRepository {
                 .fetchOne(Helper::recordToClient);
     }
 
+    /**
+     * Méthode création d'un client
+     * @param client client
+     * @return clientId
+     */
     public Integer createClient(Client client) {
         Record record = context
                 .insertInto(CLIENT)
@@ -53,6 +68,11 @@ public class ClientRepository {
         return record.get(CLIENT.I_CLIENT_ID);
     }
 
+    /**
+     * Méthode de mise à jour d'un client
+     * @param client client
+     * @return != 0 si il a été mis à jour
+     */
     public Integer updateClient(Client client) {
         return context
                 .update(CLIENT)
@@ -66,6 +86,12 @@ public class ClientRepository {
 
     //Supprime le client
     //TODO Enlever contrainte étrangère clientId sur projet
+
+    /**
+     * Méthode suppression du client
+     * @param clientId du client
+     * @return != 0 s'il a été supprimé
+     */
     public Integer deleteClient(Integer clientId) {
         return context.transactionResult(configuration -> {
             Integer linesDeleted = DSL.using(configuration)
@@ -80,6 +106,10 @@ public class ClientRepository {
         });
     }
 
+    /**
+     * Méthode qui récupère la liste des clientAdresse
+     * @return listClientAdresse
+     */
     public List<ClientAdresse> getAllClientAdresse() {
         return context
                 .select(CLIENT_ADRESSE.fields())
@@ -87,6 +117,11 @@ public class ClientRepository {
                 .fetch(Helper::recordToClientAdresse);
     }
 
+    /**
+     * Méthode pour ajouter un clientAdresse
+     * @param listClientAdresse listClientAdresse
+     * @return != 0 si les clientAdresse ont été ajoutés.
+     */
     public Integer addClientAdresse(List<ClientAdresse> listClientAdresse) {
         var query = context
                 .insertInto(CLIENT_ADRESSE)
@@ -102,6 +137,11 @@ public class ClientRepository {
         return query.execute();
     }
 
+    /**
+     * Méthode de création d'une adresse
+     * @param listAdresse listAdresse
+     * @return != 0 si les adresses ont été ajoutées.
+     */
     public Integer createAdresse(List<Adresse> listAdresse) {
         var query = context
                 .insertInto(ADRESSE)

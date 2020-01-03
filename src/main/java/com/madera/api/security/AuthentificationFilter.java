@@ -37,6 +37,14 @@ public class AuthentificationFilter extends OncePerRequestFilter {
     private static final Logger log = LoggerFactory.getLogger(ApiApplication.class);
     final UserRepository userRepository = new UserRepository();
 
+    /**
+     *
+     * @param request HttpServletRequest
+     * @param response HttpServletResponse
+     * @param filterChain FilterChain
+     * @throws ServletException servletException
+     * @throws IOException IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {

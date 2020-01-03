@@ -90,7 +90,8 @@ CREATE TABLE madera.composant (
     i_composant_groupe_id integer,
     v_libelle character varying(45),
     i_composant_referentiel_id integer,
-    f_section float
+    f_section float,
+    f_composant_prix float
 );
 
 
