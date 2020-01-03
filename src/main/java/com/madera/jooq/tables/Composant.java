@@ -42,7 +42,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Composant extends TableImpl<ComposantRecord> {
 
-    private static final long serialVersionUID = 1789055329;
+    private static final long serialVersionUID = 1725833891;
 
     /**
      * The reference instance of <code>madera.composant</code>
@@ -80,12 +80,12 @@ public class Composant extends TableImpl<ComposantRecord> {
     /**
      * The column <code>madera.composant.f_section</code>.
      */
-    public final TableField<ComposantRecord, Double> F_SECTION = createField(DSL.name("f_section"), org.jooq.impl.SQLDataType.DOUBLE, this, "");
+    public final TableField<ComposantRecord, Double> F_SECTION = createField(DSL.name("f_section"), org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
 
     /**
      * The column <code>madera.composant.f_composant_prix</code>.
      */
-    public final TableField<ComposantRecord, Double> F_COMPOSANT_PRIX = createField(DSL.name("f_composant_prix"), org.jooq.impl.SQLDataType.DOUBLE, this, "");
+    public final TableField<ComposantRecord, Double> F_COMPOSANT_PRIX = createField(DSL.name("f_composant_prix"), org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
 
     /**
      * Create a <code>madera.composant</code> table reference
