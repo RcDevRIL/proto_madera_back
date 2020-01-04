@@ -153,9 +153,9 @@ INSERT INTO madera.composant(i_composant_id, i_composant_groupe_id, v_libelle, i
 -- Ossature
 (12, 11, 'Chassis de bois', 4 , 200, 204.66),
 -- Tasseau ?
-(13, null, 'Construction carton de plâtre', null , null, 25),
+(13, null, 'Construction carton de plâtre', null , 1, 25),
 -- 12 euros le m2 ?
-(14, 15, 'Tuiles', 6 , null, 12),
+(14, 15, 'Tuiles', 6 , 1, 12),
 -- Pare vapeur ?
 (15, 12, 'Folio', 3, 1, 45),
 -- Poutre de maintien
@@ -238,9 +238,9 @@ INSERT INTO madera.projet(i_projet_id, i_client_id, v_nom_projet, v_ref_projet, 
 SELECT setval('madera.projet_i_projet_id_seq'::regclass, 2);
 
 INSERT INTO madera.produit(i_produit_id, v_produit_nom, i_gammes_id, f_prix_produit, b_modele) VALUES
-(1, 'Maison modulaire standard', 1, 2535, true),
-(2, 'Dépendance standard', 1, 1245, true),
-(3, 'Dépendance premium', 2, 35000, true);
+(1, 'Maison modulaire standard', 1, null, true),
+(2, 'Dépendance standard', 1, null, true),
+(3, 'Dépendance premium', 2, null, true);
 
 SELECT setval('madera.produit_i_produit_id_seq'::regclass, 3);
 

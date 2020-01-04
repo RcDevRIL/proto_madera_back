@@ -21,7 +21,7 @@ import org.jooq.Index;
 import org.jooq.JSONB;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row6;
+import org.jooq.Row7;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -43,7 +43,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ProduitModule extends TableImpl<ProduitModuleRecord> {
 
-    private static final long serialVersionUID = -1916263390;
+    private static final long serialVersionUID = 1955923963;
 
     /**
      * The reference instance of <code>madera.produit_module</code>
@@ -87,6 +87,11 @@ public class ProduitModule extends TableImpl<ProduitModuleRecord> {
      * The column <code>madera.produit_module.j_section_longueur</code>.
      */
     public final TableField<ProduitModuleRecord, JSONB> J_SECTION_LONGUEUR = createField(DSL.name("j_section_longueur"), org.jooq.impl.SQLDataType.JSONB, this, "");
+
+    /**
+     * The column <code>madera.produit_module.f_prix</code>.
+     */
+    public final TableField<ProduitModuleRecord, Double> F_PRIX = createField(DSL.name("f_prix"), org.jooq.impl.SQLDataType.DOUBLE, this, "");
 
     /**
      * Create a <code>madera.produit_module</code> table reference
@@ -186,11 +191,11 @@ public class ProduitModule extends TableImpl<ProduitModuleRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row6 type methods
+    // Row7 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row6<Integer, Integer, Integer, String, String, JSONB> fieldsRow() {
-        return (Row6) super.fieldsRow();
+    public Row7<Integer, Integer, Integer, String, String, JSONB, Double> fieldsRow() {
+        return (Row7) super.fieldsRow();
     }
 }

@@ -80,16 +80,16 @@ public class TestTaskProject {
         assertNotNull(produit2);
 
         //Création listProduitModule pour produit1
-        listProduitModule1.add(new ProduitModule(1, "Mur ext.", "Angle sortant", "{\"section\": {\"longueur\": 450}, \"section\": {\"longueur\": 630}}"));
-        listProduitModule1.add(new ProduitModule(2, "Mur int.", "Angle entrant", "{\"section\": {\"longueur\": 520}, \"section\": {\"longueur\": 400}}"));
-        listProduitModule1.add(new ProduitModule(4, "Toit plat", "", "{\"section\": {\"longueur\": 750}}"));
+        listProduitModule1.add(new ProduitModule(1, "Mur ext.", "Angle sortant", "{\"sections\": [{\"longueur\": 450}, {\"longueur\": 630}]}"));
+        listProduitModule1.add(new ProduitModule(2, "Mur int.", "Angle entrant", "{\"sections\": [{\"longueur\": 520}, {\"longueur\": 400}]}"));
+        listProduitModule1.add(new ProduitModule(4, "Toit plat", "", "{\"sections\": [{\"longueur\": 750}]}"));
         // Test si le résultat est null
         assertNotNull(listProduitModule1);
 
         //Création listProduitModule pour produit2
-        listProduitModule2.add(new ProduitModule(5, "Mur ext. premium", "Angle sortant", "{\"section\": {\"longueur\": 500}, \"section\": {\"longueur\": 500}}"));
-        listProduitModule2.add(new ProduitModule(2, "Mur int.", "Angle entrant", "{\"section\": {\"longueur\": 520}, \"section\": {\"longueur\": 400}}"));
-        listProduitModule2.add(new ProduitModule(4, "Toit", "", "{\"section\": {\"longueur\": 750}}"));
+        listProduitModule2.add(new ProduitModule(5, "Mur ext. premium", "Angle sortant", "{\"sections\": [{\"longueur\": 500}, {\"longueur\": 500} ]}"));
+        listProduitModule2.add(new ProduitModule(2, "Mur int.", "Angle entrant", "{\"sections\": [{\"longueur\": 520}, {\"longueur\": 400}]}"));
+        listProduitModule2.add(new ProduitModule(4, "Toit", "", "{\"sections\": [{\"longueur\": 750}]}"));
         // Test si le résultat est null
         assertNotNull(listProduitModule2);
 
@@ -120,7 +120,7 @@ public class TestTaskProject {
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
-    @Test
+   @Test
     public void testDeleteProject() {
         ResponseEntity<Object> responseEntity = taskProject.deleteProjectByRef("20191412-testprojet-4");
         // Test si le résultat est null
@@ -128,84 +128,4 @@ public class TestTaskProject {
         // Test si la méthode renvoi un code 200
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
-
-    //TODO refaire
-    //TODO delete a faire la contrainte unique !!!
-    /*@Test
-    public void testCreateProject() {
-        Projet projet = new Projet();
-        projet.setNomProjet("testProjet");
-        projet.setRefProjet("20191412-testprojet-4");
-        projet.setDateProjet(Date.valueOf(LocalDate.now()));
-        projet.setPrix(301254);
-        projet.setClientId(4);
-        projet.setDevisEtatId(1);
-
-        List<ProduitModule> listProjetModule = new ArrayList<>();
-        listProjetModule.add(new ProduitModule(1));
-        listProjetModule.add(new ProduitModule(2));
-        listProjetModule.add(new ProduitModule(3));
-        listProjetModule.add(new ProduitModule(4));
-        ResponseEntity<Object> responseEntity = taskProject.createProject(projet, listProjetModule, 4);
-        // Test si le résultat est null
-        assertNotNull(responseEntity);
-        // Test si la méthode renvoi un code 200
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        try {
-            projet.setProjetId(new JSONObject(responseEntity.getBody().toString()).getInt("projetId"));
-            // Test si le projetId est différent de 0
-            assertNotEquals(projet.getProjetId(), Integer.valueOf(0));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void testUpdateProject() {
-        Projet projet = new Projet();
-        projet.setNomProjet("testProjetUpdate");
-        projet.setRefProjet("20191412-testprojet-4");
-        projet.setDateProjet(Date.valueOf(LocalDate.now()));
-        projet.setPrix(301254);
-        projet.setClientId(4);
-        projet.setDevisEtatId(4);
-
-        List<ProduitModule> listProjetModule = new ArrayList<>();
-        listProjetModule.add(new ProduitModule(1));
-        listProjetModule.add(new ProduitModule(2));
-        listProjetModule.add(new ProduitModule(3));
-        listProjetModule.add(new ProduitModule(4));
-        listProjetModule.add(new ProduitModule(3));
-
-        ResponseEntity<Object> responseEntity = taskProject.updateProject(projet, listProjetModule, 4);
-        // Test si le résultat est null
-        assertNotNull(responseEntity);
-        // Test si la méthode renvoi un code 200
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    }
-
-    @Test
-    public void testDeleteProject() {
-        ResponseEntity<Object> responseEntity = taskProject.deleteProjectByRef("20191412-testprojet-4");
-        // Test si le résultat est null
-        assertNotNull(responseEntity);
-        // Test si la méthode renvoi un code 200
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-        try {
-            Boolean isDeleted = new JSONObject(responseEntity.getBody().toString()).getBoolean("isDeleted");
-            // Test si le projet a bien été supprimé
-            assertTrue(isDeleted);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    public void test() {
-        ResponseEntity<Object> responseEntity = taskProject.getQuote(0);
-        // Test si le résultat est null
-        assertNotNull(responseEntity);
-        // Test si la méthode renvoi un code 200
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    }*/
 }
