@@ -14,10 +14,10 @@ echo "---------------------------------------------------"
 echo "Attention s'il faut un mot de passe pour votre base de données il faudra le renseigner !"
 
 echo "Suppression de l' ancience base de données"
-psql -U postgres madera -W -c "DROP SCHEMA madera CASCADE;"
+psql -U postgres madera -h localhost -W -c "DROP SCHEMA madera CASCADE;"
 
 echo "Création de la nouvelle base de données"
-psql -U postgres madera -W -f madera-scripts/dumps/madera_dump.sql
+psql -U postgres madera -h localhost -W -f madera-scripts/dumps/madera_dump.sql
 
 echo "Félicitations, votre base de données est à jour !"
 echo "---------------------"
