@@ -20,7 +20,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row5;
+import org.jooq.Row6;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -185,11 +185,11 @@ public class Composant extends TableImpl<ComposantRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row5 type methods
+    // Row6 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Integer, Integer, String, Integer, Double> fieldsRow() {
-        return (Row5) super.fieldsRow();
+    public Row6<Integer, Integer, String, Integer, Double, Double> fieldsRow() {
+        return (Row6) super.fieldsRow();
     }
 }
