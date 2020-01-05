@@ -237,17 +237,17 @@ INSERT INTO madera.projet(i_projet_id, i_client_id, v_nom_projet, v_ref_projet, 
 
 SELECT setval('madera.projet_i_projet_id_seq'::regclass, 2);
 
+-- TODO corriger les données aucun modele ne doit être associé aux clients ! Il le sélectionne c'est tout
 INSERT INTO madera.produit(i_produit_id, v_produit_nom, i_gammes_id, f_prix_produit, b_modele) VALUES
 (1, 'Maison modulaire standard', 1, null, true),
-(2, 'Dépendance standard', 1, null, true),
+(2, 'Dépendance standard', 1, null, false),
 (3, 'Dépendance premium', 2, null, true);
 
 SELECT setval('madera.produit_i_produit_id_seq'::regclass, 3);
 
+-- TODO Refaire jeu d'essai n'attribuer aucun produitModele au client !
 INSERT INTO madera.projet_produits(i_projet_id, i_produit_id) VALUES
-(1, 1),
-(2, 2),
-(2, 3);
+(1, 2);
 
 -- Continuer d'ajouter les modules !
 INSERT INTO madera.produit_module(i_produit_module_id, i_produit_id, i_module_id, v_produit_module_nom, v_produit_module_angle, j_section_longueur) VALUES
