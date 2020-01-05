@@ -27,6 +27,11 @@ psql -U postgres madera -W -f madera-scripts/dumps/data_dump.sql
 
 echo "La base de données est opérationnel !"
 
+echo "----------------------------------------------------"
+echo "Installation de l'application et Exécution des tests"
+echo "----------------------------------------------------"
+
+mvn clean install
 
 echo "--------------------------"
 echo "Lancement de l'application"
