@@ -4,7 +4,7 @@ pipeline {
         maven 'mvn'
     }
     stages {
-        stage ('Show environment variable') {
+        stage ('Prepare build') {
             steps {
                 sh '''
                     set +x
@@ -14,6 +14,8 @@ pipeline {
                     echo "WORKSPACE = ${WORKSPACE}"
                     git --version
                     mvn -version
+                    echo "Prepare build for this commit:"
+                    git log -1
                 '''
             }
         }
