@@ -23,7 +23,7 @@ echo "Félicitations, votre base de données est à jour !"
 echo "---------------------"
 echo "Insertion des données"
 echo "---------------------"
-psql -U postgres madera -W -f madera-scripts/dumps/data_dump.sql
+psql -U postgres madera -h localhost -W -f madera-scripts/dumps/data_dump.sql
 
 echo "La base de données est opérationnel !"
 
