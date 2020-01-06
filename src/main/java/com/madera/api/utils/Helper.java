@@ -256,7 +256,7 @@ public class Helper {
         adresse.setAdresseId(record.get(ADRESSE.I_ADRESSE_ID));
         adresse.setVille(record.get(ADRESSE.V_VILLE));
         adresse.setCodePostale(record.get(ADRESSE.V_CODE_POSTALE));
-        adresse.setRue(record.get(ADRESSE.V_COMPLEMENT));
+        adresse.setRue(record.get(ADRESSE.V_RUE));
         adresse.setComplement(record.get(ADRESSE.V_COMPLEMENT));
         adresse.setNumero(record.get(ADRESSE.V_NUMERO));
         return adresse;
