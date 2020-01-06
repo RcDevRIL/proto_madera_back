@@ -1,4 +1,10 @@
-# proto_madera_back - README V1.0.2
+# proto_madera_back - README V1.1
+__Build status by branch__
+* __master :__ 
+* __int :__ [![I_Codemagic build status][]][I_latest_build]
+* __dev :__ [![D_Jenkins_Build_Status][]][D_Jenkins_Job]
+
+__Tests coverage :__
   ![Coverage](https://github.com/RcDevRIL/proto_madera_back/blob/master/coverage/coverage.svg)
 
 Welcome on our development repository for our graduation project!! 
@@ -16,7 +22,7 @@ This README will guide you through the setup and deployment of this application 
 
 ###### Things to add on this README:
 
-* [ ] Jenkins badges to show build/test status
+* [X] Jenkins badges to show build/test status
 * [X] Test coverage badge
 * [X] librairies used to run the app
 * [X] How to run app on localhost
@@ -104,7 +110,12 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE
 ## Disclaimer
 
 * As I mentionned before, this is still a work in progress. :upside_down_face:
-
+[M_Jenkins_Build_Status]: http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK
+[M_Jenkins_Job]: http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK/
+[I_Jenkins_Build_Status]: http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_INT
+[I_Jenkins_Job]: http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_INT/
+[D_Jenkins_Build_Status]: http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_DEV
+[D_Jenkins_Job]: http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_DEV/
 [Spring]: https://spring.io/
 [Jooq]: https://www.jooq.org/
 [JUnit4]: https://junit.org/junit4/
