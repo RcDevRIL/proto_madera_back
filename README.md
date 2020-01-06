@@ -1,8 +1,8 @@
 # proto_madera_back - README V1.1
 __Build status by branch__
-* __master :__ 
-* __int :__ [![I_Codemagic build status][]][I_latest_build]
-* __dev :__ [![D_Jenkins_Build_Status][]][D_Jenkins_Job]
+* __master :__ [![Build Status](http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK)](http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK/)
+* __int :__ [![Build Status](http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_INT)](http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_INT/)
+* __dev :__ [![Build Status](http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_DEV)](http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_DEV/)
 
 __Tests coverage :__
   ![Coverage](https://github.com/RcDevRIL/proto_madera_back/blob/master/coverage/coverage.svg)
@@ -110,12 +110,7 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE
 ## Disclaimer
 
 * As I mentionned before, this is still a work in progress. :upside_down_face:
-[M_Jenkins_Build_Status]: http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK
-[M_Jenkins_Job]: http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK/
-[I_Jenkins_Build_Status]: http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_INT
-[I_Jenkins_Job]: http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_INT/
-[D_Jenkins_Build_Status]: http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_DEV
-[D_Jenkins_Job]: http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_DEV/
+
 [Spring]: https://spring.io/
 [Jooq]: https://www.jooq.org/
 [JUnit4]: https://junit.org/junit4/
