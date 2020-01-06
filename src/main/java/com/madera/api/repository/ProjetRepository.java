@@ -48,6 +48,12 @@ public class ProjetRepository {
                 .where(PROJET_UTILISATEURS.I_UTILISATEUR_ID.eq(utilisateurId)).fetch(Helper::recordToProjet);
     }
 
+    public List<Projet> getAllProjectsByProjetId(Integer projetId) {
+        return context.select(PROJET.fields())
+                .from(PROJET)
+                .where(PROJET.I_PROJET_ID.eq(projetId)).fetch(Helper::recordToProjet);
+    }
+
     /**
      *
      * @return listProduit qui sont des modèles
@@ -69,6 +75,12 @@ public class ProjetRepository {
                 .where(PROJET_UTILISATEURS.I_UTILISATEUR_ID.eq(utilisateurId)).fetch(Helper::recordToProduitModule);
     }
 
+    public List<ProduitModule> getAllProduitModuleByProjetId(Integer projetId) {
+        return context.select(PRODUIT_MODULE.fields()).from(PRODUIT_MODULE).join(PROJET_PRODUITS)
+                .on(PROJET_PRODUITS.I_PRODUIT_ID.eq(PRODUIT_MODULE.I_PRODUIT_ID))
+                .where(PROJET_PRODUITS.I_PROJET_ID.eq(projetId)).fetch(Helper::recordToProduitModule);
+    }
+
     /**
      *
      * @return listAdresse
@@ -88,6 +100,11 @@ public class ProjetRepository {
                 .where(PROJET_UTILISATEURS.I_UTILISATEUR_ID.eq(utilisateurId)).fetch(Helper::recordToProjetProduits);
     }
 
+    public List<ProjetProduits> getAllProjetProduitByProjetId(Integer projetId) {
+        return context.select(PROJET_PRODUITS.fields()).from(PROJET_PRODUITS)
+                .where(PROJET_PRODUITS.I_PROJET_ID.eq(projetId)).fetch(Helper::recordToProjetProduits);
+    }
+
     /**
      *
      * @param utilisateurId utilisateurId
@@ -100,13 +117,20 @@ public class ProjetRepository {
                 .where(PROJET_UTILISATEURS.I_UTILISATEUR_ID.eq(utilisateurId)).fetch(Helper::recordToProduit);
     }
 
+    public List<Produit> getAllProduitByProjetId(Integer projetId) {
+        return context.select(PRODUIT.fields()).from(PRODUIT).join(PROJET_PRODUITS)
+                .on(PROJET_PRODUITS.I_PRODUIT_ID.eq(PRODUIT.I_PRODUIT_ID))
+                .where(PROJET_PRODUITS.I_PRODUIT_ID.eq(projetId)).fetch(Helper::recordToProduit);
+    }
+
     /**
      *
      * @return la liste de tous les produitsModule des produitsModele
      */
     public List<ProduitModule> getAllProduitModuleForModele() {
-        return context.select(PRODUIT_MODULE.fields()).from(PRODUIT_MODULE).join(PRODUIT)
-                .on(PRODUIT.I_PRODUIT_ID.eq(PRODUIT_MODULE.I_PRODUIT_ID)).where(PRODUIT.B_MODELE.eq(true))
+        return context.select(PRODUIT_MODULE.fields()).from(PRODUIT_MODULE)
+                .join(PRODUIT).on(PRODUIT.I_PRODUIT_ID.eq(PRODUIT_MODULE.I_PRODUIT_ID))
+                .where(PRODUIT.B_MODELE.eq(true))
                 .fetch(Helper::recordToProduitModule);
     }
 
@@ -116,14 +140,19 @@ public class ProjetRepository {
      * @return list des produitsId insérer
      */
     // TODO attention si les finitions et le type de remplissages sont mis à jour !
-    public List<Integer> createAll(ProjetWithAllInfos projetWithAllInfos) {
+    public Integer createAll(ProjetWithAllInfos projetWithAllInfos) {
         return context.transactionResult(configuration -> {
             Integer projetId = createProjet(configuration, projetWithAllInfos.getProjet());
             Integer isUserAddProjet = addUserOnProjet(configuration, projetId,
                     projetWithAllInfos.getListUtilisateurId());
             if (projetId != null && isUserAddProjet != null) {
                 log.info("Le projet " + projetId + "a été créé.");
-                return createProduitsAndModules(configuration, projetWithAllInfos.getProduitWithModule(), projetId);
+                List<Integer> listProduitId = createProduitsAndModules(configuration, projetWithAllInfos.getProduitWithModule(), projetId);
+                if(listProduitId != null) {
+                    return projetId;
+                } else {
+                    return null;
+                }
             } else {
                 log.info("Le projet n'a pas pu être créé");
                 return null;
@@ -250,7 +279,6 @@ public class ProjetRepository {
                     produitWithModule.getListModules()
                             .forEach((produitModule -> {
                                 Integer produitModuleId = createProduitModule(configuration, produitId, produitModule);
-                                //TODO remplacer valeur section
                                 JSONArray jsonArray = new JSONObject(produitModule.getProduitModuleSectionLongueur()).getJSONArray("sections");
                                 double sectionTotal = 0.0;
                                 for(int a = 0; a < jsonArray.length(); a++) {
