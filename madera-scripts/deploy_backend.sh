@@ -38,8 +38,15 @@ echo "Lancement de l'application"
 echo "--------------------------"
 
 pgrep java -a > javaPIDs.txt
-tail -n +2 javaPIDs.txt > backendProcessInfos.txt | kill $(cut -c 1,2,3,4,5 backendProcessInfos.txt)
-nohup java -jar ./target/*.jar  > maderaserver.log 2>&1 &
+echo "PIDs détectés:"
+cat javaPIDs.txt
+tail -n +2 javaPIDs.txt > backendProcessInfos.txt
+echo "Infos sur le serveur Madera:"
+cat backendProcessInfos.txt
+echo "Numéro du PID:"
+cut -c 1,2,3,4,5 backendProcessInfos.txt
+kill $(cut -c 1,2,3,4,5 backendProcessInfos.txt)
+nohup java -jar ./target/*.jar  > /home/dev/maderaserver.log 2>&1 &
 rm javaPIDs.txt
 rm backendProcessInfos.txt
 
