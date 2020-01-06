@@ -83,6 +83,8 @@ public class TaskClient {
      */
     @DeleteMapping(path = "/client", consumes = "application/json")
     public ResponseEntity<Object> deleteClient(@RequestBody Integer clientId) {
+        //TODO tu peux check si c 2 plutot non ? 1 pour l'adresse + 1 pour le client.
+        //TODO Parce que du coup on sait pas si tout a marché, juste au moins un des deux
         boolean isDeleted = clientRepository.deleteClient(clientId) != 0;
         if (isDeleted) {
             return new ResponseEntity<>(HttpStatus.OK);

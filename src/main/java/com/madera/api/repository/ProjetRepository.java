@@ -145,10 +145,10 @@ public class ProjetRepository {
             Integer projetId = createProjet(configuration, projetWithAllInfos.getProjet());
             Integer isUserAddProjet = addUserOnProjet(configuration, projetId,
                     projetWithAllInfos.getListUtilisateurId());
-            if (projetId != null && isUserAddProjet != null) {
+            if (projetId != null && isUserAddProjet != null /* isUserAddProjet != 0*/) {//TODO isUserAddProjet != 0 plutot non?
                 log.info("Le projet " + projetId + "a été créé.");
                 List<Integer> listProduitId = createProduitsAndModules(configuration, projetWithAllInfos.getProduitWithModule(), projetId);
-                if(listProduitId != null) {
+                if(listProduitId != null /*!listProduitId.isEmpty()*/) {//TODO !listProduitId.isEmpty() plutot non?
                     return projetId;
                 } else {
                     return null;

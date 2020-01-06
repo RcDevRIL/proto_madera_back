@@ -43,11 +43,11 @@ public class TaskError implements ErrorController {
                 statusCode, messageError == null ? "N/A" : messageError);
         }
         else{
-            log.error("Error with server {}", exception == null ? "N/A" : exception.getMessage());
+            log.error("Error with server {}", exception.getMessage());
             return String.format(
                     "<html>" + "<body>" + "<h2>Une Erreur est survenue !</h2>" + "<div>Status code: <b>%s</b></div>"
                             + "<div>Exception Message: <b>%s</b></div>" + "</body>" + "</html>",
-                    statusCode, exception == null ? "N/A" : exception.getMessage());
+                    statusCode, exception.getMessage());
         }
     }
 
