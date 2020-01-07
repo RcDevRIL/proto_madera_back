@@ -29,6 +29,8 @@ public class Projet {
 
     public Integer devisEtatId;
 
+    public Boolean isSynchro;
+
     public Projet() {
     }
 
@@ -86,5 +88,13 @@ public class Projet {
 
     public void setPrixTotal(double prixTotal) {
         this.prixTotal = prixTotal;
+    }
+
+    public Boolean getSynchro() {
+        return isSynchro;
+    }
+
+    public void setSynchro(Boolean synchro) {
+        isSynchro = synchro;
     }
 }

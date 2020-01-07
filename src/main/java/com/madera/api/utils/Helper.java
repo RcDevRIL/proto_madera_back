@@ -48,12 +48,10 @@ public class Helper {
         projet.setNomProjet(record.get(PROJET.V_NOM_PROJET));
         projet.setRefProjet(record.get(PROJET.V_REF_PROJET));
         projet.setDateProjet(record.get(PROJET.D_DATE_PROJET));
-        // TODO add trigger in bdd après chaque insert de module pour recalculer le prix
-        // du projet
-        // TODO temporaire
         projet.setPrixTotal(record.get(PROJET.F_PRIX_TOTAL) == null ? 0 : record.get(PROJET.F_PRIX_TOTAL));
         projet.setClientId(record.get(PROJET.I_CLIENT_ID));
         projet.setDevisEtatId(record.get(PROJET.I_DEVIS_ETAT_ID));
+        projet.setSynchro(record.get(PROJET.IS_SYNCHRO));
         return projet;
     }
 
