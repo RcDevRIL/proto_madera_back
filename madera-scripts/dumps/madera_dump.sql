@@ -234,7 +234,8 @@ CREATE TABLE madera.projet (
     d_date_projet date,
     v_signature_projet bytea,
     i_devis_etat_id integer,
-    f_prix_total double precision
+    f_prix_total double precision,
+    is_synchro boolean
 );
 
 

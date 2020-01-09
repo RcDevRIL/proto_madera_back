@@ -232,9 +232,9 @@ public class ProjetRepository {
             // aucun élément n'est renvoyer
             return ctx.insertInto(PROJET)
                     .columns(PROJET.V_NOM_PROJET, PROJET.V_REF_PROJET, PROJET.D_DATE_PROJET, PROJET.F_PRIX_TOTAL,
-                            PROJET.I_CLIENT_ID, PROJET.I_DEVIS_ETAT_ID)
+                            PROJET.I_CLIENT_ID, PROJET.I_DEVIS_ETAT_ID, PROJET.IS_SYNCHRO)
                     .values(projet.getNomProjet(), projet.getRefProjet(), projet.getDateProjet(), projet.getPrixTotal(),
-                            projet.getClientId(), projet.getDevisEtatId())
+                            projet.getClientId(), projet.getDevisEtatId(), true)
                     .onConflict(PROJET.V_REF_PROJET).doNothing().returning(PROJET.I_PROJET_ID).fetchOne()
                     .getValue(PROJET.I_PROJET_ID);
 

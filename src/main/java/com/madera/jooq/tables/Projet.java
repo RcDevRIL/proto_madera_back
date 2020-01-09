@@ -21,7 +21,7 @@ import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row8;
+import org.jooq.Row9;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -43,7 +43,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Projet extends TableImpl<ProjetRecord> {
 
-    private static final long serialVersionUID = 1053495118;
+    private static final long serialVersionUID = -447082600;
 
     /**
      * The reference instance of <code>madera.projet</code>
@@ -97,6 +97,11 @@ public class Projet extends TableImpl<ProjetRecord> {
      * The column <code>madera.projet.f_prix_total</code>.
      */
     public final TableField<ProjetRecord, Double> F_PRIX_TOTAL = createField(DSL.name("f_prix_total"), org.jooq.impl.SQLDataType.DOUBLE, this, "");
+
+    /**
+     * The column <code>madera.projet.is_synchro</code>.
+     */
+    public final TableField<ProjetRecord, Boolean> IS_SYNCHRO = createField(DSL.name("is_synchro"), org.jooq.impl.SQLDataType.BOOLEAN, this, "");
 
     /**
      * Create a <code>madera.projet</code> table reference
@@ -192,11 +197,11 @@ public class Projet extends TableImpl<ProjetRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row8 type methods
+    // Row9 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row8<Integer, Integer, String, String, Date, byte[], Integer, Double> fieldsRow() {
-        return (Row8) super.fieldsRow();
+    public Row9<Integer, Integer, String, String, Date, byte[], Integer, Double, Boolean> fieldsRow() {
+        return (Row9) super.fieldsRow();
     }
 }
