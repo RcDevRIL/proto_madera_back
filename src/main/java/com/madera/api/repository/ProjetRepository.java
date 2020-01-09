@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.madera.jooq.Tables.*;
-import static org.jooq.impl.DSL.select;
-import static org.jooq.impl.DSL.sum;
+import static org.jooq.impl.DSL.*;
 
 /**
  * Repository Projet
@@ -630,7 +629,9 @@ public class ProjetRepository {
                 } else {
                     // Sinon on l'ajoute
                     Integer isInserted = createProduitModule(configuration, produitId, produitModule);
-                    // TODO gérer la valeur de isInserted
+                    if(isInserted != 0 ) {
+                        log.error("Une erreur est survenur lors de l'ajout d'un module !");
+                    }
                 }
             });
         }
