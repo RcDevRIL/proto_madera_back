@@ -145,10 +145,10 @@ public class ProjetRepository {
             Integer projetId = createProjet(configuration, projetWithAllInfos.getProjet());
             Integer isUserAddProjet = addUserOnProjet(configuration, projetId,
                     projetWithAllInfos.getListUtilisateurId());
-            if (projetId != null && isUserAddProjet != null /* isUserAddProjet != 0*/) {//TODO isUserAddProjet != 0 plutot non?
+            if (projetId != 0 && isUserAddProjet != 0 ) {
                 log.info("Le projet " + projetId + "a été créé.");
                 List<Integer> listProduitId = createProduitsAndModules(configuration, projetWithAllInfos.getProduitWithModule(), projetId);
-                if(listProduitId != null /*!listProduitId.isEmpty()*/) {//TODO !listProduitId.isEmpty() plutot non?
+                if(!listProduitId.isEmpty()) {
                     return projetId;
                 } else {
                     return null;
@@ -158,10 +158,6 @@ public class ProjetRepository {
                 return null;
             }
         });
-        //TODO mettre à jour également le prix !
-        //prixProduit = somme des modules
-        //prixModules = somme des prix composants (mais le prix des composants dépendent des dimensions du module)
-        //prixModules dépend de la section du module et du prix des composants
     }
 
     private void calculPrixProjet(Integer projetId) {
@@ -533,15 +529,11 @@ public class ProjetRepository {
      * @param projetWithAllInfos projetWithAllInfos
      * @return != 0 si les mises à jour ont été effectuées.
      */
-    public Integer updateAll(ProjetWithAllInfos projetWithAllInfos) {
+    public void updateAll(ProjetWithAllInfos projetWithAllInfos) {
         // TODO attention à l'état du devis !
-        return context.transactionResult(configuration -> {
-            Integer isUpdated = updateProjet(configuration, projetWithAllInfos.getProjet());
-            if (isUpdated != 0) {
+        context.transaction(configuration -> {
                 updateProduitAndModule(configuration, projetWithAllInfos.getProjet().getProjetId(),
                         projetWithAllInfos.getListUtilisateurId(), projetWithAllInfos.getProduitWithModule());
-            }
-            return isUpdated;
         });
     }
 
@@ -609,7 +601,8 @@ public class ProjetRepository {
         try (DSLContext ctx = configuration == null ? context : DSL.using(configuration)) {
             ctx.update(PRODUIT).set(PRODUIT.V_PRODUIT_NOM, produit.getProduitNom())
                     .set(PRODUIT.I_GAMMES_ID, produit.getGammesId())
-                    .set(PRODUIT.F_PRIX_PRODUIT, produit.getPrixProduit());
+                    .set(PRODUIT.F_PRIX_PRODUIT, produit.getPrixProduit())
+            .execute();
         }
     }
 

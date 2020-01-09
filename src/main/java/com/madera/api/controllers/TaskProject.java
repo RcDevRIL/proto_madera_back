@@ -63,13 +63,12 @@ public class TaskProject {
     @PutMapping(path = "/project", consumes = "application/json")
     public ResponseEntity<Object> updateProject(@RequestBody ProjetWithAllInfos projetWithAllInfos)
     {
-        Map<String, Object> mapResponse = new HashMap<>();
-        boolean isUpdated = projetRepository.updateAll(projetWithAllInfos) != 0;
-        if(isUpdated) {
-            return new ResponseEntity<>(mapResponse, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(mapResponse, HttpStatus.BAD_REQUEST);
+        try {
+            projetRepository.updateAll(projetWithAllInfos);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 
     @GetMapping(path = "/projects/{id}", produces = "application/json")
