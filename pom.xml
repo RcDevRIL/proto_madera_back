@@ -12,16 +12,17 @@
 
 	<groupId>com.madera</groupId>
 	<artifactId>api</artifactId>
-	<version>0.3.3-RELEASE</version>
+	<version>0.4.0-RELEASE</version>
 	<packaging>jar</packaging>
 
 	<name>Madera API prototype</name>
-	<description>API prototype - Madera Application v0.3.3-RELEASE</description>
+	<description>API prototype - Madera Application v{project.version}</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>11</java.version>
+		<project.version>0.4.0-RELEASE</project.version>
 	</properties>
 
 	<dependencies>

@@ -1,4 +1,4 @@
-# proto_madera_back - README V1.1
+# proto_madera_back - README V1.1.1
 __Build status by branch__
 * __master :__ [![Build Status](http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK)](http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK/)
 * __int :__ [![Build Status](http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_INT)](http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_INT/)
@@ -28,8 +28,7 @@ This README will guide you through the setup and deployment of this application 
 * [X] How to run app on localhost
 * [X] How to run tests
 * [X] How to setup local database
-* [ ] Add details on spring modules used if needed
-* [ ] Write specific steps on Linux OS if needed
+* [ ] Write specific steps on Linux OS 
 * [ ] How to ...
 
 ##### Prerequisites
@@ -89,7 +88,9 @@ This will trigger the execution of tests. Maven will output result and possible 
 
 * [Spring] - The Java framework used to build this server
 * [Jooq] - The 'ORM' used to build and generate database interaction code
-* [JUnit4] - The popular unit test framework
+* [JUnit4] - The popular unit test framework. We also use Jacoco to generate tests reports.
+* [PostgreSQL] - The popular DBMS used to build and manage our database
+
 
 ## Contributing
 
@@ -114,6 +115,7 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE
 [Spring]: https://spring.io/
 [Jooq]: https://www.jooq.org/
 [JUnit4]: https://junit.org/junit4/
+[PostgreSQL]: https://www.postgresql.org/
 [Github root]: https://github.com/RcDevRIL/proto_madera_back/
 [test]: https://github.com/RcDevRIL/proto_madera_back/tree/master/src/test/java/com/madera/api
 [RcDevRIL]: https://github.com/RcDevRIL
