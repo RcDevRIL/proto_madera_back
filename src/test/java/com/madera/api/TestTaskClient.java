@@ -89,6 +89,7 @@ public class TestTaskClient {
      * renvoi un code 200 assertEquals(HttpStatus.OK,
      * responseEntity.getStatusCode()); }
      */
+    @SuppressWarnings(value = "unchecked")
     @Test
     public void testEDeleteClient() {
         // Test avec des infos correctes

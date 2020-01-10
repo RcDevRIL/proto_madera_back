@@ -1,4 +1,4 @@
-# proto_madera_back - README V1.1.1
+# proto_madera_back - README V1.2.0
 __Build status by branch__
 * __master :__ [![Build Status](http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK)](http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK/)
 * __int :__ [![Build Status](http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_INT)](http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_INT/)
@@ -61,7 +61,15 @@ To build the database, copy paste [madera_dump.sql] content into the Query Tool 
 
 ### Build & Run
 
-To start the installation of the application:
+To start the installation of the application, you need to add application properties file first because we didn't versionned this file for security purposes!
+Please create a new file '_madera.properties_' under _[src/main/resources]_ folder. This file __must__ contain these lines:
+```
+1  driver.className=org.postgresql.Driver
+2  db.url=jdbc:postgresql://127.0.0.1:5432/madera
+3  db.user=postgres
+4  db.pass=your_master_password
+5  server.port=8081
+```
 
 * `mvn clean install -DskipTests=true`
 
@@ -128,3 +136,4 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE
 [pgAdmin]: https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 [madera_dump.sql]: https://github.com/RcDevRIL/proto_madera_back/blob/master/madera-scripts/dumps/madera_dump.sql
 [data_dump.sql]: https://github.com/RcDevRIL/proto_madera_back/blob/master/madera-scripts/dumps/data_dump.sql
+[src/main/resources]: https://github.com/RcDevRIL/proto_madera_back/src/main/resources
