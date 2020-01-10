@@ -18,7 +18,7 @@ import static com.madera.jooq.tables.DevisEtat.DEVIS_ETAT;
  * Elle est principalement utilisé pour mapper des données actuellement.
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.3-RELEASE
+ * @version 0.4-RELEASE
  */
 public class Helper {
 

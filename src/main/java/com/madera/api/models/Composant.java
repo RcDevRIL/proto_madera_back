@@ -8,7 +8,7 @@ import java.util.Optional;
  * DTO Composant
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.3-RELEASE
+ * @version 0.4-RELEASE
  */
 @JsonSerialize
 public class Composant {

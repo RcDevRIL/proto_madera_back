@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * Controlleur pour gérer les erreurs.
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.3-RELEASE
+ * @version 0.4-RELEASE
  */
 @Controller
 public class TaskError implements ErrorController {
@@ -24,6 +24,7 @@ public class TaskError implements ErrorController {
 
     /**
      * Endpoint error
+     * 
      * @param request requete
      * @return response html
      */
@@ -32,17 +33,14 @@ public class TaskError implements ErrorController {
     public String handleError(HttpServletRequest request) {
         Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         String messageError = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
-        Exception exception = (Exception)
-         request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
-        if(null == exception)
-        {
+        Exception exception = (Exception) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+        if (null == exception) {
             log.error("Error with server {}", messageError == null ? "N/A" : messageError);
             return String.format(
-                "<html>" + "<body>" + "<h2>Une Erreur est survenue !</h2>" + "<div>Status code: <b>%s</b></div>"
-                        + "<div>Exception Message: <b>%s</b></div>" + "</body>" + "</html>",
-                statusCode, messageError == null ? "N/A" : messageError);
-        }
-        else{
+                    "<html>" + "<body>" + "<h2>Une Erreur est survenue !</h2>" + "<div>Status code: <b>%s</b></div>"
+                            + "<div>Exception Message: <b>%s</b></div>" + "</body>" + "</html>",
+                    statusCode, messageError == null ? "N/A" : messageError);
+        } else {
             log.error("Error with server {}", exception.getMessage());
             return String.format(
                     "<html>" + "<body>" + "<h2>Une Erreur est survenue !</h2>" + "<div>Status code: <b>%s</b></div>"

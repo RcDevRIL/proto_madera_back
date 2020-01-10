@@ -22,7 +22,7 @@ import java.util.UUID;
  * Controlleur principal pour exposer nos différents services.
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.3-RELEASE
+ * @version 0.4-RELEASE
  */
 @RestController
 @RequestMapping(path = "/api")
@@ -34,10 +34,10 @@ public class TaskMadera {
     private final UserRepository userRepository;
     private final ClientRepository clientRepository;
 
-
     /**
      * Constructeur TaskMadera
-     * @param userRepository userRepository
+     * 
+     * @param userRepository   userRepository
      * @param clientRepository clientRepository
      */
     public TaskMadera(UserRepository userRepository, ClientRepository clientRepository) {
@@ -47,6 +47,7 @@ public class TaskMadera {
 
     /**
      * Endpoint servant à tester la joignabilité du serveur
+     * 
      * @return Ok
      */
     @RequestMapping(path = "", method = RequestMethod.GET)
@@ -58,6 +59,7 @@ public class TaskMadera {
 
     /**
      * EndPoint authentification
+     * 
      * @param userAuth UserAuth
      * @return Ok ou unauthorized
      */
@@ -82,6 +84,7 @@ public class TaskMadera {
 
     /**
      * EndPoint deconnection
+     * 
      * @param login login de la personne a deconnecter
      * @return Ok ou BadRequest
      */
@@ -98,6 +101,7 @@ public class TaskMadera {
 
     /**
      * EndPoint pour ajouter des adresses
+     * 
      * @param listAdresse listAdresse
      * @return Ok ou BadRequest
      */

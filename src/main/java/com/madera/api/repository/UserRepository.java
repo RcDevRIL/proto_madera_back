@@ -17,7 +17,7 @@ import static com.madera.jooq.Tables.UTILISATEUR;
  * Repository User
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.3-RELEASE
+ * @version 0.4-RELEASE
  */
 @Repository
 public class UserRepository {
@@ -27,6 +27,7 @@ public class UserRepository {
 
     /**
      * Méthode de vérification de l'utilisateur
+     * 
      * @param user userAuth
      * @return Une instance de User
      */
@@ -38,7 +39,8 @@ public class UserRepository {
 
     /**
      * Ajoute le token
-     * @param user UserAuth
+     * 
+     * @param user  UserAuth
      * @param token token généré
      */
     public void insertToken(UserAuth user, String token) {
@@ -49,7 +51,7 @@ public class UserRepository {
     /**
      *
      * @param context context
-     * @param token token généré
+     * @param token   token généré
      * @return SecurityUser
      */
     public SecurityUser verifyTokenAndRole(DSLContext context, String token) {
@@ -63,6 +65,7 @@ public class UserRepository {
 
     /**
      * Supprime le token
+     * 
      * @param login login de l'utilisateur
      * @return != 0 si le token a été supprimé.
      */

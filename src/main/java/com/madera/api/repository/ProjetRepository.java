@@ -26,7 +26,7 @@ import static org.jooq.impl.DSL.*;
  * Repository Projet
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.3-RELEASE
+ * @version 0.4-RELEASE
  */
 @Repository
 public class ProjetRepository {
@@ -48,9 +48,8 @@ public class ProjetRepository {
     }
 
     public List<Projet> getAllProjectsByProjetId(Integer projetId) {
-        return context.select(PROJET.fields())
-                .from(PROJET)
-                .where(PROJET.I_PROJET_ID.eq(projetId)).fetch(Helper::recordToProjet);
+        return context.select(PROJET.fields()).from(PROJET).where(PROJET.I_PROJET_ID.eq(projetId))
+                .fetch(Helper::recordToProjet);
     }
 
     /**
@@ -127,9 +126,8 @@ public class ProjetRepository {
      * @return la liste de tous les produitsModule des produitsModele
      */
     public List<ProduitModule> getAllProduitModuleForModele() {
-        return context.select(PRODUIT_MODULE.fields()).from(PRODUIT_MODULE)
-                .join(PRODUIT).on(PRODUIT.I_PRODUIT_ID.eq(PRODUIT_MODULE.I_PRODUIT_ID))
-                .where(PRODUIT.B_MODELE.eq(true))
+        return context.select(PRODUIT_MODULE.fields()).from(PRODUIT_MODULE).join(PRODUIT)
+                .on(PRODUIT.I_PRODUIT_ID.eq(PRODUIT_MODULE.I_PRODUIT_ID)).where(PRODUIT.B_MODELE.eq(true))
                 .fetch(Helper::recordToProduitModule);
     }
 
@@ -144,10 +142,11 @@ public class ProjetRepository {
             Integer projetId = createProjet(configuration, projetWithAllInfos.getProjet());
             Integer isUserAddProjet = addUserOnProjet(configuration, projetId,
                     projetWithAllInfos.getListUtilisateurId());
-            if (projetId != 0 && isUserAddProjet != 0 ) {
+            if (projetId != 0 && isUserAddProjet != 0) {
                 log.info("Le projet " + projetId + "a été créé.");
-                List<Integer> listProduitId = createProduitsAndModules(configuration, projetWithAllInfos.getProduitWithModule(), projetId);
-                if(!listProduitId.isEmpty()) {
+                List<Integer> listProduitId = createProduitsAndModules(configuration,
+                        projetWithAllInfos.getProduitWithModule(), projetId);
+                if (!listProduitId.isEmpty()) {
                     return projetId;
                 } else {
                     return null;
@@ -160,58 +159,44 @@ public class ProjetRepository {
     }
 
     private void calculPrixProjet(Integer projetId) {
-        //On considère que le coup de la main d'oeuvre est de 30 000 euros.
-        double prixProjet = context.select(sum(PRODUIT.F_PRIX_PRODUIT).as("projet_prix"))
-                .from(PRODUIT)
+        // On considère que le coup de la main d'oeuvre est de 30 000 euros.
+        double prixProjet = context.select(sum(PRODUIT.F_PRIX_PRODUIT).as("projet_prix")).from(PRODUIT)
                 .join(PROJET_PRODUITS).on(PROJET_PRODUITS.I_PRODUIT_ID.eq(PRODUIT.I_PRODUIT_ID))
-                .where(PROJET_PRODUITS.I_PROJET_ID.eq(projetId))
-        .fetchOne("projet_prix", double.class);
-        context
-                .update(PROJET)
-                .set(PROJET.F_PRIX_TOTAL, prixProjet)
-                .where(PROJET.I_PROJET_ID.eq(projetId))
-                .execute();
+                .where(PROJET_PRODUITS.I_PROJET_ID.eq(projetId)).fetchOne("projet_prix", double.class);
+        context.update(PROJET).set(PROJET.F_PRIX_TOTAL, prixProjet).where(PROJET.I_PROJET_ID.eq(projetId)).execute();
     }
 
     private void calculPrixProduit(Integer produitId) {
-        double prixProduit = context.select(sum(PRODUIT_MODULE.F_PRIX).as("module_prix"))
-                .from(PRODUIT_MODULE)
-                .where(PRODUIT_MODULE.I_PRODUIT_ID.eq(produitId))
-                .fetchOne("module_prix", double.class);
-        context
-                .update(PRODUIT)
-                .set(PRODUIT.F_PRIX_PRODUIT, prixProduit)
-                .where(PRODUIT.I_PRODUIT_ID.eq(produitId))
+        double prixProduit = context.select(sum(PRODUIT_MODULE.F_PRIX).as("module_prix")).from(PRODUIT_MODULE)
+                .where(PRODUIT_MODULE.I_PRODUIT_ID.eq(produitId)).fetchOne("module_prix", double.class);
+        context.update(PRODUIT).set(PRODUIT.F_PRIX_PRODUIT, prixProduit).where(PRODUIT.I_PRODUIT_ID.eq(produitId))
                 .execute();
     }
 
     /**
      *
      * @param produitModuleId produitModuleId
-     * @param sectionModule sectionModule
+     * @param sectionModule   sectionModule
      */
     private void calculPrixModule(Integer produitModuleId, double sectionModule) {
-        Double prixModule = 0.0; //TODO transaction ?
-        //Liste de la section des composants !
+        Double prixModule = 0.0; // TODO transaction ?
+        // Liste de la section des composants !
         var listInfoComposant = context
-                .select(COMPOSANT.I_COMPOSANT_ID, COMPOSANT.F_SECTION, COMPOSANT.F_COMPOSANT_PRIX)
-                .from(COMPOSANT)
-                .join(MODULE_COMPOSANT).on(MODULE_COMPOSANT.I_COMPOSANT_ID.eq(COMPOSANT.I_COMPOSANT_ID))
-                .join(MODULE).on(MODULE.I_MODULE_ID.eq(MODULE_COMPOSANT.I_MODULE_ID))
-                .join(PRODUIT_MODULE).on(PRODUIT_MODULE.I_MODULE_ID.eq(MODULE.I_MODULE_ID))
-                .where(PRODUIT_MODULE.I_PRODUIT_MODULE_ID.eq(produitModuleId))
-                .fetch();
+                .select(COMPOSANT.I_COMPOSANT_ID, COMPOSANT.F_SECTION, COMPOSANT.F_COMPOSANT_PRIX).from(COMPOSANT)
+                .join(MODULE_COMPOSANT).on(MODULE_COMPOSANT.I_COMPOSANT_ID.eq(COMPOSANT.I_COMPOSANT_ID)).join(MODULE)
+                .on(MODULE.I_MODULE_ID.eq(MODULE_COMPOSANT.I_MODULE_ID)).join(PRODUIT_MODULE)
+                .on(PRODUIT_MODULE.I_MODULE_ID.eq(MODULE.I_MODULE_ID))
+                .where(PRODUIT_MODULE.I_PRODUIT_MODULE_ID.eq(produitModuleId)).fetch();
         List<Double> listPrixComposant = listInfoComposant.getValues(COMPOSANT.F_COMPOSANT_PRIX);
         List<Double> listSectionComposant = listInfoComposant.getValues(COMPOSANT.F_SECTION);
-        for(int i = 0; i <  listSectionComposant.size() -1; i++) {
-            //Calcul le nombre de composant qu'il faut pour le module en divisant la section du module total par celle du composant en question et ensuite le multiplie par le prix
+        for (int i = 0; i < listSectionComposant.size() - 1; i++) {
+            // Calcul le nombre de composant qu'il faut pour le module en divisant la
+            // section du module total par celle du composant en question et ensuite le
+            // multiplie par le prix
             prixModule = prixModule + (sectionModule / listSectionComposant.get(i)) * listPrixComposant.get(i);
         }
-        context
-                .update(PRODUIT_MODULE)
-                .set(PRODUIT_MODULE.F_PRIX, prixModule)
-                .where(PRODUIT_MODULE.I_PRODUIT_MODULE_ID.eq(produitModuleId))
-                .execute();
+        context.update(PRODUIT_MODULE).set(PRODUIT_MODULE.F_PRIX, prixModule)
+                .where(PRODUIT_MODULE.I_PRODUIT_MODULE_ID.eq(produitModuleId)).execute();
     }
 
     /**
@@ -271,19 +256,19 @@ public class ProjetRepository {
                 listProduitId.add(produitId);
                 boolean isProjetProduit = createProjetProduit(configuration, projetId, produitId) != 0;
                 if (isProjetProduit) {
-                    produitWithModule.getListModules()
-                            .forEach((produitModule -> {
-                                Integer produitModuleId = createProduitModule(configuration, produitId, produitModule);
-                                JSONArray jsonArray = new JSONObject(produitModule.getProduitModuleSectionLongueur()).getJSONArray("sections");
-                                double sectionTotal = 0.0;
-                                for(int a = 0; a < jsonArray.length(); a++) {
-                                    final JSONObject section = jsonArray.getJSONObject(a);
-                                    sectionTotal = sectionTotal + section.getDouble("longueur");
-                                }
-                                //Calcul le prix d'un module
-                                calculPrixModule(produitModuleId, sectionTotal);
-                            }));
-                    //Calcul le prix du produit
+                    produitWithModule.getListModules().forEach((produitModule -> {
+                        Integer produitModuleId = createProduitModule(configuration, produitId, produitModule);
+                        JSONArray jsonArray = new JSONObject(produitModule.getProduitModuleSectionLongueur())
+                                .getJSONArray("sections");
+                        double sectionTotal = 0.0;
+                        for (int a = 0; a < jsonArray.length(); a++) {
+                            final JSONObject section = jsonArray.getJSONObject(a);
+                            sectionTotal = sectionTotal + section.getDouble("longueur");
+                        }
+                        // Calcul le prix d'un module
+                        calculPrixModule(produitModuleId, sectionTotal);
+                    }));
+                    // Calcul le prix du produit
                     calculPrixProduit(produitId);
                     log.info("Le produit et ses modules ont bien été créés");
                 } else {
@@ -293,7 +278,7 @@ public class ProjetRepository {
                 log.info("Le produit n'a pas pu être créé");
             }
         }));
-        //Calcul le prix total du projet
+        // Calcul le prix total du projet
         calculPrixProjet(projetId);
         return listProduitId;
     }
@@ -347,8 +332,7 @@ public class ProjetRepository {
                     .values(produitId, produitModule.getModuleId(), produitModule.getProduitModuleNom(),
                             produitModule.getProduitModuleAngle(),
                             JSONB.valueOf(produitModule.getProduitModuleSectionLongueur()))
-                    .returning(PRODUIT_MODULE.I_PRODUIT_MODULE_ID)
-                    .fetchOne()
+                    .returning(PRODUIT_MODULE.I_PRODUIT_MODULE_ID).fetchOne()
                     .getValue(PRODUIT_MODULE.I_PRODUIT_MODULE_ID);
         }
     }
@@ -531,8 +515,8 @@ public class ProjetRepository {
     public void updateAll(ProjetWithAllInfos projetWithAllInfos) {
         // TODO attention à l'état du devis !
         context.transaction(configuration -> {
-                updateProduitAndModule(configuration, projetWithAllInfos.getProjet().getProjetId(),
-                        projetWithAllInfos.getListUtilisateurId(), projetWithAllInfos.getProduitWithModule());
+            updateProduitAndModule(configuration, projetWithAllInfos.getProjet().getProjetId(),
+                    projetWithAllInfos.getListUtilisateurId(), projetWithAllInfos.getProduitWithModule());
         });
     }
 
@@ -600,8 +584,7 @@ public class ProjetRepository {
         try (DSLContext ctx = configuration == null ? context : DSL.using(configuration)) {
             ctx.update(PRODUIT).set(PRODUIT.V_PRODUIT_NOM, produit.getProduitNom())
                     .set(PRODUIT.I_GAMMES_ID, produit.getGammesId())
-                    .set(PRODUIT.F_PRIX_PRODUIT, produit.getPrixProduit())
-            .execute();
+                    .set(PRODUIT.F_PRIX_PRODUIT, produit.getPrixProduit()).execute();
         }
     }
 
@@ -629,7 +612,7 @@ public class ProjetRepository {
                 } else {
                     // Sinon on l'ajoute
                     Integer isInserted = createProduitModule(configuration, produitId, produitModule);
-                    if(isInserted != 0 ) {
+                    if (isInserted != 0) {
                         log.error("Une erreur est survenur lors de l'ajout d'un module !");
                     }
                 }
