@@ -33,6 +33,12 @@ public class TaskSynchro {
     private final ProjetRepository projetRepository;
     private final ClientRepository clientRepository;
 
+    /**
+     * Constructeur TaskSynchro
+     * @param referentielRepository referentielRepository
+     * @param projetRepository projetRepository
+     * @param clientRepository clientRepository
+     */
     public TaskSynchro(ReferentielRepository referentielRepository, ProjetRepository projetRepository,
             ClientRepository clientRepository) {
         this.referentielRepository = referentielRepository;
@@ -40,6 +46,10 @@ public class TaskSynchro {
         this.clientRepository = clientRepository;
     }
 
+    /**
+     * EndPoint permattant la synchro des données du referentiel
+     * @return liste du referentiel des données de madera
+     */
     @GetMapping(path = "/referentiel", produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> getReferentiel() {
@@ -66,6 +76,11 @@ public class TaskSynchro {
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
 
+    /**
+     * EndPoint synchronisation des données utilisateurs
+     * @param utilisateurId identifiant du commercial en question
+     * @return liste des données utilisateurs
+     */
     @GetMapping(path = "/synchro/{id}", produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> getSynchro(@PathVariable("id") Integer utilisateurId) {

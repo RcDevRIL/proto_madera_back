@@ -124,50 +124,55 @@ INSERT INTO madera.gammes(i_gammes_id, v_libelle_gammes) VALUES
 
 SELECT setval('madera.gammes_i_gammes_id_seq'::regclass, 2);
 
-INSERT INTO madera.composant(i_composant_id, i_composant_groupe_id, v_libelle, i_composant_referentiel_id, f_section) VALUES
-(1, 10, 'Crépi minéral', 4 , 3),
+INSERT INTO madera.composant(i_composant_id, i_composant_groupe_id, v_libelle, i_composant_referentiel_id, f_section, f_composant_prix) VALUES
+(1, 10, 'Crépi minéral', 4 , 3, 29.99),
 -- Equivalent au plâtre
-(2, 13, 'Gypse-phaser', 4 , 12),
+-- 5 euros l'unité (plaque de plâtre)
+(2, 13, 'Gypse-phaser', 4 , 12, 5),
 -- Isolant
-(3, 3, 'EPS / XPS', 4 , 30),
+-- 7 euros le m2
+(3, 3, 'EPS / XPS', 4 , 30, 7),
 -- Panneau structurel
-(4, 10, 'OSB', 4 , 10),
+(4, 10, 'OSB', 4 , 10, 56.99),
 -- Ossature
-(5, 11, 'Chassis de bois', 4 , 120),
+(5, 11, 'Chassis de bois', 4 , 120, 159),
 -- Isolant
-(6, 3, 'Ouate minérale', 3 , 1.2),
+-- 12.55 le m2
+(6, 3, 'Ouate minérale', 3 , 1.2, 12.55),
 -- Pare vapeur
-(7, 12, 'Folio isolé sur vapeur', 3 , 1),
+(7, 12, 'Folio isolé sur vapeur', 3 , 1, 87),
 -- Panneau structurel
-(8, 13, 'Carton de plâtre', 4 , 12.5),
+(8, 13, 'Carton de plâtre', 4 , 12.5, 65.23),
 -- Finition intérieure
-(9, 9, 'Ponçage et peinture', 4 , 2),
+(9, 9, 'Ponçage et peinture', 4 , 2, 21),
 -- Planchers
-(10, 10, 'Parquette laminée', 5 , 10),
+-- 23.50 l'unité
+(10, 10, 'Parquette laminée', 5 , 10, 23.50),
 -- Panneau structurel
-(11, 10, 'OSB', 4 , 18),
+(11, 10, 'OSB', 4 , 18, 60.33),
 -- Ossature
-(12, 11, 'Chassis de bois', 4 , 200),
+(12, 11, 'Chassis de bois', 4 , 200, 204.66),
 -- Tasseau ?
-(13, null, 'Construction carton de plâtre', null , null),
-(14, 15, 'Tuiles', 6 , null),
+(13, null, 'Construction carton de plâtre', null , 1, 25),
+-- 12 euros le m2 ?
+(14, 15, 'Tuiles', 6 , 1, 12),
 -- Pare vapeur ?
-(15, 12, 'Folio', 3, 1),
+(15, 12, 'Folio', 3, 1, 45),
 -- Poutre de maintien
-(16, 11, 'Poutre', 1, 16),
+(16, 11, 'Poutre', 1, 16, 30),
 -- Isolant
-(17, 3, 'Ouate', 3 , 5),
-(18, 3, 'Ouate + folio d''aluminium', 3 , 5),
+(17, 3, 'Ouate', 3 , 5, 50),
+(18, 3, 'Ouate + folio d''aluminium', 3 , 5, 75),
 -- Phaser
-(19, 13, 'Phaser', 4, 3),
+(19, 13, 'Phaser', 4, 3, 35),
 -- Ouate
-(20, 3, 'Ouate minérale', 3 , 100),
+(20, 3, 'Ouate minérale', 3 , 100, 80),
 -- Finition extérieure
-(21, 10, 'Tuile immitation bois', 1, 5),
+(21, 10, 'Tuile immitation bois', 1, 5, 45),
 -- Isolant
-(22, 3, 'Laine de verre', 3, 5),
+(22, 3, 'Laine de verre', 3, 5, 55),
 -- Finition intérieure
-(23, 9, 'Papier peint blanc à motifs', 4, 2);
+(23, 9, 'Papier peint blanc à motifs', 4, 2, 20);
 
 SELECT setval('madera.composant_i_composant_id_seq'::regclass, 23);
 
@@ -226,31 +231,31 @@ INSERT INTO madera.module_composant(i_composant_id, i_module_id, i_ordre) VALUES
 (8, 5, 8),
 (23, 5, 9);
 
-INSERT INTO madera.projet(i_projet_id, i_client_id, v_nom_projet, v_ref_projet, d_date_projet, i_devis_etat_id, f_prix_total) VALUES
-(1, 1, 'Petit maison', 'ref20191227_1', '2019-12-27', 2, null),
-(2, 2, 'Projet dépendance', 'ref_20191027_2', '2019-10-27', 3, null);
+INSERT INTO madera.projet(i_projet_id, i_client_id, v_nom_projet, v_ref_projet, d_date_projet, i_devis_etat_id, f_prix_total, is_synchro) VALUES
+(1, 1, 'Petit maison', 'ref20191227_1', '2019-12-27', 2, null, true),
+(2, 2, 'Projet dépendance', 'ref_20191027_2', '2019-10-27', 3, null, true);
 
 SELECT setval('madera.projet_i_projet_id_seq'::regclass, 2);
 
+-- TODO corriger les données aucun modele ne doit être associé aux clients ! Il le sélectionne c'est tout
 INSERT INTO madera.produit(i_produit_id, v_produit_nom, i_gammes_id, f_prix_produit, b_modele) VALUES
 (1, 'Maison modulaire standard', 1, null, true),
-(2, 'Dépendance standard', 1, null, true),
+(2, 'Dépendance standard', 1, null, false),
 (3, 'Dépendance premium', 2, null, true);
 
 SELECT setval('madera.produit_i_produit_id_seq'::regclass, 3);
 
+-- TODO Refaire jeu d'essai n'attribuer aucun produitModele au client !
 INSERT INTO madera.projet_produits(i_projet_id, i_produit_id) VALUES
-(1, 1),
-(2, 2),
-(2, 3);
+(1, 2);
 
 -- Continuer d'ajouter les modules !
 INSERT INTO madera.produit_module(i_produit_module_id, i_produit_id, i_module_id, v_produit_module_nom, v_produit_module_angle, j_section_longueur) VALUES
-(1, 1, 1, 'Mur standard 1', 'Angle Sortant', '{"section": {"longueur": 500}, "section": {"longueur": 350}}'),
-(2, 1, 2, 'Cloison droite', '', '{"section": {"longueur": 300}}'),
-(3, 1, 3, 'Mur intermédiaire (plafond)', '', '{"section": {"longueur": 500}}'),
-(4, 1, 4, 'Toit (Tuiles)', '', '{"section": {"longueur": 1000}}'),
-(5, 2, 5, 'Mur ext. immitation bois', 'Angle Entrant', '{"section": {"longueur": 700}, "section": {"longueur": 700}}');
+(1, 1, 1, 'Mur standard 1', 'Angle Sortant', '{"sections": [{"longueur": 500}, {"longueur": 350}]}'),
+(2, 1, 2, 'Cloison droite', '', '{"sections": [{"longueur": 300}]}'),
+(3, 1, 3, 'Mur intermédiaire (plafond)', '', '{"sections": [{"longueur": 500}]}'),
+(4, 1, 4, 'Toit (Tuiles)', '', '{"sections": [{"longueur": 1000}]}'),
+(5, 2, 5, 'Mur ext. immitation bois', 'Angle Entrant', '{"sections": [{"longueur": 700}, {"longueur": 700}]}');
 
 SELECT setval('madera.produit_module_i_produit_module_id_seq'::regclass, 5);
 

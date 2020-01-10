@@ -4,7 +4,7 @@ package com.madera.api.models;
  * DTO ModuleComposant
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.3-RELEASE
+ * @version 0.4-RELEASE
  */
 public class ModuleComposant {
 

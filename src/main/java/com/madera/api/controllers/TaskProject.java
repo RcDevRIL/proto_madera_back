@@ -1,7 +1,6 @@
 package com.madera.api.controllers;
 
-import com.madera.api.models.Projet;
-import com.madera.api.models.ProjetWithAllInfos;
+import com.madera.api.models.*;
 import com.madera.api.repository.ProjetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,9 +39,16 @@ public class TaskProject {
             @RequestBody ProjetWithAllInfos projetWithAllInfos)
     {
         Map<String, Object> mapResponse = new HashMap<>();
-        List<Integer> listProduitId = projetRepository.createAll(projetWithAllInfos);
-        if(listProduitId != null) {
-            mapResponse.put("listProduitId", listProduitId);
+        Integer projetId = projetRepository.createAll(projetWithAllInfos);
+        if(projetId != null) {
+            List<Projet> listProjet = projetRepository.getAllProjectsByProjetId(projetId);
+            List<ProduitModule> listProjetModule = projetRepository.getAllProduitModuleByProjetId(projetId);
+            List<ProjetProduits> listProjetProduits = projetRepository.getAllProjetProduitByProjetId(projetId);
+            List<Produit> listProduits = projetRepository.getAllProduitByProjetId(projetId);
+            mapResponse.put("projet", listProjet);
+            mapResponse.put("projetProduits", listProjetProduits);
+            mapResponse.put("produit", listProduits);
+            mapResponse.put("produitModule", listProjetModule);
             return new ResponseEntity<>(mapResponse, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -57,13 +63,12 @@ public class TaskProject {
     @PutMapping(path = "/project", consumes = "application/json")
     public ResponseEntity<Object> updateProject(@RequestBody ProjetWithAllInfos projetWithAllInfos)
     {
-        Map<String, Object> mapResponse = new HashMap<>();
-        boolean isUpdated = projetRepository.updateAll(projetWithAllInfos) != 0;
-        if(isUpdated) {
-            return new ResponseEntity<>(mapResponse, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(mapResponse, HttpStatus.BAD_REQUEST);
+        try {
+            projetRepository.updateAll(projetWithAllInfos);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 
     @GetMapping(path = "/projects/{id}", produces = "application/json")

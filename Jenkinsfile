@@ -4,16 +4,16 @@ pipeline {
         maven 'mvn'
     }
     stages {
-        stage ('Show environment variable') {
+        stage ('Prepare build') {
             steps {
                 sh '''
                     set +x
-                    echo "JAVA_HOME = ${JAVA_HOME}"
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                    echo "WORKSPACE = ${WORKSPACE}"
-                    git --version
-                    mvn -version
+                    set -e
+                    echo "Prepare build for this commit:"
+                    git log -1
+                    echo "Copying properties to workspace..."
+                    cp /home/dev/proto_madera_back/src/main/resources/madera.properties ${WORKSPACE}/src/main/resources/madera.properties
+                    echo "Preparation Stage Done."                
                 '''
             }
         }
@@ -22,7 +22,7 @@ pipeline {
                 sh 'mvn clean install' 
             }
             post {
-                success {
+                always {
                     junit 'target/surefire-reports/**/*.xml' 
                 }
             }

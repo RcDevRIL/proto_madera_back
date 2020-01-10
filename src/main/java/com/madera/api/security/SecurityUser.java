@@ -12,7 +12,7 @@ import java.util.List;
  * Classe permettant de configurer l'authentification
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.3-RELEASE
+ * @version 0.4-RELEASE
  */
 // Implementation of UserDetails
 public class SecurityUser implements UserDetails {
@@ -42,6 +42,10 @@ public class SecurityUser implements UserDetails {
         this.role = role;
     }
 
+    /**
+     *
+     * @return liste des autorités
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<>();

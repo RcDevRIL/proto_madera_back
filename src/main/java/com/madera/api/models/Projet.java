@@ -9,7 +9,7 @@ import java.sql.Date;
  * DTO Projet
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.3-RELEASE
+ * @version 0.4-RELEASE
  */
 @JsonSerialize
 public class Projet {
@@ -28,6 +28,8 @@ public class Projet {
     public Integer clientId;
 
     public Integer devisEtatId;
+
+    public Boolean isSynchro;
 
     public Projet() {
     }
@@ -86,5 +88,13 @@ public class Projet {
 
     public void setPrixTotal(double prixTotal) {
         this.prixTotal = prixTotal;
+    }
+
+    public Boolean getSynchro() {
+        return isSynchro;
+    }
+
+    public void setSynchro(Boolean synchro) {
+        isSynchro = synchro;
     }
 }

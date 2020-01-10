@@ -1,4 +1,10 @@
-# proto_madera_back - README V1.0.2
+# proto_madera_back - README V1.2.0
+__Build status by branch__
+* __master :__ [![Build Status](http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK)](http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK/)
+* __int :__ [![Build Status](http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_INT)](http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_INT/)
+* __dev :__ [![Build Status](http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_DEV)](http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_DEV/)
+
+__Tests coverage :__
   ![Coverage](https://github.com/RcDevRIL/proto_madera_back/blob/master/coverage/coverage.svg)
 
 Welcome on our development repository for our graduation project!! 
@@ -16,14 +22,13 @@ This README will guide you through the setup and deployment of this application 
 
 ###### Things to add on this README:
 
-* [ ] Jenkins badges to show build/test status
+* [X] Jenkins badges to show build/test status
 * [X] Test coverage badge
 * [X] librairies used to run the app
 * [X] How to run app on localhost
 * [X] How to run tests
 * [X] How to setup local database
-* [ ] Add details on spring modules used if needed
-* [ ] Write specific steps on Linux OS if needed
+* [ ] Write specific steps on Linux OS 
 * [ ] How to ...
 
 ##### Prerequisites
@@ -56,7 +61,15 @@ To build the database, copy paste [madera_dump.sql] content into the Query Tool 
 
 ### Build & Run
 
-To start the installation of the application:
+To start the installation of the application, you need to add application properties file first because we didn't versionned this file for security purposes!
+Please create a new file '_madera.properties_' under _[src/main/resources]_ folder. This file __must__ contain these lines:
+```
+1  driver.className=org.postgresql.Driver
+2  db.url=jdbc:postgresql://127.0.0.1:5432/madera
+3  db.user=postgres
+4  db.pass=your_master_password
+5  server.port=8081
+```
 
 * `mvn clean install -DskipTests=true`
 
@@ -83,7 +96,9 @@ This will trigger the execution of tests. Maven will output result and possible 
 
 * [Spring] - The Java framework used to build this server
 * [Jooq] - The 'ORM' used to build and generate database interaction code
-* [JUnit4] - The popular unit test framework
+* [JUnit4] - The popular unit test framework. We also use Jacoco to generate tests reports.
+* [PostgreSQL] - The popular DBMS used to build and manage our database
+
 
 ## Contributing
 
@@ -108,6 +123,7 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE
 [Spring]: https://spring.io/
 [Jooq]: https://www.jooq.org/
 [JUnit4]: https://junit.org/junit4/
+[PostgreSQL]: https://www.postgresql.org/
 [Github root]: https://github.com/RcDevRIL/proto_madera_back/
 [test]: https://github.com/RcDevRIL/proto_madera_back/tree/master/src/test/java/com/madera/api
 [RcDevRIL]: https://github.com/RcDevRIL
@@ -120,3 +136,4 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE
 [pgAdmin]: https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
 [madera_dump.sql]: https://github.com/RcDevRIL/proto_madera_back/blob/master/madera-scripts/dumps/madera_dump.sql
 [data_dump.sql]: https://github.com/RcDevRIL/proto_madera_back/blob/master/madera-scripts/dumps/data_dump.sql
+[src/main/resources]: https://github.com/RcDevRIL/proto_madera_back/src/main/resources

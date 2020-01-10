@@ -90,7 +90,8 @@ CREATE TABLE madera.composant (
     i_composant_groupe_id integer,
     v_libelle character varying(45),
     i_composant_referentiel_id integer,
-    f_section float
+    f_section float NOT NULL,
+    f_composant_prix float NOT NULL
 );
 
 
@@ -233,7 +234,8 @@ CREATE TABLE madera.projet (
     d_date_projet date,
     v_signature_projet bytea,
     i_devis_etat_id integer,
-    f_prix_total double precision
+    f_prix_total double precision,
+    is_synchro boolean
 );
 
 
@@ -268,7 +270,8 @@ CREATE TABLE madera.produit_module (--changement nom table
     i_module_id integer NOT NULL, -- Foreign key module
     v_produit_module_nom varchar(50),
     v_produit_module_angle varchar(30),
-    j_section_longueur jsonb
+    j_section_longueur jsonb,
+    f_prix float
 );
 
 
