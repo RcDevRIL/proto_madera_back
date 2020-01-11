@@ -14,6 +14,10 @@ Welcome on our development repository for our graduation project!!
   
 *Distributed by __LesCodeursEnBois__ - CESI RIL B2 - 2018-2020*
 
+## Documentation
+
+To see the documentation of our API, please visit [our app documentation][doc_website].
+
 ## Getting Started
 
 This README will guide you through the setup and deployment of this application on a local machine.
@@ -137,3 +141,4 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE
 [madera_dump.sql]: https://github.com/RcDevRIL/proto_madera_back/blob/master/madera-scripts/dumps/madera_dump.sql
 [data_dump.sql]: https://github.com/RcDevRIL/proto_madera_back/blob/master/madera-scripts/dumps/data_dump.sql
 [src/main/resources]: https://github.com/RcDevRIL/proto_madera_back/src/main/resources
+[doc_website]: http://vps756227.ovh.net/
