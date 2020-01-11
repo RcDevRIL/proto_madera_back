@@ -36,7 +36,11 @@ pipeline {
                     echo "Numéro du PID:"
                     cut -d' ' -f 1 backendProcessInfos.txt
                     sudo kill $(cut -d' ' -f 1 backendProcessInfos.txt)
-                    nohup java -jar /var/lib/jenkins//workspace/PROTO_MADERA_BACK/target/*.jar  > /var/lib/jenkins/maderalogs/maderaserver.log 2>&1 &
+                '''
+                withEnv(['JENKINS_NODE_COOKIE=dontKillMe']) {
+                    sh 'nohup java -jar /var/lib/jenkins//workspace/PROTO_MADERA_BACK/target/*.jar  > /var/lib/jenkins/maderalogs/maderaserver.log 2>&1 &'
+                }
+                sh '''                    
                     rm javaPIDs.txt
                     rm backendProcessInfos.txt
                     echo "------------------------------"
