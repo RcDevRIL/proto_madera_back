@@ -1,5 +1,8 @@
 package com.madera.api.controllers;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.madera.api.models.Adresse;
 import com.madera.api.models.User;
 import com.madera.api.models.UserAuth;
@@ -14,6 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 // import java.util.HashMap;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 // import java.util.Map;
 import java.util.UUID;
@@ -113,5 +119,29 @@ public class TaskMadera {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping(path = "/devis/{projet_id}", consumes = "application/json")
+    public ResponseEntity<Object> generateDevisPdf(@PathVariable("projet_id") Integer projetId) {
+        //TODO a mettre dans une classe a part et commenter
+        //Création du document
+        Document document = new Document();
+        try {
+            //Défini que document est un pdf
+            PdfWriter.getInstance(document, new FileOutputStream("test.pdf"));
+            document.open();
+            BaseFont fontCalibriBaseFont = BaseFont.createFont("src/main/resources/fonts/OpenSans-Bold.ttf", BaseFont.WINANSI, BaseFont.EMBEDDED);
+            Font fontTitle = new Font(fontCalibriBaseFont);
+            Chunk chunk = new Chunk("DEVIS [nomProjet]", fontTitle);
+            document.add(chunk);
+            document.close();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
