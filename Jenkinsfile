@@ -18,7 +18,7 @@ pipeline {
             }
         }
         stage ('Build') {
-            steps { // le tail -n +2 récupère la deuxieme liste. Si le PID du serveur madera est plus petit que le PID de jenkins alors ce script eteindra Jenkins!!
+            steps { // le tail -n +2 récupère la deuxieme liste. Si le PID du serveur madera est plus petit que le PID de jenkins alors ce script sortira en erreur
                 sh '''
                     echo "----------------------------------------------------"
                     echo "Installation de l'application et Exécution des tests"
