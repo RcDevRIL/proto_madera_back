@@ -1,8 +1,8 @@
-# proto_madera_back - README V1.2.0
+# proto_madera_back - README V1.3.0
 __Build status by branch__
-* __master :__ [![Build Status](http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK)](http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK/)
-* __int :__ [![Build Status](http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_INT)](http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_INT/)
-* __dev :__ [![Build Status](http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_DEV)](http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_DEV/)
+* __master :__ [![M_Jenkins_Build_Status][]][M_latest_build]
+* __int :__ [![I_Jenkins_Build_Status][]][I_latest_build]
+* __dev :__ [![D_Jenkins_Build_Status][]][D_latest_build]
 
 __Tests coverage :__
   ![Coverage](https://github.com/RcDevRIL/proto_madera_back/blob/master/coverage/coverage.svg)
@@ -20,21 +20,9 @@ To see the documentation of our API, please visit [our app documentation][doc_we
 
 ## Getting Started
 
-This README will guide you through the setup and deployment of this application on a local machine.
+This README will guide you through the setup and deployment of this application on a local machine for Windows and Linux (Debian) OS.
 
-/!\ This README is a work in __progress__ ! /!\
-
-###### Things to add on this README:
-
-* [X] Jenkins badges to show build/test status
-* [X] Test coverage badge
-* [X] librairies used to run the app
-* [X] How to run app on localhost
-* [X] How to run tests
-* [X] How to setup local database
-* [ ] Write specific steps on Linux OS 
-* [ ] How to ...
-
+# Windows 10 OS
 ##### Prerequisites
 
 What things you need to install and how to install them
@@ -48,11 +36,9 @@ What things you need to install and how to install them
 
     * Install [pgAdmin] to create a local database
 
-
 ## Run app on localhost
-_(In the following sections, we assume you are running on **Windows** OS)_
 
-### Setup the local database
+### Setup the local database on Windows
 
 You need a copy of the database to run tests locally. To do so, when you're done with installing [pgAdmin] v11.6, you have to go on the home page of pgAdmin server. Clic on create server if you want to add custom name for connection. Then create a database on the selected server. database server **must** be _'madera'_, host name: _localhost / 127.0.0.1_, user: _postgres_, password: *your_master_password*.
 
@@ -74,27 +60,75 @@ Please create a new file '_madera.properties_' under _[src/main/resources]_ fold
 4  db.pass=your_master_password
 5  server.port=8081
 ```
+Now run the following command:
 
-* `mvn clean install -DskipTests=true`
+  `mvn clean install -DskipTests=true`
 
-We are skipping tests on purpose as there is another section for this purpose on this README.
+We are skipping tests on purpose as there is another section for this.
 There is now two ways to launch application:
 
 * `mvn spring-boot:run`
 
-* `java -jar [path_to_jar]/api-[VERSION]` (__TODO__ vérifier)
+* `java -jar ./target/*.jar`
 
+_Using the first option is probably the better to test our app._
 ## Run tests
 
 _This paragraph explain how to trigger tests written in the **[test]** folder of this repository._
 
-You need the local database to run tests and see green, so if you haven't done it already, please refer to the **[Setup the local database](https://github.com/RcDevRIL/proto_madera_back#setup-the-local-database)** section
+You need the local database to run tests and see green, so if you haven't done it already, please refer to the **[Setup the local database][Windows_db_setup]** section
 
 To start tests, execute this command:
 
-* `mvn clean test`
+  `mvn clean test`
 
-This will trigger the execution of tests. Maven will output result and possible errors. 
+This will trigger the execution of tests. Maven will output result and possible errors.
+
+# Linux OS (Debian)
+##### Prerequisites
+
+What things you need to install and how to install them
+
+* First you will need a copy of this repository: either use "Download" feature on [this][Github root] page, or use Git CLI if you have installed it on your computer:
+    * `git clone https://github.com/RcDevRIL/proto_madera_back.git`
+
+__*//TODO*__
+## Run app on localhost
+### Setup the local database on Debian
+__*//TODO*__
+### Build & Run
+To start the installation of the application, you need to add application properties file first because we didn't versionned this file for security purposes!
+Please create a new file '_madera.properties_' under _[src/main/resources]_ folder. This file __must__ contain these lines:
+```
+1  driver.className=org.postgresql.Driver
+2  db.url=jdbc:postgresql://127.0.0.1:5432/madera
+3  db.user=postgres
+4  db.pass=your_master_password
+5  server.port=8081
+```
+Now run the following command:
+
+  `mvn clean install -DskipTests=true`
+
+We are skipping tests on purpose as there is another section for this.
+There is now two ways to launch application:
+
+* `mvn spring-boot:run`
+
+* `nohup java -jar ./target/*.jar  > ~/maderaserver.log 2>&1 &`
+
+_Using the second option is probably the better to test our app because this will run app on background and print standard output to the specified "maderaserver.log" at your user home._
+## Run tests
+
+_This paragraph explain how to trigger tests written in the **[test]** folder of this repository._
+
+You need the local database to run tests and see green, so if you haven't done it already, please refer to the **[Setup the local database][Debian_db_setup]** section
+
+To start tests, execute this command:
+
+  `mvn clean test`
+
+This will trigger the execution of tests. Maven will output result and possible errors.
 
 ## Built With
 
@@ -120,10 +154,8 @@ See also the list of [contributors] who participated in this project.
 
 This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE.md] file for details
 
-## Disclaimer
-
-* As I mentionned before, this is still a work in progress. :upside_down_face:
-
+[Windows_db_setup]: https://github.com/RcDevRIL/proto_madera_back#setup-the-local-database-on-windows
+[Debian_db_setup]: https://github.com/RcDevRIL/proto_madera_back#setup-the-local-database-on-debian
 [Spring]: https://spring.io/
 [Jooq]: https://www.jooq.org/
 [JUnit4]: https://junit.org/junit4/
@@ -142,3 +174,9 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE
 [data_dump.sql]: https://github.com/RcDevRIL/proto_madera_back/blob/master/madera-scripts/dumps/data_dump.sql
 [src/main/resources]: https://github.com/RcDevRIL/proto_madera_back/src/main/resources
 [doc_website]: http://vps756227.ovh.net/
+[M_Jenkins_Build_Status]: http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK
+[M_latest_build]: http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK/
+[I_Jenkins_Build_Status]: http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_INT
+[I_latest_build]: http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_INT/
+[D_Jenkins_Build_Status]: http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK_DEV
+[D_latest_build]: http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK_DEV/
