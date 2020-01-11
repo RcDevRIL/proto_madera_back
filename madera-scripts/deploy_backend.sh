@@ -1,11 +1,6 @@
 #!/bin/sh
 
-echo "--------------------------"
-echo "Mise à jour du code source"
-echo "--------------------------"
-
-cd /home/dev/proto_madera_back/
-git pull
+echo "/!\ N'oubliez pas la mise à jour du code source /!\\\\"
 
 echo "---------------------------------------------------"
 echo "Création / Mise à jour de la base de données madera"
@@ -31,6 +26,7 @@ echo "----------------------------------------------------"
 echo "Installation de l'application et Exécution des tests"
 echo "----------------------------------------------------"
 
+cd /home/dev/proto_madera_back/
 mvn clean install
 
 echo "--------------------------"
@@ -44,8 +40,8 @@ tail -n +2 javaPIDs.txt > backendProcessInfos.txt
 echo "Infos sur le serveur Madera:"
 cat backendProcessInfos.txt
 echo "Numéro du PID:"
-cut -c 1,2,3,4,5 backendProcessInfos.txt
-kill $(cut -c 1,2,3,4,5 backendProcessInfos.txt)
+cut -d' ' -f 1 backendProcessInfos.txt
+kill $(cut -d' ' -f 1 backendProcessInfos.txt)
 nohup java -jar ./target/*.jar  > /home/dev/maderaserver.log 2>&1 &
 rm javaPIDs.txt
 rm backendProcessInfos.txt
