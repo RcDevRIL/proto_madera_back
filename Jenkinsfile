@@ -24,23 +24,8 @@ pipeline {
                     echo "Installation de l'application et Exécution des tests"
                     echo "----------------------------------------------------"
                     mvn clean install
-                    echo "--------------------------"
-                    echo "Lancement de l'application"
-                    echo "--------------------------"
-                    pgrep java -a > javaPIDs.txt
-                    echo "PIDs détectés:"
-                    cat javaPIDs.txt
-                    tail -n +2 javaPIDs.txt > backendProcessInfos.txt
-                    echo "Infos sur le serveur Madera:"
-                    cat backendProcessInfos.txt
-                    echo "Numéro du PID:"
-                    cut -d' ' -f 1 backendProcessInfos.txt
-                    sudo kill $(cut -d' ' -f 1 backendProcessInfos.txt)
-                    nohup java -jar ./target/*.jar  > /var/lib/jenkins/maderalogs/maderaserver.log 2>&1 &
-                    rm javaPIDs.txt
-                    rm backendProcessInfos.txt
                     echo "------------------------------"
-                    echo "Script de déploiement terminé!"
+                    echo "Script d'installation terminé!"
                     echo "------------------------------"
                 ''' 
             }
