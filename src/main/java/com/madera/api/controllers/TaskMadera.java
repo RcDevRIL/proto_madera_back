@@ -5,7 +5,7 @@ import com.madera.api.models.User;
 import com.madera.api.models.UserAuth;
 import com.madera.api.repository.ClientRepository;
 import com.madera.api.repository.UserRepository;
-// import com.madera.api.utils.Helper;
+import com.madera.api.utils.DevisGenerated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-// import java.util.HashMap;
 import java.util.List;
-// import java.util.Map;
 import java.util.UUID;
+
+// import com.madera.api.utils.Helper;
+// import java.util.HashMap;
+// import java.util.Map;
 
 /**
  * Controlleur principal pour exposer nos différents services.
@@ -114,4 +116,5 @@ public class TaskMadera {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 }

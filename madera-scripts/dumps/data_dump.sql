@@ -345,20 +345,19 @@ SELECT setval('madera.produit_i_produit_id_seq'::regclass, 5);
 INSERT INTO madera.projet_produits(i_projet_id, i_produit_id) VALUES
 (1, 3);
 
-INSERT INTO madera.produit_module(i_produit_module_id, i_produit_id, i_module_id, v_produit_module_nom, v_produit_module_angle, j_section_longueur) VALUES
-(1, 1, 1, 'Mur standard 1', 'Angle Sortant', '{"sections": [{"longueur": 500}, {"longueur": 350}]}'),
-(2, 1, 2, 'Cloison droite', '', '{"sections": [{"longueur": 300}]}'),
-(3, 1, 3, 'Mur intermédiaire (plafond)', '', '{"sections": [{"longueur": 500}]}'),
-(4, 1, 4, 'Toit (Tuiles)', '', '{"sections": [{"longueur": 1000}]}'),
-(5, 4, 6, 'Mur ext. Eco +', 'Angle Entrant', '{"sections": [{"longueur": 1250}, {"longueur": 1250}]}'),
-(6, 4, 7, 'Toit Eco +', '', '{"sections": [{"longueur": 2500}]}'),
-(7, 4, 8, 'Mur int. Eco +', 'Angle Sortant', '{"sections": [{"longueur": 300}, {"longueur": 300}]}'),
-(8, 4, 9, 'Mur intermédiaire Eco +', '', '{"sections": [{"longueur": 3000}]}'),
-(9, 3, 10, 'Mur intermédiaire Premium', '', '{"sections": [{"longueur": 2500}]}'),
-(10, 3, 11, 'Mur intérieur Premium', '', '{"sections": [{"longueur": 1500}]}'),
-(11, 3, 12, 'Mur extérieur Premium', '', '{"sections": [{"longueur": 3000}]}'),
-(12, 3, 13, 'Toit premium', '', '{"sections": [{"longueur": 3000}]}');
---TODO Faire par exemple 4 murs extérieur pour un module ? Genre avec une exposition ?
+INSERT INTO madera.produit_module(i_produit_module_id, i_produit_id, i_module_id, v_produit_module_nom, v_produit_module_angle, j_section_longueur, f_prix) VALUES
+(1, 1, 1, 'Mur standard 1', 'Angle Sortant', '{"sections": [{"longueur": 500}, {"longueur": 350}]}', 0.0),
+(2, 1, 2, 'Cloison droite', '', '{"sections": [{"longueur": 300}]}', 0.0),
+(3, 1, 3, 'Mur intermédiaire (plafond)', '', '{"sections": [{"longueur": 500}]}', 0.0),
+(4, 1, 4, 'Toit (Tuiles)', '', '{"sections": [{"longueur": 1000}]}', 0.0),
+(5, 4, 6, 'Mur ext. Eco +', 'Angle Entrant', '{"sections": [{"longueur": 1250}, {"longueur": 1250}]}', 0.0),
+(6, 4, 7, 'Toit Eco +', '', '{"sections": [{"longueur": 2500}]}', 0.0),
+(7, 4, 8, 'Mur int. Eco +', 'Angle Sortant', '{"sections": [{"longueur": 300}, {"longueur": 300}]}', 0.0),
+(8, 4, 9, 'Mur intermédiaire Eco +', '', '{"sections": [{"longueur": 3000}]}', 0.0),
+(9, 3, 10, 'Mur intermédiaire Premium', '', '{"sections": [{"longueur": 2500}]}', 0.0),
+(10, 3, 11, 'Mur intérieur Premium', '', '{"sections": [{"longueur": 1500}]}', 0.0),
+(11, 3, 12, 'Mur extérieur Premium', '', '{"sections": [{"longueur": 3000}]}', 0.0),
+(12, 3, 13, 'Toit premium', '', '{"sections": [{"longueur": 3000}]}', 0.0);
 
 SELECT setval('madera.produit_module_i_produit_module_id_seq'::regclass, 12);
 
