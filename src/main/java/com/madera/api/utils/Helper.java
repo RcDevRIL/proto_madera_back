@@ -259,4 +259,14 @@ public class Helper {
         adresse.setNumero(record.get(ADRESSE.V_NUMERO));
         return adresse;
     }
+
+    public static Utilisateur recordToUtilisateur(Record record) {
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setNom(record.get(UTILISATEUR.V_NOM));
+        utilisateur.setPrenom(record.get(UTILISATEUR.V_PRENOM));
+        utilisateur.setMail(record.get(UTILISATEUR.V_MAIL));
+        utilisateur.setLogin(record.get(UTILISATEUR.V_LOGIN));
+        utilisateur.setTel(record.get(UTILISATEUR.V_TEL));
+        return utilisateur;
+    }
 }

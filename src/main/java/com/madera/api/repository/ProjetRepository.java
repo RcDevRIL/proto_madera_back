@@ -47,9 +47,31 @@ public class ProjetRepository {
                 .where(PROJET_UTILISATEURS.I_UTILISATEUR_ID.eq(utilisateurId)).fetch(Helper::recordToProjet);
     }
 
+    public Projet getProjetByProjetId(Integer projetId) {
+        return context.select(PROJET.fields()).from(PROJET)
+                .where(PROJET.I_PROJET_ID.eq(projetId)).fetchOne(Helper::recordToProjet);
+    }
+
+    public Utilisateur getUtilisateurById(Integer utilisateurId) {
+        return context.select(
+                UTILISATEUR.V_NOM,
+                UTILISATEUR.V_PRENOM,
+                UTILISATEUR.V_MAIL,
+                UTILISATEUR.V_LOGIN,
+                UTILISATEUR.V_TEL
+        ).from(UTILISATEUR).where(UTILISATEUR.I_UTILISATEUR_ID.eq(utilisateurId)).fetchOne(Helper::recordToUtilisateur);
+    }
+
+
+
     public List<Projet> getAllProjectsByProjetId(Integer projetId) {
         return context.select(PROJET.fields()).from(PROJET).where(PROJET.I_PROJET_ID.eq(projetId))
                 .fetch(Helper::recordToProjet);
+    }
+
+    public DevisEtat getDevisEtatOfProject(Integer devisEtatId) {
+        return context.select(DEVIS_ETAT.fields()).from(DEVIS_ETAT)
+                .where(DEVIS_ETAT.I_DEVIS_ETAT_ID.eq(devisEtatId)).fetchOne(Helper::recordToDevisEtat);
     }
 
     /**

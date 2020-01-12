@@ -1,7 +1,9 @@
 package com.madera.api.controllers;
 
 import com.madera.api.models.*;
+import com.madera.api.repository.ClientRepository;
 import com.madera.api.repository.ProjetRepository;
+import com.madera.api.utils.DevisGenerated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +26,11 @@ public class TaskProject {
 
     @Autowired
     private final ProjetRepository projetRepository;
+    private final ClientRepository clientRepository;
 
-    public TaskProject(ProjetRepository projetRepository) {
+    public TaskProject(ProjetRepository projetRepository, ClientRepository clientRepository) {
         this.projetRepository = projetRepository;
+        this.clientRepository = clientRepository;
     }
 
     /**
@@ -41,11 +45,11 @@ public class TaskProject {
         Map<String, Object> mapResponse = new HashMap<>();
         Integer projetId = projetRepository.createAll(projetWithAllInfos);
         if(projetId != null) {
-            List<Projet> listProjet = projetRepository.getAllProjectsByProjetId(projetId);
+            Projet projet = projetRepository.getProjetByProjetId(projetId);
             List<ProduitModule> listProjetModule = projetRepository.getAllProduitModuleByProjetId(projetId);
             List<ProjetProduits> listProjetProduits = projetRepository.getAllProjetProduitByProjetId(projetId);
             List<Produit> listProduits = projetRepository.getAllProduitByProjetId(projetId);
-            mapResponse.put("projet", listProjet);
+            mapResponse.put("projet", projet);
             mapResponse.put("projetProduits", listProjetProduits);
             mapResponse.put("produit", listProduits);
             mapResponse.put("produitModule", listProjetModule);
@@ -103,5 +107,22 @@ public class TaskProject {
     public ResponseEntity<Object> getQuote(@PathVariable ("id") Integer id) {
         Map<String, Object> mapResponse = new HashMap<>();
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
+    }
+
+
+    @GetMapping(path = "/devis/{projet_id}/{utilisateur_id}", consumes = "application/json")
+    public ResponseEntity<Object> generateDevisPdf(
+            @PathVariable("projet_id") Integer projetId,
+            @PathVariable("utilisateur_id") Integer utilisateurId)
+    {
+        //TODO Faire un objet pour ca ?
+        Projet projet = projetRepository.getProjetByProjetId(projetId);
+        DevisEtat devisEtat = projetRepository.getDevisEtatOfProject(projet.devisEtatId);
+        Utilisateur utilisateur = projetRepository.getUtilisateurById(utilisateurId);
+        Client client = clientRepository.getClientByProjetId(projetId);
+        DevisGenerated devisGenerated = new DevisGenerated();
+        devisGenerated.generate(projet, devisEtat, utilisateur, client);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,14 +1,11 @@
 package com.madera.api.controllers;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.madera.api.models.Adresse;
 import com.madera.api.models.User;
 import com.madera.api.models.UserAuth;
 import com.madera.api.repository.ClientRepository;
 import com.madera.api.repository.UserRepository;
-// import com.madera.api.utils.Helper;
+import com.madera.api.utils.DevisGenerated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-// import java.util.HashMap;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
-// import java.util.Map;
 import java.util.UUID;
+
+// import com.madera.api.utils.Helper;
+// import java.util.HashMap;
+// import java.util.Map;
 
 /**
  * Controlleur principal pour exposer nos différents services.
@@ -121,27 +117,4 @@ public class TaskMadera {
         }
     }
 
-    @GetMapping(path = "/devis/{projet_id}", consumes = "application/json")
-    public ResponseEntity<Object> generateDevisPdf(@PathVariable("projet_id") Integer projetId) {
-        //TODO a mettre dans une classe a part et commenter
-        //Création du document
-        Document document = new Document();
-        try {
-            //Défini que document est un pdf
-            PdfWriter.getInstance(document, new FileOutputStream("test.pdf"));
-            document.open();
-            BaseFont fontCalibriBaseFont = BaseFont.createFont("src/main/resources/fonts/OpenSans-Bold.ttf", BaseFont.WINANSI, BaseFont.EMBEDDED);
-            Font fontTitle = new Font(fontCalibriBaseFont);
-            Chunk chunk = new Chunk("DEVIS [nomProjet]", fontTitle);
-            document.add(chunk);
-            document.close();
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 }

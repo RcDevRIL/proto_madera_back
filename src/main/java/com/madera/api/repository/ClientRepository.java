@@ -159,4 +159,10 @@ public class ClientRepository {
                 adresse.getNumero()));
         return query.execute();
     }
+
+    public Client getClientByProjetId(Integer projetId) {
+        return context.select(CLIENT.fields()).from(CLIENT)
+                .join(PROJET).on(PROJET.I_CLIENT_ID.eq(CLIENT.I_CLIENT_ID))
+                .where(PROJET.I_PROJET_ID.eq(projetId)).fetchOne(Helper::recordToClient);
+    }
 }
