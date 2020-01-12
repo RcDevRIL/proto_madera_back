@@ -360,7 +360,7 @@ INSERT INTO madera.produit_module(i_produit_module_id, i_produit_id, i_module_id
 (12, 3, 13, 'Toit premium', '', '{"sections": [{"longueur": 3000}]}');
 --TODO Faire par exemple 4 murs extérieur pour un module ? Genre avec une exposition ?
 
-SELECT setval('madera.produit_module_i_produit_module_id_seq'::regclass, 8);
+SELECT setval('madera.produit_module_i_produit_module_id_seq'::regclass, 12);
 
 INSERT INTO madera.projet_utilisateurs(i_utilisateur_id, i_projet_id) VALUES
 (1, 1),
