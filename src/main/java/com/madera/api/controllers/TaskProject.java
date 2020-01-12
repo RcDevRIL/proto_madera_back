@@ -39,7 +39,7 @@ public class TaskProject {
      * @param projetWithAllInfos projetWithAllInfos
      * @return Ok or BadRequest
      */
-    @PostMapping(path = "/project", consumes = "application/json")
+    @GetMapping(path = "/project", consumes = "application/json")
     public ResponseEntity<Object> createProject(
             @RequestBody ProjetWithAllInfos projetWithAllInfos)
     {
@@ -111,7 +111,7 @@ public class TaskProject {
     }
 
 
-    @GetMapping(path = "/devis/{projet_id}/{utilisateur_id}", consumes = "application/json")
+    @PostMapping(path = "/devis/{projet_id}/{utilisateur_id}", consumes = "application/json", produces = "application/pdf")
     public ResponseEntity<Object> generateDevisPdf(
             @PathVariable("projet_id") Integer projetId,
             @PathVariable("utilisateur_id") Integer utilisateurId)
@@ -132,8 +132,10 @@ public class TaskProject {
         }
         List<Composant> listComposants = projetRepository.getComposantByModuleId(listComposantId);
         DevisGenerated devisGenerated = new DevisGenerated();
-        devisGenerated.generate(projet, devisEtat, utilisateur, client, adresseFacturation, listProduit, listProduitWithModle, listDevisEcheance, listModuleComposant, listComposants);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        byte[] pdfByte = devisGenerated.generate(projet, devisEtat, utilisateur, client, adresseFacturation, listProduit, listProduitWithModle, listDevisEcheance, listModuleComposant, listComposants);
+        return ResponseEntity
+                .ok()
+                .header("Content-Disposition: attachment")
+                .body(pdfByte);
     }
 }

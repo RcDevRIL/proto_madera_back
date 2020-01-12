@@ -1,11 +1,14 @@
 package com.madera.api.utils;
 
 import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.*;
-import com.itextpdf.text.pdf.draw.VerticalPositionMark;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.madera.api.models.*;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,8 +16,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 public class DevisGenerated {
 
@@ -72,7 +73,7 @@ public class DevisGenerated {
      * @param listModuleComposant
      * @param listComposant
      */
-    public void generate(
+    public byte[] generate(
             Projet projet,
             DevisEtat devisEtat,
             Utilisateur utilisateur,
@@ -89,8 +90,11 @@ public class DevisGenerated {
             //Création du document
             Document document = new Document();
             //Défini que document est un pdf
-            //Add a footer
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("devis_generated/devis.pdf"));
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            //Instance de byteArray
+            PdfWriter.getInstance(document, byteArrayOutputStream);
+            //Instance d'un fichier pdf sur le serveur
+             PdfWriter.getInstance(document, new FileOutputStream(String.format("devis_generated/devis_%s_%s.pdf", client.id, Date.valueOf(LocalDate.now()))));
             document.open();
             //Construct first page of devis
             document.add(buildHeader(projet.nomProjet, false));
@@ -135,10 +139,11 @@ public class DevisGenerated {
             document.add(buildListeRecap(listProduit, listProduitModule));
             document.add(detailProduitAndModule(listProduit, listProduitModule, listComposant, listModuleComposant));
             document.close();
-
+            return byteArrayOutputStream.toByteArray();
         } catch (DocumentException | FileNotFoundException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     /**
