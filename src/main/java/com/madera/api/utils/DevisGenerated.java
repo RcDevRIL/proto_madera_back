@@ -114,7 +114,7 @@ public class DevisGenerated {
                 document.add(buldParagraphTT(produit.getPrixProduit(), 0));
                 totalProjet += produit.getPrixProduit();
             }
-            Chunk projetPrix = new Chunk(String.format("Total : %s \n", totalProjet), this.fontBold);
+            Chunk projetPrix = new Chunk(String.format("Total : %s €\n", Math.round(totalProjet)), this.fontBold);
             Anchor anchor = new Anchor("https://madera-construction.fr/cctp");
             anchor.setReference("https://madera-construction.fr/cctp");
             Paragraph paragrapheProjetPrix  = new Paragraph(projetPrix);
@@ -276,8 +276,8 @@ public class DevisGenerated {
                 if(produit.getProduitId() == produitModule.getProduitId()) {
                     tableOfProducts.addCell(buildCell(produitModule.getProduitModuleNom(), Element.ALIGN_BASELINE, false, true, false, false));
                     tableOfProducts.addCell(buildCell(buildDimensionModule(produitModule.getProduitModuleSectionLongueur()), Element.ALIGN_BASELINE, false, true, false, false));
-                    tableOfProducts.addCell(buildCell(String.valueOf(produitModule.getPrixModule()), Element.ALIGN_BASELINE, false, true, false, false));
-                    tableOfProducts.addCell(buildCell(String.valueOf(produitModule.getPrixModule()), Element.ALIGN_BASELINE, false, true, false, false));
+                    tableOfProducts.addCell(buildCell(String.valueOf(Math.round(produitModule.getPrixModule())), Element.ALIGN_BASELINE, false, true, false, false));
+                    tableOfProducts.addCell(buildCell(String.valueOf(Math.round(produitModule.getPrixModule())), Element.ALIGN_BASELINE, false, true, false, false));
                 }
             }
         //End contruct body
@@ -324,8 +324,8 @@ public class DevisGenerated {
         Paragraph paragraph = new Paragraph();
         paragraph.setAlignment(Element.ALIGN_RIGHT);
         paragraph.setPaddingTop(8f);
-        paragraph.add(new Chunk(String.format("Total produit : %s \n", sousTotal), this.fontBody));
-        paragraph.add(new Chunk(String.format("Remise : %s \n", remise), this.fontBody));
+        paragraph.add(new Chunk(String.format("Total produit : %s €\n", Math.round(sousTotal)), this.fontBody));
+        paragraph.add(new Chunk(String.format("Remise : %s €\n", Math.round(remise)), this.fontBody));
         return paragraph;
     }
 
@@ -339,9 +339,10 @@ public class DevisGenerated {
         PdfPTable tableEcheance = new PdfPTable(2);
         tableEcheance.setWidthPercentage(100f);
         for(DevisEtat devisEtat : listEcheance) {
-            double calculSomme = prixProjet * devisEtat.pourcentageSomme / 100;
+            double calculSomme = Math.round(prixProjet * devisEtat.pourcentageSomme / 100);
+            prixProjet -= calculSomme;
             tableEcheance.addCell(buildCell(String.format("%s (%s )", devisEtat.devisEtatLibelle, devisEtat.pourcentageSomme), Element.ALIGN_LEFT, false, false, true, false));
-            tableEcheance.addCell(buildCell(String.valueOf(calculSomme), Element.ALIGN_RIGHT, false, false, false, true));
+            tableEcheance.addCell(buildCell(Math.round(calculSomme) + " €", Element.ALIGN_RIGHT, false, false, false, true));
         }
         return tableEcheance;
     }
@@ -419,7 +420,7 @@ public class DevisGenerated {
                     tableOfComposants.addCell(buildCell(composant.getLibelleGroupe(), Element.ALIGN_BASELINE, false, true, false, false));
                     tableOfComposants.addCell(buildCell(composant.getUniteUsage(), Element.ALIGN_BASELINE, false, true, false, false));
                     tableOfComposants.addCell(buildCell(String.valueOf(composant.getSection().orElse(null)), Element.ALIGN_BASELINE, false, true, false, false));
-                    tableOfComposants.addCell(buildCell(String.valueOf(composant.getPrixComposant()), Element.ALIGN_BASELINE, false, true, false, false));
+                    tableOfComposants.addCell(buildCell(String.valueOf(Math.round(composant.getPrixComposant())), Element.ALIGN_BASELINE, false, true, false, false));
                 }
             }
         }

@@ -39,7 +39,7 @@ public class TaskProject {
      * @param projetWithAllInfos projetWithAllInfos
      * @return Ok or BadRequest
      */
-    @GetMapping(path = "/project", consumes = "application/json")
+    @PostMapping(path = "/project", consumes = "application/json")
     public ResponseEntity<Object> createProject(
             @RequestBody ProjetWithAllInfos projetWithAllInfos)
     {
@@ -111,7 +111,7 @@ public class TaskProject {
     }
 
 
-    @PostMapping(path = "/devis/{projet_id}/{utilisateur_id}", consumes = "application/json", produces = "application/pdf")
+    @PostMapping(path = "/devis/{projet_id}/{utilisateur_id}", produces = "application/pdf")
     public ResponseEntity<Object> generateDevisPdf(
             @PathVariable("projet_id") Integer projetId,
             @PathVariable("utilisateur_id") Integer utilisateurId)

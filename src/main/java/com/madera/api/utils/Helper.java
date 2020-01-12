@@ -231,7 +231,7 @@ public class Helper {
         produitModule.setProduitModuleNom(record.get(PRODUIT_MODULE.V_PRODUIT_MODULE_NOM));
         produitModule.setProduitModuleAngle(record.get(PRODUIT_MODULE.V_PRODUIT_MODULE_ANGLE));
         produitModule.setProduitModuleSectionLongueur(record.get(PRODUIT_MODULE.J_SECTION_LONGUEUR, String.class));
-        produitModule.setPrixModule(record.get(PRODUIT_MODULE.F_PRIX));
+        produitModule.setPrixModule(record.get(PRODUIT_MODULE.F_PRIX) == null ? 0 : record.get(PRODUIT_MODULE.F_PRIX));
         return produitModule;
     }
 
