@@ -4,7 +4,7 @@ package com.madera.api.models;
  * DTO ModuleReferentiel
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.4-RELEASE
+ * @version 1.0-PRE-RELEASE
  */
 // TODO Refactoring en referentiel (même classe que composantReferentiel)
 public class ModuleReferentiel {

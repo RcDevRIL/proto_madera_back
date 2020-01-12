@@ -17,7 +17,7 @@ import static com.madera.jooq.Tables.UTILISATEUR;
  * Repository User
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.4-RELEASE
+ * @version 1.0-PRE-RELEASE
  */
 @Repository
 public class UserRepository {

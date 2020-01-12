@@ -9,7 +9,7 @@ import java.beans.ConstructorProperties;
  * DTO Client
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.4-RELEASE
+ * @version 1.0-PRE-RELEASE
  */
 @JsonSerialize
 @JsonDeserialize

@@ -25,7 +25,7 @@ import java.io.IOException;
  * Classe pour filtrer les requêtes suivant l'état d'authentification
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-RELEASE
+ * @version 1.0-PRE-RELEASE
  */
 @Component
 public class AuthentificationFilter extends OncePerRequestFilter {
@@ -39,11 +39,11 @@ public class AuthentificationFilter extends OncePerRequestFilter {
 
     /**
      *
-     * @param request HttpServletRequest
-     * @param response HttpServletResponse
+     * @param request     HttpServletRequest
+     * @param response    HttpServletResponse
      * @param filterChain FilterChain
      * @throws ServletException servletException
-     * @throws IOException IOException
+     * @throws IOException      IOException
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

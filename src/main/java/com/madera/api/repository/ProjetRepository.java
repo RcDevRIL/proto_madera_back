@@ -26,7 +26,7 @@ import static org.jooq.impl.DSL.*;
  * Repository Projet
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.4-RELEASE
+ * @version 1.0-PRE-RELEASE
  */
 @Repository
 public class ProjetRepository {

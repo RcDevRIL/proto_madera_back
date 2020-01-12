@@ -24,7 +24,7 @@ import java.util.UUID;
  * Controlleur principal pour exposer nos différents services.
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.4-RELEASE
+ * @version 1.0-PRE-RELEASE
  */
 @RestController
 @RequestMapping(path = "/api")
