@@ -250,12 +250,12 @@ INSERT INTO madera.projet_produits(i_projet_id, i_produit_id) VALUES
 (1, 2);
 
 -- Continuer d'ajouter les modules !
-INSERT INTO madera.produit_module(i_produit_module_id, i_produit_id, i_module_id, v_produit_module_nom, v_produit_module_angle, j_section_longueur) VALUES
-(1, 1, 1, 'Mur standard 1', 'Angle Sortant', '{"sections": [{"longueur": 500}, {"longueur": 350}]}'),
-(2, 1, 2, 'Cloison droite', '', '{"sections": [{"longueur": 300}]}'),
-(3, 1, 3, 'Mur intermédiaire (plafond)', '', '{"sections": [{"longueur": 500}]}'),
-(4, 1, 4, 'Toit (Tuiles)', '', '{"sections": [{"longueur": 1000}]}'),
-(5, 2, 5, 'Mur ext. immitation bois', 'Angle Entrant', '{"sections": [{"longueur": 700}, {"longueur": 700}]}');
+INSERT INTO madera.produit_module(i_produit_module_id, i_produit_id, i_module_id, v_produit_module_nom, v_produit_module_angle, j_section_longueur, f_prix) VALUES
+(1, 1, 1, 'Mur standard 1', 'Angle Sortant', '{"sections": [{"longueur": 500}, {"longueur": 350}]}', 0.0),
+(2, 1, 2, 'Cloison droite', '', '{"sections": [{"longueur": 300}]}', 0.0),
+(3, 1, 3, 'Mur intermédiaire (plafond)', '', '{"sections": [{"longueur": 500}]}', 0.0),
+(4, 1, 4, 'Toit (Tuiles)', '', '{"sections": [{"longueur": 1000}]}', 0.0),
+(5, 2, 5, 'Mur ext. immitation bois', 'Angle Entrant', '{"sections": [{"longueur": 700}, {"longueur": 700}]}', 0.0);
 
 SELECT setval('madera.produit_module_i_produit_module_id_seq'::regclass, 5);
 

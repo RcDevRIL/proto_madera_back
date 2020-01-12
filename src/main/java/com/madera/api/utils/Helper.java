@@ -6,6 +6,8 @@ import com.madera.api.repository.UserRepository;
 import com.madera.api.security.SecurityUser;
 import org.jooq.Record;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static com.madera.jooq.Tables.*;
@@ -135,6 +137,7 @@ public class Helper {
         composant.setLibelle(record.get(COMPOSANT.V_LIBELLE));
         // Section peut être null
         composant.setSection(Optional.ofNullable(record.get(COMPOSANT.F_SECTION)));
+        composant.setPrixComposant(record.get(COMPOSANT.F_COMPOSANT_PRIX));
         return composant;
     }
 
@@ -228,6 +231,7 @@ public class Helper {
         produitModule.setProduitModuleNom(record.get(PRODUIT_MODULE.V_PRODUIT_MODULE_NOM));
         produitModule.setProduitModuleAngle(record.get(PRODUIT_MODULE.V_PRODUIT_MODULE_ANGLE));
         produitModule.setProduitModuleSectionLongueur(record.get(PRODUIT_MODULE.J_SECTION_LONGUEUR, String.class));
+        produitModule.setPrixModule(record.get(PRODUIT_MODULE.F_PRIX));
         return produitModule;
     }
 

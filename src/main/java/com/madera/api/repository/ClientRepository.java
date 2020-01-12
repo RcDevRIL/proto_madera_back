@@ -4,6 +4,7 @@ import com.madera.api.models.Adresse;
 import com.madera.api.models.Client;
 import com.madera.api.models.ClientAdresse;
 import com.madera.api.utils.Helper;
+import org.apache.commons.compress.archivers.sevenz.CLI;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.impl.DSL;
@@ -164,5 +165,12 @@ public class ClientRepository {
         return context.select(CLIENT.fields()).from(CLIENT)
                 .join(PROJET).on(PROJET.I_CLIENT_ID.eq(CLIENT.I_CLIENT_ID))
                 .where(PROJET.I_PROJET_ID.eq(projetId)).fetchOne(Helper::recordToClient);
+    }
+
+    public Adresse getAdresseByClientId(Integer clientId) {
+        return context.select(ADRESSE.fields()).from(ADRESSE)
+                .join(CLIENT_ADRESSE).on(CLIENT_ADRESSE.I_ADRESSE_ID.eq(ADRESSE.I_ADRESSE_ID))
+                .where(CLIENT_ADRESSE.I_CLIENT_ID.eq(clientId).and(CLIENT_ADRESSE.B_ADRESSE_FACTURATION.isTrue()))
+                .fetchOne(Helper::recordToAdresse);
     }
 }

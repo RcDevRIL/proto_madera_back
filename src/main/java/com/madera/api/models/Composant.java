@@ -29,6 +29,8 @@ public class Composant {
 
     public Optional<Double> section;
 
+    public double prixComposant;
+
     public Composant() {
     }
 
@@ -94,5 +96,13 @@ public class Composant {
 
     public void setSection(Optional<Double> section) {
         this.section = section;
+    }
+
+    public double getPrixComposant() {
+        return prixComposant;
+    }
+
+    public void setPrixComposant(double prixComposant) {
+        this.prixComposant = prixComposant;
     }
 }

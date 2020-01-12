@@ -14,14 +14,17 @@ public class ProduitModule {
 
     String produitModuleSectionLongueur;
 
+    double prixModule;
+
     public ProduitModule() {
     }
 
-    public ProduitModule(Integer moduleId, String produitModuleNom, String produitModuleAngle, String produitModuleSectionLongueur) {
+    public ProduitModule(Integer moduleId, String produitModuleNom, String produitModuleAngle, String produitModuleSectionLongueur, double prixModule) {
         this.moduleId = moduleId;
         this.produitModuleNom = produitModuleNom;
         this.produitModuleAngle = produitModuleAngle;
         this.produitModuleSectionLongueur = produitModuleSectionLongueur;
+        this.prixModule = prixModule;
     }
 
     public Integer getProduitModuleId() {
@@ -70,5 +73,13 @@ public class ProduitModule {
 
     public void setProduitModuleSectionLongueur(String getProduitModuleSectionLongueur) {
         this.produitModuleSectionLongueur = getProduitModuleSectionLongueur;
+    }
+
+    public double getPrixModule() {
+        return prixModule;
+    }
+
+    public void setPrixModule(double prixModule) {
+        this.prixModule = prixModule;
     }
 }

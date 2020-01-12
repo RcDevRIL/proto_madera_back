@@ -80,16 +80,16 @@ public class TestTaskProject {
         assertNotNull(produit2);
 
         //Création listProduitModule pour produit1
-        listProduitModule1.add(new ProduitModule(1, "Mur ext.", "Angle sortant", "{\"sections\": [{\"longueur\": 450}, {\"longueur\": 630}]}"));
-        listProduitModule1.add(new ProduitModule(2, "Mur int.", "Angle entrant", "{\"sections\": [{\"longueur\": 520}, {\"longueur\": 400}]}"));
-        listProduitModule1.add(new ProduitModule(4, "Toit plat", "", "{\"sections\": [{\"longueur\": 750}]}"));
+        listProduitModule1.add(new ProduitModule(1, "Mur ext.", "Angle sortant", "{\"sections\": [{\"longueur\": 450}, {\"longueur\": 630}]}", 0.0));
+        listProduitModule1.add(new ProduitModule(2, "Mur int.", "Angle entrant", "{\"sections\": [{\"longueur\": 520}, {\"longueur\": 400}]}", 0.0));
+        listProduitModule1.add(new ProduitModule(4, "Toit plat", "", "{\"sections\": [{\"longueur\": 750}]}", 0.0));
         // Test si le résultat est null
         assertNotNull(listProduitModule1);
 
         //Création listProduitModule pour produit2
-        listProduitModule2.add(new ProduitModule(5, "Mur ext. premium", "Angle sortant", "{\"sections\": [{\"longueur\": 500}, {\"longueur\": 500} ]}"));
-        listProduitModule2.add(new ProduitModule(2, "Mur int.", "Angle entrant", "{\"sections\": [{\"longueur\": 520}, {\"longueur\": 400}]}"));
-        listProduitModule2.add(new ProduitModule(4, "Toit", "", "{\"sections\": [{\"longueur\": 750}]}"));
+        listProduitModule2.add(new ProduitModule(5, "Mur ext. premium", "Angle sortant", "{\"sections\": [{\"longueur\": 500}, {\"longueur\": 500} ]}", 0.0));
+        listProduitModule2.add(new ProduitModule(2, "Mur int.", "Angle entrant", "{\"sections\": [{\"longueur\": 520}, {\"longueur\": 400}]}", 0.0));
+        listProduitModule2.add(new ProduitModule(4, "Toit", "", "{\"sections\": [{\"longueur\": 750}]}", 0.0));
         // Test si le résultat est null
         assertNotNull(listProduitModule2);
 

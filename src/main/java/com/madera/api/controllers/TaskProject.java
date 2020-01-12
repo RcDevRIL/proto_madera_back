@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,8 +121,18 @@ public class TaskProject {
         DevisEtat devisEtat = projetRepository.getDevisEtatOfProject(projet.devisEtatId);
         Utilisateur utilisateur = projetRepository.getUtilisateurById(utilisateurId);
         Client client = clientRepository.getClientByProjetId(projetId);
+        Adresse adresseFacturation = clientRepository.getAdresseByClientId(client.id);
+        List<Produit> listProduit = projetRepository.getAllProduitByProjetId(projetId);
+        List<ProduitModule> listProduitWithModle = projetRepository.getProduitModuleByProjetId(projetId);
+        List<DevisEtat> listDevisEcheance = projetRepository.getDevisEtatEcheance();
+        List<ModuleComposant> listModuleComposant = projetRepository.getModuleComposantByProjetId(projetId);
+        List<Integer> listComposantId = new ArrayList<>();
+        for(ModuleComposant moduleComposant : listModuleComposant) {
+            listComposantId.add(moduleComposant.getComposantId());
+        }
+        List<Composant> listComposants = projetRepository.getComposantByModuleId(listComposantId);
         DevisGenerated devisGenerated = new DevisGenerated();
-        devisGenerated.generate(projet, devisEtat, utilisateur, client);
+        devisGenerated.generate(projet, devisEtat, utilisateur, client, adresseFacturation, listProduit, listProduitWithModle, listDevisEcheance, listModuleComposant, listComposants);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
