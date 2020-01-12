@@ -6,9 +6,9 @@ INSERT INTO madera.role(i_role_id, v_libelle_role) VALUES
 SELECT setval('madera.role_i_role_id_seq'::regclass, 2);
 
 INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, i_role_id, v_login) VALUES
-(1, 'LADOUCE', 'Fabien', 'ladouce.fabien@madera-construction.com', '0600000000', 2, 'ladouce.fabien'),
-(2, 'HELIOT', 'David', 'boite.sphinx@madera-construction.com', '0600000000', 2, 'boite.sphinx'),
-(3, 'CHEVALLIER', 'Romain', 'romain.chevallier@madera-construction.com', '0600000000', 2, 'romain.chevallier');
+(1, 'LADOUCE', 'Fabien', 'fabien.ladouce@madera-construction.com', '0600000000', 2, 'fladouce'),
+(2, 'HELIOT', 'David', 'david.heliot@madera-construction.com', '0600000000', 2, 'dheliot'),
+(3, 'CHEVALLIER', 'Romain', 'romain.chevallier@madera-construction.com', '0600000000', 2, 'rchevallier');
 
 
 INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, i_role_id, v_login, v_password) VALUES
