@@ -13,7 +13,7 @@ pipeline {
                     git log -1
                     echo "Copying properties to workspace..."
                     cp /home/dev/proto_madera_back/src/main/resources/madera.properties ${WORKSPACE}/src/main/resources/madera.properties
-                    echo "Preparation Stage Done."                
+                    echo "Preparation Stage Done."
                 '''
             }
         }
@@ -38,7 +38,7 @@ pipeline {
                     sudo kill $(cut -d' ' -f 1 backendProcessInfos.txt)
                 '''
                 withEnv(['JENKINS_NODE_COOKIE=dontKillMe']) {
-                    sh 'nohup java -jar /var/lib/jenkins//workspace/PROTO_MADERA_BACK/target/*.jar  > /var/lib/jenkins/maderalogs/maderaserver.log 2>&1 &'
+                    sh 'nohup java -jar ${WORKSPACE}/target/*.jar  > /var/lib/jenkins/maderalogs/maderaserver.log 2>&1 &'
                 }
                 sh '''                    
                     rm javaPIDs.txt
