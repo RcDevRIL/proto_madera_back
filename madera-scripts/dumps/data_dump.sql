@@ -340,7 +340,7 @@ INSERT INTO madera.produit(i_produit_id, v_produit_nom, i_gammes_id, f_prix_prod
 (4, 'Dépendance premium', 2, null, true),
 (5, 'Maison modulaire écologique', 2, null, true);
 
-SELECT setval('madera.produit_i_produit_id_seq'::regclass, 4);
+SELECT setval('madera.produit_i_produit_id_seq'::regclass, 5);
 
 INSERT INTO madera.projet_produits(i_projet_id, i_produit_id) VALUES
 (1, 3);
