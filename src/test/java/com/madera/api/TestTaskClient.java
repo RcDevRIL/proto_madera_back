@@ -59,36 +59,6 @@ public class TestTaskClient {
         assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
     }
 
-    // TODO reprendre
-    /*
-     * @Test public void testCUpdateClient() { // Test avec des infos correctes
-     * //Recupére le client ResponseEntity<Object> responseEntity =
-     * taskClient.getClient("Toto", "Yaourt"); Client client = null; try {
-     * ObjectMapper mapper = new ObjectMapper(); JSONObject clientJson = new
-     * JSONObject(responseEntity.getBody().toString()); client =
-     * mapper.readValue(clientJson.get("client"), Client.class); } catch
-     * (JSONException | IOException e) { e.printStackTrace(); }
-     * System.out.println(client.toString());
-     * client.setMail("toto-yaourt@gmail.com");
-     * 
-     * responseEntity = taskClient.updateClient(client); // Test si le résultat est
-     * null assertNotNull(responseEntity); // Test si la méthode renvoi un code 200
-     * assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-     * 
-     * // Test avec des infos incorrectes client.setId(-1); responseEntity =
-     * taskClient.updateClient(client); // Test si le résultat est null
-     * assertNotNull(responseEntity); // Test si la méthode renvoi un code 400
-     * assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode()); }
-     * 
-     * @Test public void testDAddClientAdresse() { List<ClientAdresse>
-     * listClientAdresse = new ArrayList<>(); //Id de l'utilisateur de test : 4
-     * listClientAdresse.add(new ClientAdresse(4, 1, false));
-     * listClientAdresse.add(new ClientAdresse(4, 7, true)); ResponseEntity<Object>
-     * responseEntity = taskClient.addClientAdresse(listClientAdresse); // Test si
-     * le résultat est null assertNotNull(responseEntity); //Test si la méthode
-     * renvoi un code 200 assertEquals(HttpStatus.OK,
-     * responseEntity.getStatusCode()); }
-     */
     @SuppressWarnings(value = "unchecked")
     @Test
     public void testEDeleteClient() {

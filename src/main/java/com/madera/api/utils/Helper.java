@@ -5,7 +5,6 @@ import com.madera.api.models.*;
 import com.madera.api.repository.UserRepository;
 import com.madera.api.security.SecurityUser;
 import org.jooq.Record;
-
 import java.util.Optional;
 
 import static com.madera.jooq.Tables.*;
@@ -18,7 +17,7 @@ import static com.madera.jooq.tables.DevisEtat.DEVIS_ETAT;
  * Elle est principalement utilisé pour mapper des données actuellement.
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.4-RELEASE
+ * @version 1.0-RELEASE
  */
 public class Helper {
 
@@ -96,7 +95,6 @@ public class Helper {
         return securityUser;
     }
 
-    // TODO A supprimer ?
     public static ComposantReferentiel recordToComposantReferentiel(Record record) {
         ComposantReferentiel composantReferentiel = new ComposantReferentiel();
         composantReferentiel.setComposantReferentielId(record.get(COMPOSANT_REFERENTIEL.I_COMPOSANT_REFERENTIEL_ID));
@@ -135,6 +133,7 @@ public class Helper {
         composant.setLibelle(record.get(COMPOSANT.V_LIBELLE));
         // Section peut être null
         composant.setSection(Optional.ofNullable(record.get(COMPOSANT.F_SECTION)));
+        composant.setPrixComposant(record.get(COMPOSANT.F_COMPOSANT_PRIX));
         return composant;
     }
 
@@ -228,6 +227,7 @@ public class Helper {
         produitModule.setProduitModuleNom(record.get(PRODUIT_MODULE.V_PRODUIT_MODULE_NOM));
         produitModule.setProduitModuleAngle(record.get(PRODUIT_MODULE.V_PRODUIT_MODULE_ANGLE));
         produitModule.setProduitModuleSectionLongueur(record.get(PRODUIT_MODULE.J_SECTION_LONGUEUR, String.class));
+        produitModule.setPrixModule(record.get(PRODUIT_MODULE.F_PRIX) == null ? 0 : record.get(PRODUIT_MODULE.F_PRIX));
         return produitModule;
     }
 
@@ -258,5 +258,15 @@ public class Helper {
         adresse.setComplement(record.get(ADRESSE.V_COMPLEMENT));
         adresse.setNumero(record.get(ADRESSE.V_NUMERO));
         return adresse;
+    }
+
+    public static Utilisateur recordToUtilisateur(Record record) {
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setNom(record.get(UTILISATEUR.V_NOM));
+        utilisateur.setPrenom(record.get(UTILISATEUR.V_PRENOM));
+        utilisateur.setMail(record.get(UTILISATEUR.V_MAIL));
+        utilisateur.setLogin(record.get(UTILISATEUR.V_LOGIN));
+        utilisateur.setTel(record.get(UTILISATEUR.V_TEL));
+        return utilisateur;
     }
 }

@@ -8,7 +8,7 @@ import java.util.Optional;
  * DTO Composant
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.4-RELEASE
+ * @version 1.0-RELEASE
  */
 @JsonSerialize
 public class Composant {
@@ -28,6 +28,8 @@ public class Composant {
     public String uniteUsage;
 
     public Optional<Double> section;
+
+    public double prixComposant;
 
     public Composant() {
     }
@@ -94,5 +96,13 @@ public class Composant {
 
     public void setSection(Optional<Double> section) {
         this.section = section;
+    }
+
+    public double getPrixComposant() {
+        return prixComposant;
+    }
+
+    public void setPrixComposant(double prixComposant) {
+        this.prixComposant = prixComposant;
     }
 }

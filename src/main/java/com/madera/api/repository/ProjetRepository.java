@@ -26,7 +26,7 @@ import static org.jooq.impl.DSL.*;
  * Repository Projet
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.4-RELEASE
+ * @version 1.0-RELEASE
  */
 @Repository
 public class ProjetRepository {
@@ -47,9 +47,33 @@ public class ProjetRepository {
                 .where(PROJET_UTILISATEURS.I_UTILISATEUR_ID.eq(utilisateurId)).fetch(Helper::recordToProjet);
     }
 
+    public Projet getProjetByProjetId(Integer projetId) {
+        return context.select(PROJET.fields()).from(PROJET).where(PROJET.I_PROJET_ID.eq(projetId))
+                .fetchOne(Helper::recordToProjet);
+    }
+
+    public Utilisateur getUtilisateurById(Integer utilisateurId) {
+        return context
+                .select(UTILISATEUR.V_NOM, UTILISATEUR.V_PRENOM, UTILISATEUR.V_MAIL, UTILISATEUR.V_LOGIN,
+                        UTILISATEUR.V_TEL)
+                .from(UTILISATEUR).where(UTILISATEUR.I_UTILISATEUR_ID.eq(utilisateurId))
+                .fetchOne(Helper::recordToUtilisateur);
+    }
+
     public List<Projet> getAllProjectsByProjetId(Integer projetId) {
         return context.select(PROJET.fields()).from(PROJET).where(PROJET.I_PROJET_ID.eq(projetId))
                 .fetch(Helper::recordToProjet);
+    }
+
+    public List<ProduitModule> getProduitModuleByProjetId(Integer projetId) {
+        return context.select().from(PRODUIT_MODULE).join(PROJET_PRODUITS)
+                .on(PROJET_PRODUITS.I_PRODUIT_ID.eq(PRODUIT_MODULE.I_PRODUIT_ID))
+                .where(PROJET_PRODUITS.I_PROJET_ID.eq(projetId)).fetch(Helper::recordToProduitModule);
+    }
+
+    public DevisEtat getDevisEtatOfProject(Integer devisEtatId) {
+        return context.select(DEVIS_ETAT.fields()).from(DEVIS_ETAT).where(DEVIS_ETAT.I_DEVIS_ETAT_ID.eq(devisEtatId))
+                .fetchOne(Helper::recordToDevisEtat);
     }
 
     /**
@@ -118,7 +142,29 @@ public class ProjetRepository {
     public List<Produit> getAllProduitByProjetId(Integer projetId) {
         return context.select(PRODUIT.fields()).from(PRODUIT).join(PROJET_PRODUITS)
                 .on(PROJET_PRODUITS.I_PRODUIT_ID.eq(PRODUIT.I_PRODUIT_ID))
-                .where(PROJET_PRODUITS.I_PRODUIT_ID.eq(projetId)).fetch(Helper::recordToProduit);
+                .where(PROJET_PRODUITS.I_PROJET_ID.eq(projetId)).fetch(Helper::recordToProduit);
+    }
+
+    public List<DevisEtat> getDevisEtatEcheance() {
+        return context.select(DEVIS_ETAT.fields()).from(DEVIS_ETAT)
+                .where(DEVIS_ETAT.I_DEVIS_ETAT_ID.in(1, 9, 10, 11, 12, 13, 14, 15)).orderBy(DEVIS_ETAT.I_DEVIS_ETAT_ID)
+                .fetch(Helper::recordToDevisEtat);
+    }
+
+    public List<ModuleComposant> getModuleComposantByProjetId(Integer projetId) {
+        return context.select().from(MODULE_COMPOSANT).join(MODULE)
+                .on(MODULE.I_MODULE_ID.eq(MODULE_COMPOSANT.I_MODULE_ID)).join(PRODUIT_MODULE)
+                .on(PRODUIT_MODULE.I_MODULE_ID.eq(MODULE.I_MODULE_ID)).join(PROJET_PRODUITS)
+                .on(PROJET_PRODUITS.I_PRODUIT_ID.eq(PRODUIT_MODULE.I_PRODUIT_ID))
+                .where(PROJET_PRODUITS.I_PROJET_ID.eq(projetId)).fetch(Helper::recordToModuleComposant);
+    }
+
+    public List<Composant> getComposantByModuleId(List<Integer> listModuleComposantId) {
+        return context.select().from(COMPOSANT).join(COMPOSANT_GROUPE)
+                .on(COMPOSANT_GROUPE.I_COMPOSANT_GROUPE_ID.eq(COMPOSANT.I_COMPOSANT_GROUPE_ID))
+                .join(COMPOSANT_REFERENTIEL)
+                .on(COMPOSANT_REFERENTIEL.I_COMPOSANT_REFERENTIEL_ID.eq(COMPOSANT.I_COMPOSANT_REFERENTIEL_ID))
+                .where(COMPOSANT.I_COMPOSANT_ID.in(listModuleComposantId)).fetch(Helper::recordToComposant);
     }
 
     /**
@@ -179,7 +225,7 @@ public class ProjetRepository {
      * @param sectionModule   sectionModule
      */
     private void calculPrixModule(Integer produitModuleId, double sectionModule) {
-        Double prixModule = 0.0; // TODO transaction ?
+        Double prixModule = 0.0;
         // Liste de la section des composants !
         var listInfoComposant = context
                 .select(COMPOSANT.I_COMPOSANT_ID, COMPOSANT.F_SECTION, COMPOSANT.F_COMPOSANT_PRIX).from(COMPOSANT)
@@ -208,8 +254,6 @@ public class ProjetRepository {
     private Integer createProjet(Configuration configuration, Projet projet) {
         // Initialise le ctx selon celui en est cours (context ou transaction)
         try (DSLContext ctx = configuration == null ? context : DSL.using(configuration)) {
-            // TODO Il semblerais avoir une erreur lorsque le onConflictDoNothing survient,
-            // aucun élément n'est renvoyer
             return ctx.insertInto(PROJET)
                     .columns(PROJET.V_NOM_PROJET, PROJET.V_REF_PROJET, PROJET.D_DATE_PROJET, PROJET.F_PRIX_TOTAL,
                             PROJET.I_CLIENT_ID, PROJET.I_DEVIS_ETAT_ID, PROJET.IS_SYNCHRO)

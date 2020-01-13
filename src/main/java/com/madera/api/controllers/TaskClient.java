@@ -23,11 +23,10 @@ public class TaskClient {
         this.clientRepository = clientRepository;
     }
 
-    // TODO get Client by id
-
     /**
      * Récupérer un client
-     * @param nom du client
+     * 
+     * @param nom    du client
      * @param prenom du client
      * @return Ok avec le client ou BadRequest
      */
@@ -45,6 +44,7 @@ public class TaskClient {
 
     /**
      * EndPoint création d'un client
+     * 
      * @param client json(depuis un appel serveur) to client
      * @return le clientId ajouté
      */
@@ -63,6 +63,7 @@ public class TaskClient {
 
     /**
      * Méthode de mise à jour du client
+     * 
      * @param client json(depuis un appel serveur) to client
      * @return Ok ou BadRequest
      */
@@ -78,13 +79,12 @@ public class TaskClient {
 
     /**
      * EndPoint Suppression client
+     * 
      * @param clientId integer
      * @return Ok ou BadRequest
      */
     @DeleteMapping(path = "/client", consumes = "application/json")
     public ResponseEntity<Object> deleteClient(@RequestBody Integer clientId) {
-        //TODO tu peux check si c 2 plutot non ? 1 pour l'adresse + 1 pour le client.
-        //TODO Parce que du coup on sait pas si tout a marché, juste au moins un des deux
         boolean isDeleted = clientRepository.deleteClient(clientId) != 0;
         if (isDeleted) {
             return new ResponseEntity<>(HttpStatus.OK);
@@ -95,6 +95,7 @@ public class TaskClient {
 
     /**
      * Endpoint pour ajouter une liste d'adresse à un client
+     * 
      * @param listClientAdresse listClientAdresse
      * @return OK ou BadRequest
      */

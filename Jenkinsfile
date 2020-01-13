@@ -13,19 +13,38 @@ pipeline {
                     git log -1
                     echo "Copying properties to workspace..."
                     cp /home/dev/proto_madera_back/src/main/resources/madera.properties ${WORKSPACE}/src/main/resources/madera.properties
-                    echo "Preparation Stage Done."                
+                    echo "Preparation Stage Done."
                 '''
             }
         }
         stage ('Build') {
-            steps { // le tail -n +2 récupère la deuxieme liste. Si le PID du serveur madera est plus petit que le PID de jenkins alors ce script eteindra Jenkins!!
+            steps { // le tail -n +2 récupère la deuxieme liste. Si le PID du serveur madera est plus petit que le PID de jenkins alors ce script sortira en erreur
                 sh '''
                     echo "----------------------------------------------------"
                     echo "Installation de l'application et Exécution des tests"
                     echo "----------------------------------------------------"
                     mvn clean install
+                    echo "--------------------------"
+                    echo "Lancement de l'application"
+                    echo "--------------------------"
+                    pgrep java -a > javaPIDs.txt
+                    echo "PIDs détectés:"
+                    cat javaPIDs.txt
+                    tail -n +2 javaPIDs.txt > backendProcessInfos.txt
+                    echo "Infos sur le serveur Madera:"
+                    cat backendProcessInfos.txt
+                    echo "Numéro du PID:"
+                    cut -d' ' -f 1 backendProcessInfos.txt
+                    sudo kill $(cut -d' ' -f 1 backendProcessInfos.txt)
+                '''
+                withEnv(['JENKINS_NODE_COOKIE=dontKillMe']) {
+                    sh 'nohup java -jar ${WORKSPACE}/target/*.jar  > /var/lib/jenkins/maderalogs/maderaserver.log 2>&1 &'
+                }
+                sh '''                    
+                    rm javaPIDs.txt
+                    rm backendProcessInfos.txt
                     echo "------------------------------"
-                    echo "Script d'installation terminé!"
+                    echo "Script de déploiement terminé!"
                     echo "------------------------------"
                 ''' 
             }

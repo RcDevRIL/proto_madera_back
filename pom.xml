@@ -12,7 +12,7 @@
 
 	<groupId>com.madera</groupId>
 	<artifactId>api</artifactId>
-	<version>0.4.0-RELEASE</version>
+	<version>1.0.0-RELEASE</version>
 	<packaging>jar</packaging>
 
 	<name>Madera API prototype</name>
@@ -22,7 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>11</java.version>
-		<project.version>0.4.0-RELEASE</project.version>
+		<project.version>1.0.0-RELEASE</project.version>
 	</properties>
 
 	<dependencies>
@@ -90,6 +90,11 @@
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20190722</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.13.1</version>
 		</dependency>
 	</dependencies>
 

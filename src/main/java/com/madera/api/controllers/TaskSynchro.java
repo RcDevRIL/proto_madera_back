@@ -20,7 +20,7 @@ import java.util.Map;
  * Controlleur synchro pour la synchronisation des données.
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.1-RELEASE
+ * @version 1.0-RELEASE
  */
 @RestController
 @RequestMapping("/api")
@@ -35,9 +35,10 @@ public class TaskSynchro {
 
     /**
      * Constructeur TaskSynchro
+     * 
      * @param referentielRepository referentielRepository
-     * @param projetRepository projetRepository
-     * @param clientRepository clientRepository
+     * @param projetRepository      projetRepository
+     * @param clientRepository      clientRepository
      */
     public TaskSynchro(ReferentielRepository referentielRepository, ProjetRepository projetRepository,
             ClientRepository clientRepository) {
@@ -48,6 +49,7 @@ public class TaskSynchro {
 
     /**
      * EndPoint permattant la synchro des données du referentiel
+     * 
      * @return liste du referentiel des données de madera
      */
     @GetMapping(path = "/referentiel", produces = "application/json")
@@ -78,6 +80,7 @@ public class TaskSynchro {
 
     /**
      * EndPoint synchronisation des données utilisateurs
+     * 
      * @param utilisateurId identifiant du commercial en question
      * @return liste des données utilisateurs
      */

@@ -14,7 +14,7 @@ import java.io.IOException;
  * d'authentification
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 0.4-RELEASE
+ * @version 1.0-RELEASE
  */
 @Component
 // Return a custom response error

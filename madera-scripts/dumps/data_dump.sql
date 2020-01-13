@@ -6,13 +6,13 @@ INSERT INTO madera.role(i_role_id, v_libelle_role) VALUES
 SELECT setval('madera.role_i_role_id_seq'::regclass, 2);
 
 INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, i_role_id, v_login) VALUES
-(1, 'LADOUCE', 'Fabien', 'ladouce.fabien@gmail.com', '0600000000', 2, 'ladouce.fabien'),
-(2, 'HELIOT', 'David', 'boite.sphinx@gmail.com', '0600000000', 2, 'boite.sphinx'),
-(3, 'CHEVALLIER', 'Romain', 'romain.chevallier@gmail.com', '0600000000', 2, 'romain.chevallier');
+(1, 'LADOUCE', 'Fabien', 'fabien.ladouce@madera-construction.com', '0600000000', 2, 'fladouce'),
+(2, 'HELIOT', 'David', 'david.heliot@madera-construction.com', '0600000000', 2, 'dheliot'),
+(3, 'CHEVALLIER', 'Romain', 'romain.chevallier@madera-construction.com', '0600000000', 2, 'rchevallier');
 
 
 INSERT INTO madera.utilisateur(i_utilisateur_id, v_nom, v_prenom, v_mail, v_tel, i_role_id, v_login, v_password) VALUES
-(4, 'test', 'user', 'user@test.com', '0000000000', 3, 'testuser', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+(4, 'test', 'user', 'test.user@madera-constructions.com', '0000000000', 3, 'testuser', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
 
 SELECT setval('madera.utilisateur_i_utilisateur_id_seq'::regclass, 4);
 
@@ -172,16 +172,45 @@ INSERT INTO madera.composant(i_composant_id, i_composant_groupe_id, v_libelle, i
 -- Isolant
 (22, 3, 'Laine de verre', 3, 5, 55),
 -- Finition intérieure
-(23, 9, 'Papier peint blanc à motifs', 4, 2, 20);
+(23, 9, 'Papier peint blanc à motifs', 4, 2, 20),
+-- Isolant premium eco +
+(24, 3, 'Panneau isolant de liège expansé naturel', 2, 10 , 40.30),
+(25, 3, 'Panneau isolant coton recyclé', 2, 200 , 15.40),
+(26, 3, 'Panneau isolant chanvre coton lin', 2, 200 , 22.45),
+-- Plancer premium eco +
+(27, 14, 'Parquet chêne massif Bourgogne à clouer', 3, 200 , 69.90),
+(28, 14, 'Parquet sapin du nord à clouer', 3, 140 , 26.70),
+(29, 14, 'Plancher chauffant mince en fibre de bois', 3, 40 , 54.90),
+(30, 14, 'Plancher chauffant ', 3, 40 , 45),
+(31, 14, 'Parquet châtaignier Rustique à cloueur', 3, 120 , 58.15),
+-- Bâche toiture premium eco +
+(32, 15, 'Bâche EPDM membrane d''étanchéité toiture', 6, 12 , 9.99),
+-- Tapis toiture premium eco +
+(33, 10, 'Tapis de sédum précultivé en rouleau', 6, 39 , 24.70),
+(34, 12, 'Pare-vapeur Alu Autocollant', 3, 75 , 7.80),
+(35, 12, 'Pare-poussière PROCLIMA RB', 3, 50 , 71.60),
+(36, 9, 'Peinture Blanche NATURA Grands Travaux', 4, 10 , 59.90),
+(37, 12, 'Panneau OSB 4 sans formaldéhyde', 2, 900, 6.75),
+(38, 10, 'Clin pour bardage pin', 6, 1.56, 22.90),
+(39, 10, 'Plaque de toiture plat polycarbonate', 3, 1, 11.87),
+(40, 9, 'Moquette special Mur intérieur', 4, 200, 32);
 
-SELECT setval('madera.composant_i_composant_id_seq'::regclass, 23);
+SELECT setval('madera.composant_i_composant_id_seq'::regclass, 39);
 
 INSERT INTO madera.module(i_module_id, i_gammes_id, i_module_referentiel_id, v_nom, v_nature_module, f_prix_module) VALUES
 (1, 1, 1, 'Mur extérieur', 'Mur extérieur', null),
 (2, 1, 2, 'Mur intérieur', 'Mur intérieur', null),
 (3, 1, 4, 'Mur intermédiaire', 'Mur intermédiaire', null),
 (4, 1, 6, 'Toit', 'Toit', null),
-(5, 2, 1, 'Mur extérieur immitation bois', 'Mur extérieur', null);
+(5, 1, 6, 'Toit', 'Toit', null),
+(6, 2, 1, 'Mur extérieur - Eco +', 'Mur extérieur', null),
+(7, 2, 6, 'Toit - Eco +', 'Toit', null),
+(8, 2, 2, 'Mur intérieur - Eco +', 'Mur intérieur', null),
+(9, 2, 4, 'Mur intermédiaire - Eco +', 'Mur intermédiaire', null),
+(10, 2, 4, 'Mur intermédiaire premium', 'Mur intermédiaire', null),
+(11, 2, 2, 'Mur interieur premium', 'Mur intermédiaire', null),
+(12, 2, 1, 'Mur extérieur premium', 'Mur intermédiaire', null),
+(13, 2, 6, 'Toit premium', 'Mur intermédiaire', null);
 
 SELECT setval('madera.module_i_module_id_seq'::regclass, 5);
 
@@ -193,9 +222,9 @@ INSERT INTO madera.module_composant(i_composant_id, i_module_id, i_ordre) VALUES
 (4, 1, 4),
 (5, 1, 5),
 (6, 1, 6),
-(7, 1, 9),
+(7, 1, 7),
 (8, 1, 8),
-(9, 1, 9 ),
+(9, 1, 9),
 -- Mur intérieur
 (9, 2, 1),
 (8, 2, 2),
@@ -227,37 +256,110 @@ INSERT INTO madera.module_composant(i_composant_id, i_module_id, i_ordre) VALUES
 (4, 5, 4),
 (5, 5, 5),
 (22, 5, 6),
-(7, 5, 9),
+(7, 5, 7),
 (8, 5, 8),
-(23, 5, 9);
+(23, 5, 9),
+-- Mur extérieur Eco +
+(38, 6, 1),
+(2, 6, 2),
+(24, 6, 3),
+(37, 6, 4),
+(5, 6, 5),
+(20, 6, 6),
+(34, 6, 7),
+(8, 6, 8),
+-- Toit eco +
+(33, 7, 1),
+(32, 7, 2),
+(37, 7, 3),
+(16, 7, 4),
+(26, 7, 5),
+(19, 7, 6),
+(8, 7, 7),
+(36, 7, 8),
+-- Mur intérieur Eco +
+(36, 8, 1),
+(8, 8, 2),
+(37, 8, 3),
+(5, 8, 4),
+(26, 8, 5),
+-- Mur intermédiaire Eco +
+(31, 9, 1),
+(37, 9, 2),
+(12, 9, 3),
+(26, 9, 4),
+(13, 9, 5),
+(8, 9, 6),
+(36, 9, 7),
+-- Mur intermédiaire premium
+(38, 10, 1),
+(8, 10, 2),
+(11, 10, 3),
+(5, 10, 4),
+(26, 10, 5),
+(34, 10, 6),
+(16, 10, 7),
+(9, 10, 8),
+-- Mur intérieur premium
+(23, 11, 1),
+(8, 11, 2),
+(11, 11, 3),
+(5, 11, 4),
+(24, 11, 5),
+-- Mur extérieur premium
+(38, 12, 1),
+(8, 12, 2),
+(17, 12, 3),
+(11, 12, 4),
+(5, 12, 5),
+(18, 12, 6),
+(15, 12, 7),
+(8, 12, 8),
+(9, 12, 9),
+-- Toit premium
+(39, 13, 1),
+(15, 13, 2),
+(11, 13, 3),
+(5, 13, 4),
+(25, 13, 5),
+(2, 13, 6),
+(8, 13, 7),
+(40, 13, 8);
 
 INSERT INTO madera.projet(i_projet_id, i_client_id, v_nom_projet, v_ref_projet, d_date_projet, i_devis_etat_id, f_prix_total, is_synchro) VALUES
 (1, 1, 'Petit maison', 'ref20191227_1', '2019-12-27', 2, null, true),
 (2, 2, 'Projet dépendance', 'ref_20191027_2', '2019-10-27', 3, null, true);
+-- Maison modulaire ecologique
 
 SELECT setval('madera.projet_i_projet_id_seq'::regclass, 2);
 
--- TODO corriger les données aucun modele ne doit être associé aux clients ! Il le sélectionne c'est tout
 INSERT INTO madera.produit(i_produit_id, v_produit_nom, i_gammes_id, f_prix_produit, b_modele) VALUES
 (1, 'Maison modulaire standard', 1, null, true),
-(2, 'Dépendance standard', 1, null, false),
-(3, 'Dépendance premium', 2, null, true);
+(2, 'Dépendance standard', 1, null, true),
+(3, 'Dépendance Yaort', 1, null, false),
+(4, 'Dépendance premium', 2, null, true),
+(5, 'Maison modulaire écologique', 2, null, true);
 
-SELECT setval('madera.produit_i_produit_id_seq'::regclass, 3);
+SELECT setval('madera.produit_i_produit_id_seq'::regclass, 5);
 
--- TODO Refaire jeu d'essai n'attribuer aucun produitModele au client !
 INSERT INTO madera.projet_produits(i_projet_id, i_produit_id) VALUES
-(1, 2);
+(1, 3);
 
--- Continuer d'ajouter les modules !
-INSERT INTO madera.produit_module(i_produit_module_id, i_produit_id, i_module_id, v_produit_module_nom, v_produit_module_angle, j_section_longueur) VALUES
-(1, 1, 1, 'Mur standard 1', 'Angle Sortant', '{"sections": [{"longueur": 500}, {"longueur": 350}]}'),
-(2, 1, 2, 'Cloison droite', '', '{"sections": [{"longueur": 300}]}'),
-(3, 1, 3, 'Mur intermédiaire (plafond)', '', '{"sections": [{"longueur": 500}]}'),
-(4, 1, 4, 'Toit (Tuiles)', '', '{"sections": [{"longueur": 1000}]}'),
-(5, 2, 5, 'Mur ext. immitation bois', 'Angle Entrant', '{"sections": [{"longueur": 700}, {"longueur": 700}]}');
+INSERT INTO madera.produit_module(i_produit_module_id, i_produit_id, i_module_id, v_produit_module_nom, v_produit_module_angle, j_section_longueur, f_prix) VALUES
+(1, 1, 1, 'Mur standard 1', 'Angle Sortant', '{"sections": [{"longueur": 500}, {"longueur": 350}]}', 0.0),
+(2, 1, 2, 'Cloison droite', '', '{"sections": [{"longueur": 300}]}', 0.0),
+(3, 1, 3, 'Mur intermédiaire (plafond)', '', '{"sections": [{"longueur": 500}]}', 0.0),
+(4, 1, 4, 'Toit (Tuiles)', '', '{"sections": [{"longueur": 1000}]}', 0.0),
+(5, 4, 6, 'Mur ext. Eco +', 'Angle Entrant', '{"sections": [{"longueur": 1250}, {"longueur": 1250}]}', 0.0),
+(6, 4, 7, 'Toit Eco +', '', '{"sections": [{"longueur": 2500}]}', 0.0),
+(7, 4, 8, 'Mur int. Eco +', 'Angle Sortant', '{"sections": [{"longueur": 300}, {"longueur": 300}]}', 0.0),
+(8, 4, 9, 'Mur intermédiaire Eco +', '', '{"sections": [{"longueur": 3000}]}', 0.0),
+(9, 3, 10, 'Mur intermédiaire Premium', '', '{"sections": [{"longueur": 2500}]}', 0.0),
+(10, 3, 11, 'Mur intérieur Premium', '', '{"sections": [{"longueur": 1500}]}', 0.0),
+(11, 3, 12, 'Mur extérieur Premium', '', '{"sections": [{"longueur": 3000}]}', 0.0),
+(12, 3, 13, 'Toit premium', '', '{"sections": [{"longueur": 3000}]}', 0.0);
 
-SELECT setval('madera.produit_module_i_produit_module_id_seq'::regclass, 5);
+SELECT setval('madera.produit_module_i_produit_module_id_seq'::regclass, 12);
 
 INSERT INTO madera.projet_utilisateurs(i_utilisateur_id, i_projet_id) VALUES
 (1, 1),
@@ -269,9 +371,10 @@ INSERT INTO madera.fournisseur(i_fournisseur_id, v_raison_soc, i_adresse_id) VAL
 (1, 'Leroy Merlin', 3),
 (2, 'Dijon Bois', 7),
 (3, '74 Toiture', 5),
-(4, 'Vendeur de caillou professionnel', 6);
+(4, 'Vendeur de caillou professionnel', 6),
+(5, 'Materiaux-naturels.fr', 6);
 
-SELECT setval('madera.fournisseur_i_fournisseur_id_seq'::regclass, 4);
+SELECT setval('madera.fournisseur_i_fournisseur_id_seq'::regclass, 5);
 
 INSERT INTO madera.composant_fournisseur(i_composant_id, i_fournisseur_id, v_ref_fournisseur) VALUES
 (1, 4, 'crepi_mineral_VCP'),
@@ -293,4 +396,20 @@ INSERT INTO madera.composant_fournisseur(i_composant_id, i_fournisseur_id, v_ref
 (17, 1, 'isolant_ouate_LM'),
 (18, 1, 'ioslant_oaute_alu_LM'),
 (19, 4, 'phaser_VCP'),
-(20, 1, 'isolant_ouate_100_LM');
+(20, 1, 'isolant_ouate_100_LM'),
+(21, 5, 'isolant_liege'),
+(22, 5, 'isolant_coton_recycle'),
+(23, 5, 'isolant_chanvre_coton'),
+(24, 5, 'parquet_cheme_m'),
+(25, 5, 'parquet_sapin'),
+(26, 5, 'plancher_chauffant_fb'),
+(27, 5, 'plancher_chauffant'),
+(28, 5, 'parquet_chataignier'),
+(29, 5, 'bache_etanche'),
+(30, 5, 'tapis_sedum'),
+(31, 5, 'pare_vapeur_alu_atc'),
+(32, 5, 'pare_poussiere'),
+(33, 5, 'peinture_nature'),
+(34, 5, 'osb_4'),
+(35, 5, 'bardage_clin'),
+(36, 5, 'toiture_polycarbonate');
