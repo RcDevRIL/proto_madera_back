@@ -11,14 +11,14 @@
 
   <g mask="url(#round)">
     <rect width="59.356" height="20" fill="#555"/>
-    <rect x="59.356" width="34.012" height="20" fill="#97ca00"/>
+    <rect x="59.356" width="34.012" height="20" fill="#fe7d37"/>
     <rect width="93.368" height="20" fill="url(#smooth)"/>
   </g>
 
   <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="10">
     <text x="29.678" y="15" fill="#010101" fill-opacity=".3">coverage</text>
     <text x="29.678" y="14">coverage</text>
-    <text x="75.362" y="15" fill="#010101" fill-opacity=".3">70%</text>
-    <text x="75.362" y="14">70%</text>
+    <text x="75.362" y="15" fill="#010101" fill-opacity=".3">48%</text>
+    <text x="75.362" y="14">48%</text>
   </g>
 </svg>

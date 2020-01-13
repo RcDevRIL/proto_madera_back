@@ -4,7 +4,6 @@ import com.madera.api.models.Adresse;
 import com.madera.api.models.Client;
 import com.madera.api.models.ClientAdresse;
 import com.madera.api.utils.Helper;
-import org.apache.commons.compress.archivers.sevenz.CLI;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.impl.DSL;
@@ -19,7 +18,7 @@ import static com.madera.jooq.Tables.*;
  * Repository Client
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 1.0-PRE-RELEASE
+ * @version 1.0-RELEASE
  */
 @Repository
 public class ClientRepository {
@@ -74,9 +73,6 @@ public class ClientRepository {
                                 .set(CLIENT.V_TEL, client.getNumTel()).where(CLIENT.I_CLIENT_ID.eq(client.getId()))
                                 .execute();
         }
-
-        // Supprime le client
-        // TODO Enlever contrainte étrangère clientId sur projet
 
         /**
          * Méthode suppression du client

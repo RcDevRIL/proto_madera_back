@@ -5,7 +5,6 @@ import com.madera.api.models.User;
 import com.madera.api.models.UserAuth;
 import com.madera.api.repository.ClientRepository;
 import com.madera.api.repository.UserRepository;
-import com.madera.api.utils.DevisGenerated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ import java.util.UUID;
  * Controlleur principal pour exposer nos différents services.
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 1.0-PRE-RELEASE
+ * @version 1.0-RELEASE
  */
 @RestController
 @RequestMapping(path = "/api")
@@ -54,7 +53,6 @@ public class TaskMadera {
      */
     @RequestMapping(path = "", method = RequestMethod.GET)
     public ResponseEntity<Object> index() {
-        // TODO Afficher l'IP de la machine qui ping si possible
         log.info("Received ping from somewhere");
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -71,8 +69,6 @@ public class TaskMadera {
         if (!userAuth.getLogin().isEmpty() && !userAuth.getPassword().isEmpty()) {
             User user = userRepository.checkUser(userAuth);
             if (user != null) {
-                // Map<String, String> mapResponse = new HashMap<>();
-                // TODO Générer un token avec des librairies SSL ?
                 String token = UUID.randomUUID().toString();
                 userRepository.insertToken(userAuth, token);
                 user.setToken(token);

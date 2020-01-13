@@ -12,7 +12,7 @@ import javax.sql.DataSource;
  * Classe permettant de configurer l'accès en base de données
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 1.0-PRE-RELEASE
+ * @version 1.0-RELEASE
  */
 @Configuration
 @PropertySource("classpath:madera.properties")

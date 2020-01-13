@@ -20,7 +20,7 @@ import java.util.Map;
  * Controlleur synchro pour la synchronisation des données.
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 1.0-PRE-RELEASE
+ * @version 1.0-RELEASE
  */
 @RestController
 @RequestMapping("/api")

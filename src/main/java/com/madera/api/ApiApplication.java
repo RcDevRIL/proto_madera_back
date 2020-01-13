@@ -13,7 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * GitHub</a>
  * 
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 1.0-PRE-RELEASE
+ * @version 1.0-RELEASE
  */
 @SpringBootApplication
 public class ApiApplication {

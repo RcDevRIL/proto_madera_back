@@ -15,7 +15,7 @@ import static com.madera.jooq.Tables.*;
  * Repository Réferentiel
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 1.0-PRE-RELEASE
+ * @version 1.0-RELEASE
  */
 @Repository
 public class ReferentielRepository {

@@ -1,8 +1,5 @@
 package com.madera.api.models;
 
-import javax.swing.text.html.Option;
-import java.util.Optional;
-
 public class ProduitModule {
 
     Integer produitModuleId;
@@ -22,7 +19,8 @@ public class ProduitModule {
     public ProduitModule() {
     }
 
-    public ProduitModule(Integer moduleId, String produitModuleNom, String produitModuleAngle, String produitModuleSectionLongueur, double prixModule) {
+    public ProduitModule(Integer moduleId, String produitModuleNom, String produitModuleAngle,
+            String produitModuleSectionLongueur, double prixModule) {
         this.moduleId = moduleId;
         this.produitModuleNom = produitModuleNom;
         this.produitModuleAngle = produitModuleAngle;

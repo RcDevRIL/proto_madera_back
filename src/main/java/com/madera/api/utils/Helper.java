@@ -5,9 +5,6 @@ import com.madera.api.models.*;
 import com.madera.api.repository.UserRepository;
 import com.madera.api.security.SecurityUser;
 import org.jooq.Record;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static com.madera.jooq.Tables.*;
@@ -20,7 +17,7 @@ import static com.madera.jooq.tables.DevisEtat.DEVIS_ETAT;
  * Elle est principalement utilisé pour mapper des données actuellement.
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 1.0-PRE-RELEASE
+ * @version 1.0-RELEASE
  */
 public class Helper {
 
@@ -98,7 +95,6 @@ public class Helper {
         return securityUser;
     }
 
-    // TODO A supprimer ?
     public static ComposantReferentiel recordToComposantReferentiel(Record record) {
         ComposantReferentiel composantReferentiel = new ComposantReferentiel();
         composantReferentiel.setComposantReferentielId(record.get(COMPOSANT_REFERENTIEL.I_COMPOSANT_REFERENTIEL_ID));

@@ -18,7 +18,7 @@ import java.util.Map;
  * Controlleur projet pour gérer les méthodes relatives aux projets.
  *
  * @author LADOUCE Fabien, CHEVALLIER Romain, HELIOT David
- * @version 1.0-PRE-RELEASE
+ * @version 1.0-RELEASE
  */
 @RestController
 @RequestMapping("api")
@@ -115,7 +115,6 @@ public class TaskProject {
     @PostMapping(path = "/devis/{projet_id}/{utilisateur_id}", produces = "application/pdf")
     public ResponseEntity<Object> generateDevisPdf(@PathVariable("projet_id") Integer projetId,
             @PathVariable("utilisateur_id") Integer utilisateurId) {
-        // TODO Faire un objet pour ca ?
         Projet projet = projetRepository.getProjetByProjetId(projetId);
         DevisEtat devisEtat = projetRepository.getDevisEtatOfProject(projet.devisEtatId);
         Utilisateur utilisateur = projetRepository.getUtilisateurById(utilisateurId);
