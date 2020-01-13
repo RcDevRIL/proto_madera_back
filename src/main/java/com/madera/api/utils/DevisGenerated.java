@@ -94,7 +94,7 @@ public class DevisGenerated {
             //Instance de byteArray
             PdfWriter.getInstance(document, byteArrayOutputStream);
             //Instance d'un fichier pdf sur le serveur
-             PdfWriter.getInstance(document, new FileOutputStream(String.format("devis_generated/devis_%s_%s.pdf", client.id, Date.valueOf(LocalDate.now()))));
+            //PdfWriter.getInstance(document, new FileOutputStream(String.format("devis_generated/devis_%s_%s.pdf", client.id, Date.valueOf(LocalDate.now()))));
             document.open();
             //Construct first page of devis
             document.add(buildHeader(projet.nomProjet, false));
@@ -140,7 +140,7 @@ public class DevisGenerated {
             document.add(detailProduitAndModule(listProduit, listProduitModule, listComposant, listModuleComposant));
             document.close();
             return byteArrayOutputStream.toByteArray();
-        } catch (DocumentException | FileNotFoundException e) {
+        } catch (DocumentException e) {
             e.printStackTrace();
         }
         return null;
