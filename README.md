@@ -1,4 +1,4 @@
-# proto_madera_back - README V1.3.0
+# proto_madera_back - README V2.0.0
 __Build status by branch__
 * __master :__ [![M_Jenkins_Build_Status][]][M_latest_build]
 * __int :__ [![I_Jenkins_Build_Status][]][I_latest_build]
@@ -25,7 +25,7 @@ This README will guide you through the setup and deployment of this application 
 # Windows 10 OS
 ##### Prerequisites
 
-What things you need to install and how to install them
+What things you need to install and how to install them.
 
 * First you will need a copy of this repository: either use "Download" feature on [this][Github root] page, or use Git CLI if you have installed it on your computer:
     * `git clone https://github.com/RcDevRIL/proto_madera_back.git`
@@ -40,14 +40,14 @@ What things you need to install and how to install them
 
 ### Setup the local database on Windows
 
-You need a copy of the database to run tests locally. To do so, when you're done with installing [pgAdmin] v11.6, you have to go on the home page of pgAdmin server. Clic on create server if you want to add custom name for connection. Then create a database on the selected server. database server **must** be _'madera'_, host name: _localhost / 127.0.0.1_, user: _postgres_, password: *your_master_password*.
+You need a copy of the database to run tests locally. To do so, when you're done with installing [pgAdmin] v11.6, you have to go on the home page of pgAdmin server. Clic on create server if you want to add custom name for connection. Then create a database on the selected server. database server **must** be _'madera'_, host name: _localhost / 127.0.0.1_, user: _postgres_, password: *your_master_password* (which is the one you used to setup [pgAdmin]).
 
-	Your database is now up and running, we need to build it now with our scheme.
-	Select the newly created 'madera' database, and click on black lightning icon (Query Tool).
+    Your database is now up and running, we need to build it now with our scheme.
+Select the newly created 'madera' database, and click on black lightning icon (Query Tool).
 
 To build the database, copy paste [madera_dump.sql] content into the Query Tool and run the query. Do the same with [data_dump.sql]!
 	
-	Now we can install the backend application in our maven repository: this will compile to the packaging specified in pom.xml file.
+    Now we can install the backend application in our maven repository: this will compile to the packaging specified in pom.xml file.
 
 ### Build & Run
 
@@ -87,17 +87,32 @@ This will trigger the execution of tests. Maven will output result and possible 
 # Linux OS (Debian)
 ##### Prerequisites
 
-What things you need to install and how to install them
+What things you need to install and how to install them.
 
-* First you will need a copy of this repository: either use "Download" feature on [this][Github root] page, or use Git CLI if you have installed it on your computer:
-    * `git clone https://github.com/RcDevRIL/proto_madera_back.git`
+* First you will need to install some packages on the Debian machine. Get these from the following command: `sudo apt install`. You have to enable these popular tools:
+  * postgresql
+  * java (open-jdk 11)
+  * git
 
-__*//TODO*__
 ## Run app on localhost
 ### Setup the local database on Debian
-__*//TODO*__
-### Build & Run
-To start the installation of the application, you need to add application properties file first because we didn't versionned this file for security purposes!
+
+You now need to configure postgresql.
+
+##### PostgreSQL Configuration
+
+To connect to the server:
+
+`sudo -u postgres bash` then `psql`. To quit this mode simply enter `\q`.
+
+You will now set your master password for default/admin user '_postgres_'. To do so, enter the command  `\password` and set your password, we will refer it as *your_master_password* from now on.
+
+Last but not least, create the empty scheme by typing:
+
+`CREATE DATABASE madera;`
+
+And finally, to start the installation of the application, you need to add application properties file first because we didn't versionned this file for security purposes!
+
 Please create a new file '_madera.properties_' under _[src/main/resources]_ folder. This file __must__ contain these lines:
 ```
 1  driver.className=org.postgresql.Driver
@@ -106,9 +121,27 @@ Please create a new file '_madera.properties_' under _[src/main/resources]_ fold
 4  db.pass=your_master_password
 5  server.port=8081
 ```
-Now run the following command:
+Tired? We got you covered! Next step is executing the semi-automated deployment script!
 
-  `mvn clean install -DskipTests=true`
+But first, you  need a copy of this repository: either use "Download" feature on [this][Github root] page, or use Git CLI if you have installed it on your computer:
+  * `git clone https://github.com/RcDevRIL/proto_madera_back.git`
+
+We have implemented [this][deploy_backend.sh] script when we didn't have Jenkins deployed.
+To run it on your Linux machine, just call following command:
+
+`sh /path/to/project/madera-scripts/deploy_backend.sh`
+
+This will prompt you the steps executed and ask 3 times for *your_master_password*.
+After updating the database, it will install application on your maven repository by compiling source code after success of unit tests.
+
+The script will then try to deploy the new jar built, but this will fail as it was scripted with an update in mind, and in our precise deployment environment: it will fail until you fix it. The thing is we use the list of java processes that run on the machine at the script execution time. But you will probably never have the same configuration on your machine.
+
+Please refer to following section to understand how to launch properly our app.
+
+### Build & Run
+Make sure you have compiled the jar file with the following command:
+
+`mvn clean install -DskipTests=true`
 
 We are skipping tests on purpose as there is another section for this.
 There is now two ways to launch application:
@@ -173,6 +206,7 @@ This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE
 [madera_dump.sql]: https://github.com/RcDevRIL/proto_madera_back/blob/master/madera-scripts/dumps/madera_dump.sql
 [data_dump.sql]: https://github.com/RcDevRIL/proto_madera_back/blob/master/madera-scripts/dumps/data_dump.sql
 [src/main/resources]: https://github.com/RcDevRIL/proto_madera_back/src/main/resources
+[deploy_backend.sh]: https://github.com/RcDevRIL/proto_madera_back/blob/master/madera-scripts/deploy_backend.sh
 [doc_website]: http://vps756227.ovh.net/
 [M_Jenkins_Build_Status]: http://vps756227.ovh.net:8082/buildStatus/icon?job=PROTO_MADERA_BACK
 [M_latest_build]: http://vps756227.ovh.net:8082/job/PROTO_MADERA_BACK/
