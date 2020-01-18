@@ -66,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         conf.setMaxAge((long) 3600);
         conf.setAllowCredentials(true);
         //conf.setExposedHeaders();
-        conf.setAllowedOrigins(Arrays.asList("https://rcdevril.github.io/proto_madera_front/", "https://proto_madera_front.codemagic.app/"));
+        conf.setAllowedOrigins(Arrays.asList("https://rcdevril.github.io", "https://proto_madera_front.codemagic.app"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", conf);
         return source;
