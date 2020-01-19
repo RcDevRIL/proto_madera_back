@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +28,7 @@ import java.util.Map;
 @RequestMapping("/api")
 public class TaskSynchro {
 
-    // private static final Logger log = LoggerFactory.getLogger(TaskSynchro.class);
+     private static final Logger log = LoggerFactory.getLogger(TaskSynchro.class);
 
     @Autowired
     private final ReferentielRepository referentielRepository;
@@ -55,6 +57,7 @@ public class TaskSynchro {
     @GetMapping(path = "/referentiel", produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> getReferentiel() {
+        log.info("GET /referentiel called");
         Map<String, Object> mapResponse = new HashMap<>();
 
         List<Composant> listComposants = referentielRepository.getAllComposant();
@@ -87,6 +90,7 @@ public class TaskSynchro {
     @GetMapping(path = "/synchro/{id}", produces = "application/json")
     @ResponseBody
     public ResponseEntity<Object> getSynchro(@PathVariable("id") Integer utilisateurId) {
+        log.info("GET /synchro/id called");
         Map<String, Object> mapResponse = new HashMap<>();
         List<Projet> listProjet = projetRepository.getAllProjectsByUserId(utilisateurId);
         List<ProduitModule> listProjetModule = projetRepository.getAllProduitModuleByUserId(utilisateurId);

@@ -4,6 +4,8 @@ import com.madera.api.models.*;
 import com.madera.api.repository.ClientRepository;
 import com.madera.api.repository.ProjetRepository;
 import com.madera.api.utils.DevisGenerated;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("api")
 public class TaskProject {
+    private static final Logger log = LoggerFactory.getLogger(TaskProject.class);
 
     @Autowired
     private final ProjetRepository projetRepository;
@@ -42,6 +45,7 @@ public class TaskProject {
      */
     @PostMapping(path = "/project", consumes = "application/json")
     public ResponseEntity<Object> createProject(@RequestBody ProjetWithAllInfos projetWithAllInfos) {
+        log.info("POST /project called");
         Map<String, Object> mapResponse = new HashMap<>();
         Integer projetId = projetRepository.createAll(projetWithAllInfos);
         if (projetId != null) {
@@ -68,6 +72,7 @@ public class TaskProject {
      */
     @PutMapping(path = "/project", consumes = "application/json")
     public ResponseEntity<Object> updateProject(@RequestBody ProjetWithAllInfos projetWithAllInfos) {
+        log.info("PUT /project called");
         try {
             projetRepository.updateAll(projetWithAllInfos);
         } catch (Exception e) {
@@ -78,6 +83,7 @@ public class TaskProject {
 
     @GetMapping(path = "/projects/{id}", produces = "application/json")
     public ResponseEntity<Object> getAllProject(@PathVariable("id") Integer id) {
+        log.info("GET /project/id called");
         Map<String, Object> mapResponse = new HashMap<>();
         List<Projet> listProjets = projetRepository.getAllProjectsByUserId(id);
         mapResponse.put("listProjets", listProjets);
@@ -92,6 +98,7 @@ public class TaskProject {
      */
     @DeleteMapping(path = "/project/{refProjet}", consumes = "application/json")
     public ResponseEntity<Object> deleteProjectByRef(@PathVariable("refProjet") String refProjet) {
+        log.info("DELETE /project/refProjet called");
         boolean isDeleted = projetRepository.deleteAll(refProjet) != 0;
         if (isDeleted) {
             return new ResponseEntity<>(HttpStatus.OK);
@@ -108,6 +115,7 @@ public class TaskProject {
      */
     @GetMapping(path = "/quote/{id}", consumes = "application/json")
     public ResponseEntity<Object> getQuote(@PathVariable("id") Integer id) {
+        log.info("GET /quote/id called");
         Map<String, Object> mapResponse = new HashMap<>();
         return new ResponseEntity<>(mapResponse, HttpStatus.OK);
     }
@@ -115,6 +123,7 @@ public class TaskProject {
     @PostMapping(path = "/devis/{projet_id}/{utilisateur_id}", produces = "application/pdf")
     public ResponseEntity<Object> generateDevisPdf(@PathVariable("projet_id") Integer projetId,
             @PathVariable("utilisateur_id") Integer utilisateurId) {
+        log.info("POST /devis/projet_id/utilisateur_id called");
         Projet projet = projetRepository.getProjetByProjetId(projetId);
         DevisEtat devisEtat = projetRepository.getDevisEtatOfProject(projet.devisEtatId);
         Utilisateur utilisateur = projetRepository.getUtilisateurById(utilisateurId);
